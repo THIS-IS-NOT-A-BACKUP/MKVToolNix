@@ -13,6 +13,7 @@ class Controller
     @record_duration  = false
 
     @tests            = Array.new
+    @exclusions       = Array.new
     @dir_entries      = Dir.entries(".")
   end
 
@@ -35,10 +36,16 @@ class Controller
     @tests += @dir_entries.select { |entry| /^test-#{num}/.match(entry) }
   end
 
+  def exclude_test_case(num)
+    @exclusions += @dir_entries.select { |entry| /^test-#{num}/.match(entry) }
+  end
+
   def get_tests_to_run
     test_all = !@test_failed && !@test_new
+    tests    = @tests.empty? ? @dir_entries : @tests
+    tests   -= @exclusions
 
-    return (@tests.empty? ? @dir_entries : @tests).collect do |entry|
+    return tests.collect do |entry|
       if (FileTest.file?(entry) && (entry =~ /^test-.*\.rb$/))
         class_name  = file_name_to_class_name entry
         test_this   = test_all
@@ -107,6 +114,11 @@ class Controller
 
     if (current_test.description == "INSERT DESCRIPTION")
       show_message "Skipping '#{class_name}': Not implemented yet"
+      return
+    end
+
+    if current_test.methods.include?(:skip?) and current_test.skip?
+      show_message "Skipping '#{class_name}': disabled"
       return
     end
 
