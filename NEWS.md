@@ -5,6 +5,18 @@
 * MKVToolNix GUI: preferences: switched the order & wording of controls in the
   "enabling items" panel to make it clearer that certain controls define
   exceptions. Inspired by 3086.
+* mkvmerge: SRT subtitles: mkvmerge now accepts empty text files with the
+  extension `.srt` as SRT subtitle files, enabling the creation of empty SRT
+  tracks. Implements #3089.
+
+## Bug fixes
+
+* MKVToolNix GUI: multiplexer: when dragging & dropping files to the
+  multiplexer, the source directory will be remembered as the "last open
+  directory" again, causing subsequent uses of the "open file" dialog to start
+  in the same directory. Fixes #3110.
+* mkvinfo: fixed the position of frames in block groups containing "block
+  duration" elements in summary mode (e.g. for subtitle tracks).
 
 
 # Version 56.1.0 "My Friend" 2021-04-09
