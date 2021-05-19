@@ -8,6 +8,9 @@
 * mkvmerge: SRT subtitles: mkvmerge now accepts empty text files with the
   extension `.srt` as SRT subtitle files, enabling the creation of empty SRT
   tracks. Implements #3089.
+* mkvmerge: MP4 reader: added support for reading Dolby Vision from MP4 files
+  (FourCCs `dvh1` and `dvhe`; configuration records `dvcC`, `dvvC` and `hvcE`
+  will be converted into block addition mappings). Implements #2784.
 
 ## Bug fixes
 
@@ -17,6 +20,11 @@
   in the same directory. Fixes #3110.
 * mkvinfo: fixed the position of frames in block groups containing "block
   duration" elements in summary mode (e.g. for subtitle tracks).
+
+## Build system changes
+
+* `configure` will now try to detect `libmagic` via `pkg-config` and fall back
+  to including & linking directly if it cannot be found via `pkg-config`.
 
 
 # Version 56.1.0 "My Friend" 2021-04-09

@@ -7,6 +7,7 @@
 #include "common/command_line.h"
 #include "common/hacks.h"
 #include "common/qt.h"
+#include "common/version.h"
 #include "mkvtoolnix-gui/chapter_editor/tool.h"
 #include "mkvtoolnix-gui/gui_cli_parser.h"
 #include "mkvtoolnix-gui/header_editor/tool.h"
@@ -135,7 +136,7 @@ void
 GuiCliParser::displayVersion() {
   auto p = p_func();
 
-  mxinfo(fmt::format("{0}\n", mtx::cli::g_version_info));
+  mxinfo(fmt::format("{0}\n", get_version_info("mkvtoolnix-gui", vif_full)));
   p->exitAfterParsing = true;
 }
 

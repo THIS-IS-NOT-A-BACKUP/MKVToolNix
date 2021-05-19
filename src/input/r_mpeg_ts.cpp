@@ -81,7 +81,7 @@ int reader_c::potential_packet_sizes[] = { 188, 192, 204, 0 };
 
 track_c::track_c(reader_c &p_reader,
                  pid_type_e p_type)
-  : reader(p_reader)            // no brace-initializer-list syntax here due to gcc bug 50025`
+  : reader{p_reader}
   , m_file_num{p_reader.m_current_file}
   , m_id{}
   , processed{}
@@ -1137,6 +1137,7 @@ reader_c::read_headers_for_file(std::size_t file_num) {
 
       else if (f.m_pat_found && !f.all_pmts_found() && f.m_validate_pmt_crc) {
         f.m_validate_pmt_crc = false;
+        f.m_num_pmts_to_find = 0;
         f.m_pmt_pid_seen.clear();
 
       } else
