@@ -1,19 +1,44 @@
 # Version ?
 
+## Bug fixes
+
+* build system: fixed filtering out optimization options when compiling the
+  file `iso639_language_list.cpp` (before only numeric optimization levels
+  were filtered out and only if it wasn't the last option in the list of
+  flags). See #3105 for context.
+
+
+# Version 57.0.0 "Till The End" 2021-05-22
+
 ## New features and enhancements
 
-* MKVToolNix GUI: preferences: switched the order & wording of controls in the
-  "enabling items" panel to make it clearer that certain controls define
-  exceptions. Inspired by 3086.
-* mkvmerge: SRT subtitles: mkvmerge now accepts empty text files with the
-  extension `.srt` as SRT subtitle files, enabling the creation of empty SRT
-  tracks. Implements #3089.
 * mkvmerge: MP4 reader: added support for reading Dolby Vision from MP4 files
   (FourCCs `dvh1` and `dvhe`; configuration records `dvcC`, `dvvC` and `hvcE`
   will be converted into block addition mappings). Implements #2784.
+* mkvmerge: SRT subtitles: mkvmerge now accepts empty text files with the
+  extension `.srt` as SRT subtitle files, enabling the creation of empty SRT
+  tracks. Implements #3089.
+* mkvmerge, mkvextract: HEVC/H.265: access unit delimiter NALUs will no longer
+  be discarded, neither during muxing nor during extraction.
+* MKVToolNix GUI: preferences: switched the order & wording of controls in the
+  "enabling items" panel to make it clearer that certain controls define
+  exceptions. Inspired by 3086.
 
 ## Bug fixes
 
+* mkvmerge: HEVC/H.265 parser: several NALU types, notably the Dolby
+  Vision-specific NALUs ("unspecified 62" and "unspecified 63") and suffix SEI
+  NALUs, are now stored with the frame they belong to instead of with the next
+  frame. Part of fixing & implementing #2784, #2818, #3093 and #3113.
+* mkvmerge: HEVC/H.265 packetizer: fixed setting the track's default duration
+  when reading HEVC/H.265 from Matroska files that don't have a default
+  duration set.
+* mkvmerge: HEVC/H.265 packetizer: fixed the calculation of the duration of
+  frames so that `SimpleBlock` elements can be used again instead of
+  `BlockGroups` with `BlockDuration` elements. Fixes #3114.
+* mkvmerge, mkvextract: HEVC/H.265 parser: fixed issues with ordering &
+  duplication of certain NALUs (parameter set & prefix SEI NALUs). Part of
+  fixing & implementing of #2784, #2818, #3093 and #3113.
 * MKVToolNix GUI: multiplexer: when dragging & dropping files to the
   multiplexer, the source directory will be remembered as the "last open
   directory" again, causing subsequent uses of the "open file" dialog to start
