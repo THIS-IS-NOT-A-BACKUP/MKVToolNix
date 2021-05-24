@@ -22,6 +22,11 @@
 
   `mkvpropedit` and the GUI's header editor are unaffected as they've always
   allowed to set the flag on as many tracks as the user wanted.
+* mkvinfo: the option `-X`/`--full-hexdump` now affects all binary elements,
+  not just the frame data in `SimpleBlock` and `BlockGroup` elements.
+* mkvmerge: AVC/H.264 & HEVC/H.265 identification: added the stream's pixel
+  dimensions (AVC only; were present for HEVC already) & default
+  duration. Implements #3116.
 
 
 ## Bug fixes
