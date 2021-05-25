@@ -194,7 +194,7 @@ PreferencesDialog::setupPageSelector(Page pageToShow) {
   m_cfg.handleSplitterSizes(ui->pagesSplitter);
 
   auto pageIndex = 0;
-  auto model     = new QStandardItemModel{};
+  auto model     = new QStandardItemModel{this};
   ui->pageSelector->setModel(model);
 
   auto addItem = [this, model, &pageIndex](Page pageType, QStandardItem *parent, QString const &text, QString const &icon = QString{}) -> QStandardItem * {
@@ -857,6 +857,10 @@ PreferencesDialog::setupFontAndScaling() {
   ui->sbGuiFontPointSize->setValue(font.pointSize());
 
   ui->cbGuiDisableHighDPIScaling->setChecked(m_cfg.m_uiDisableHighDPIScaling);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+  ui->cbGuiDisableHighDPIScaling->setVisible(false);
+#endif
+
   ui->cbGuiDisableDarkStyleSheet->setChecked(m_cfg.m_uiDisableDarkStyleSheet);
 #if !defined(SYS_WINDOWS)
   ui->cbGuiDisableDarkStyleSheet->setVisible(false);
