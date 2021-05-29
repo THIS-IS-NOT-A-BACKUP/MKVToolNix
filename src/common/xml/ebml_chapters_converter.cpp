@@ -131,60 +131,72 @@ ebml_chapters_converter_c::fix_atom(KaxChapterAtom &atom)
 }
 
 void
-ebml_chapters_converter_c::fix_display(KaxChapterDisplay &display)
+ebml_chapters_converter_c::fix_display_languages(libmatroska::KaxChapterDisplay &display)
+  const {
+  std::vector<mtx::bcp47::language_c> ietf_languages, legacy_languages;
+
+  for (auto const &child : display)
+    if (auto kax_ietf_language = dynamic_cast<libmatroska::KaxChapLanguageIETF *>(child); kax_ietf_language) {
+      auto parsed_language = mtx::bcp47::language_c::parse(kax_ietf_language->GetValue());
+
+      if (!parsed_language.is_valid())
+        throw conversion_x{fmt::format(Y("'{0}' is not a valid IETF BCP 47/RFC 5646 language tag. Additional information from the parser: {1}"), kax_ietf_language->GetValue(), parsed_language.get_error())};
+
+      ietf_languages.emplace_back(parsed_language);
+
+    } else if (auto kax_legacy_language = dynamic_cast<libmatroska::KaxChapterLanguage *>(child); kax_legacy_language) {
+      auto code         = kax_legacy_language->GetValue();
+      auto language_opt = mtx::iso639::look_up(code);
+
+      if (!language_opt || !language_opt->is_part_of_iso639_2)
+        throw conversion_x{fmt::format(Y("'{0}' is not a valid ISO 639-2 language code."), code)};
+
+      legacy_languages.emplace_back(mtx::bcp47::language_c::parse(code));
+    }
+
+  if (ietf_languages.empty())
+    ietf_languages = std::move(legacy_languages);
+
+  if (ietf_languages.empty())
+    ietf_languages.emplace_back(mtx::bcp47::language_c::parse("eng"));
+
+  DeleteChildren<libmatroska::KaxChapLanguageIETF>(display);
+  DeleteChildren<libmatroska::KaxChapterLanguage>(display);
+
+  for (auto const &language : ietf_languages) {
+    if (language.has_valid_iso639_code())
+      AddEmptyChild<libmatroska::KaxChapterLanguage>(display).SetValue(language.get_iso639_alpha_3_code());
+
+    if (!mtx::bcp47::language_c::is_disabled())
+      AddEmptyChild<libmatroska::KaxChapLanguageIETF>(display).SetValue(language.format());
+  }
+}
+
+void
+ebml_chapters_converter_c::fix_display_countries(libmatroska::KaxChapterDisplay &display)
+  const {
+  for (auto const &child : display)
+    if (auto kax_country = dynamic_cast<libmatroska::KaxChapterCountry *>(child); kax_country) {
+      auto country     = kax_country->GetValue();
+      auto country_opt = mtx::iso3166::look_up_cctld(country);
+      if (!country_opt)
+        throw conversion_x{fmt::format(Y("'{0}' is not a valid ccTLD country code."), country)};
+
+      auto cctld = mtx::string::to_lower_ascii(country_opt->alpha_2_code);
+
+      if (country != cctld)
+        kax_country->SetValue(cctld);
+    }
+}
+
+void
+ebml_chapters_converter_c::fix_display(libmatroska::KaxChapterDisplay &display)
   const {
   if (!FindChild<KaxChapterString>(display))
     throw conversion_x{Y("<ChapterDisplay> is missing the <ChapterString> child.")};
 
-  auto clanguage_ietf  = FindChild<KaxChapLanguageIETF>(display);
-  auto clanguage       = FindChild<KaxChapterLanguage>(display);
-  auto value_to_parse  = clanguage_ietf ? clanguage_ietf->GetValue()
-                       : clanguage      ? clanguage->GetValue()
-                       :                  "eng"s;
-  auto parsed_language = mtx::bcp47::language_c::parse(value_to_parse);
-
-  if (!parsed_language.is_valid())
-    throw conversion_x{fmt::format(Y("'{0}' is not a valid IETF BCP 47/RFC 5646 language tag. Additional information from the parser: {1}"), value_to_parse, parsed_language.get_error())};
-
-  if (!clanguage_ietf && !mtx::bcp47::language_c::is_disabled()) {
-    clanguage_ietf = new KaxChapLanguageIETF;
-    display.PushElement(*clanguage_ietf);
-  }
-
-  if (clanguage_ietf)
-    clanguage_ietf->SetValue(parsed_language.format());
-
-  if (parsed_language.has_valid_iso639_2_code()) {
-    auto code = parsed_language.get_iso639_alpha_3_code();
-
-    if ((code != "eng"s) && !clanguage) {
-      clanguage = new KaxChapterLanguage;
-      display.PushElement(*clanguage);
-    }
-
-    if (clanguage)
-      clanguage->SetValue(code);
-
-  } else if (clanguage) {
-    auto language_opt = mtx::iso639::look_up(clanguage->GetValue());
-
-    if (!language_opt || !language_opt->is_part_of_iso639_2)
-      throw conversion_x{fmt::format(Y("'{0}' is not a valid ISO 639-2 language code."), clanguage->GetValue())};
-  }
-
-  auto ccountry = FindChild<KaxChapterCountry>(display);
-  if (!ccountry)
-    return;
-
-  auto country     = ccountry->GetValue();
-  auto country_opt = mtx::iso3166::look_up_cctld(country);
-  if (!country_opt)
-    throw conversion_x{fmt::format(Y("'{0}' is not a valid ccTLD country code."), country)};
-
-  auto cctld = mtx::string::to_lower_ascii(country_opt->alpha_2_code);
-
-  if (country != cctld)
-    ccountry->SetValue(cctld);
+  fix_display_languages(display);
+  fix_display_countries(display);
 }
 
 void
