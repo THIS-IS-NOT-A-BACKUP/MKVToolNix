@@ -31,6 +31,9 @@
   or the keyboard shortcuts (instead of using drag & drop), the GUI ensures
   that the top-most selected entry remains visible after the move. Implements
   #3123.
+* MKVToolNix GUI: added an option in the preference to use legacy MIME types
+  for font attachments instead of the current standard ones
+  (e.g. 'application/x-truetype-font' instead of 'font/sfnt' and 'font/ttf').
 
 
 ## Bug fixes
@@ -61,6 +64,9 @@
   elements with multiple languages or countries. Part of the fix of #3120.
 * mkvmerge: MP4 reader: fixed an issue with timestamps overflowing when the
   file's or the track's time scale is large. Fixes #3124.
+* build system: when libmagic was detected via `pkg-config`, MKVToolNix was
+  actually compiled without support for libmagic due to a preprocessor symbol
+  not being defined.
 
 ## Build system changes
 
@@ -88,6 +94,20 @@
   `--disable-qt6` and `--disable-qt` options.
 * Boost's multi-precision library is now required.
 * Boost v1.66 or newer is now required.
+
+## Other changes
+
+* The Windows build is now using an updated version of the
+  `file`/`magic` library for MIME type detection of attachments. This
+  affects fonts whose MIME types will now be the current standard MIME
+  types (e.g. `font/sfnt` or `font/ttf` for TrueType fonts). As this
+  might pose problematic with older players that only support the
+  legacy MIME type (e.g. `application/x-truetype-font`), a new option
+  was added in the GUI's preferences to use the legacy MIME types
+  instead of the current standard ones. This is off by default.
+  Builds for other operating systems have already been using newer
+  versions of the `file`/`magic` library for a long time.
+
 
 # Version 57.0.0 "Till The End" 2021-05-22
 
