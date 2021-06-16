@@ -135,7 +135,6 @@ export LDFLAGS="-L${QTDIR}/lib ${LDFLAGS}"
 if [[ ( ! -f build-config ) && ( "$NO_BUILD" != 1 ) ]]; then
   ./configure \
     --prefix=/usr \
-    --enable-appimage \
     --enable-optimization \
     --with-moc="${QTDIR}/bin/moc" \
     --with-uic="${QTDIR}/bin/uic" \
@@ -192,13 +191,6 @@ else
 fi
 
 delete_blacklisted
-
-mkdir ./share/file
-if [[ -f /etc/centos-release ]]; then
-  cp /usr/share/misc/magic.mgc ./share/file
-else
-  cp /usr/share/file/magic.mgc ./share/file
-fi
 
 cd ..
 

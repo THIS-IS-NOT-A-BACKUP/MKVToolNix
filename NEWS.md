@@ -1,3 +1,27 @@
+# Version ?
+
+## Bug fixes
+
+* mkvmerge, mkvpropedit, MKVToolNix GUI's multiplexer & header editor: MIME
+  type detection is now done using Qt instead of the `magic` library. The main
+  impact is the MIME types of TrueType & OpenType fonts are now detected
+  correctly. Fixes #3137.
+
+## Build system changes
+
+* The `magic` library is not used anymore.
+* The Qt library is now required for building all applications, even the
+  command-line ones, as they use Qt's MIME type detection capabilities. In
+  turn this means that you cannot disable the Qt usage anymore; either Qt5 or
+  Qt 6 is required.
+
+  You can still chose not to build MKVToolNix GUI, though. A new option has
+  been added to `configure` for this purpose: `--disable-gui`.
+* `configure`: the option `--enable-appimage` has been removed. The location
+  of the relevant directories within an AppImage is now detected
+  automatically.
+
+
 # Version 58.0.0 "Supper's Ready" 2021-06-13
 
 ## New features and enhancements

@@ -157,7 +157,6 @@ class Target
     @libraries += list.collect do |entry|
       case entry
       when nil               then nil
-      when :magic            then c(:MAGIC_LIBS)
       when :flac             then c(:FLAC_LIBS)
       when :iconv            then c(:ICONV_LIBS)
       when :intl             then c(:LIBINTL_LIBS)
@@ -166,6 +165,7 @@ class Target
       when :pcre2            then c(:PCRE2_LIBS)
       when :pugixml          then c?(:PUGIXML_INTERNAL) ? [ '-Llib/pugixml/src', '-lpugixml' ] : c(:PUGIXML_LIBS)
       when :qt               then c(:QT_LIBS)
+      when :qt_non_gui       then c(:QT_LIBS_NON_GUI)
       when :static           then c(:LINK_STATICALLY)
       when :stdcppfs         then c(:STDCPPFS_LIBS)
       when :mpegparser       then [ '-Lsrc/mpegparser', '-lmpegparser'  ]

@@ -55,7 +55,7 @@ function create_directories {
 
   cd ${tgt_dir}
   rm -rf *
-  mkdir -p examples data/sounds doc/licenses locale/libqt share/misc
+  mkdir -p examples data/sounds doc/licenses locale/libqt
 
   print -- " done"
 }
@@ -81,7 +81,7 @@ function copy_dlls {
   rm -f plugins/platforms/{qminimal,qoffscreen}.dll
 
   # copy basic DLLs
-  cp ${dll_src_dir}/lib{bz2,crypto-,gnurx-,harfbuzz-0,pcre-1,pcre2-16,png16-,ssl-}*.dll .
+  cp ${dll_src_dir}/lib{crypto-,gnurx-,harfbuzz-0,pcre-1,pcre2-16,png16-,ssl-}*.dll .
 
   # copy dependencies
   ${script_dir}/copy_dll_dependencies.rb *.exe **/*.dll
@@ -134,7 +134,6 @@ function copy_files {
   mkdir ${tgt_dir}/tools
   cp src/tools/bluray_dump.exe ${tgt_dir}/tools/
 
-  cp ${mxe_usr_dir}/share/misc/magic.mgc ${tgt_dir}/share/misc/
   cp share/sounds/* ${tgt_dir}/data/sounds/
   touch ${tgt_dir}/data/portable-app
 
