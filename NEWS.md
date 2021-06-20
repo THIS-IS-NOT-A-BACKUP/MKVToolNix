@@ -6,6 +6,10 @@
   timestamps more closely by being more lenient: it allows arbitrary number of
   spaces & tabs at the start of the line & around the arrow; it allows any
   number of digits for the hours. Part of #3139.
+* MKVToolNix GUI: multiplexer: when adding a Blu-ray playlist without scanning
+  for other playlists the GUI will now look for disc library information & let
+  the user select which one to use if there's more than one entry. Implements
+  #3143.
 
 ## Bug fixes
 
@@ -27,6 +31,14 @@
   the GUI's executable with file names as command line arguments, the source
   directory will be remembered as the "last open directory" again, causing
   subsequent uses of the "open file" dialog to start in the same directory.
+* MKVToolNix GUI: multiplexer: the "default track flag" column in the track
+  list was missing its icons. Additionally it contained text even for things
+  that aren't regular tracks and therefore do not actually have that flag
+  (e.g. chapters or tags). Fixes #3144.
+* MKVToolNix GUI: multiplexer: the default for the dialog asking the user what
+  to do with dragged & dropped files if they've never seen the dialog is back
+  to adding the files to the current multiplex settings instead of "add as
+  additional parts" which was an unintentional default.
 
 
 ## Build system changes
