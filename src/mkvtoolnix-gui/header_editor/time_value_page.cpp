@@ -18,7 +18,7 @@ TimeValuePage::TimeValuePage(Tab &parent,
                              EbmlCallbacks const &callbacks,
                              translatable_string_c const &title,
                              translatable_string_c const &description)
-  : ValuePage{parent, topLevelPage, master, callbacks, ValueType::String, title, description}
+  : ValuePage{parent, topLevelPage, master, callbacks, ValueType::Timestamp, title, description}
 {
   connect(MainWindow::get(), &MainWindow::preferencesChanged, this, &TimeValuePage::showInRequestedTimeSpec);
 }
@@ -31,7 +31,7 @@ TimeValuePage::createInputControl() {
   auto &cfg = Util::Settings::get();
 
   if (m_element)
-    m_originalValueUTC = QDateTime::fromMSecsSinceEpoch(static_cast<EbmlDate *>(m_element)->GetEpochDate() * 1000, Qt::UTC);
+    m_originalValueUTC = QDateTime::fromSecsSinceEpoch(static_cast<EbmlDate *>(m_element)->GetEpochDate(), Qt::UTC);
 
   m_dteValue = new QDateTimeEdit{this};
   m_dteValue->setCalendarPopup(true);
@@ -71,7 +71,7 @@ TimeValuePage::validateValue()
 
 void
 TimeValuePage::copyValueToElement() {
-  static_cast<EbmlDate *>(m_element)->SetEpochDate(m_dteValue->dateTime().toUTC().toMSecsSinceEpoch() / 1000);
+  static_cast<EbmlDate *>(m_element)->SetEpochDate(m_dteValue->dateTime().toUTC().toSecsSinceEpoch());
 }
 
 void

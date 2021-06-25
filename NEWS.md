@@ -39,6 +39,10 @@
   to do with dragged & dropped files if they've never seen the dialog is back
   to adding the files to the current multiplex settings instead of "add as
   additional parts" which was an unintentional default.
+* mkvmerge, mkvinfo, MKVToolNix GUI's info tool: only on Windows: displaying
+  dates before 1970-01-01 00:00:00 UTC or after 2038-01-19 03:14:08 UTC was
+  broken. Note that the header editor was not affected. Fixes #3148.
+* build system: fixed compilation with fmt v8. Fixes #3151.
 
 
 ## Build system changes
@@ -54,6 +58,7 @@
 * `configure`: the option `--enable-appimage` has been removed. The location
   of the relevant directories within an AppImage is now detected
   automatically.
+* The bundled `fmt` library was updated to v8.0.0.
 
 
 # Version 58.0.0 "Supper's Ready" 2021-06-13
