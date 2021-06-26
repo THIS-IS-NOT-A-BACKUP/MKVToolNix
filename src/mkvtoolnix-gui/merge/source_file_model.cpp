@@ -1,11 +1,12 @@
 #include "common/common_pch.h"
 
+#include <QByteArray>
+#include <QDataStream>
 #include <QDir>
 #include <QFileInfo>
 #include <QItemSelectionModel>
 #include <QMimeData>
-#include <QByteArray>
-#include <QDataStream>
+#include <QRegularExpression>
 
 #include "common/logger.h"
 #include "common/sorting.h"
@@ -16,8 +17,43 @@
 #include "mkvtoolnix-gui/merge/track_model.h"
 #include "mkvtoolnix-gui/util/container.h"
 #include "mkvtoolnix-gui/util/model.h"
+#include "mkvtoolnix-gui/util/settings.h"
 
 namespace mtx::gui::Merge {
+
+namespace {
+
+struct SequencedFileNameData {
+  QString prefix, suffix;
+  unsigned int number{};
+
+  bool follows(SequencedFileNameData const &previous) const {
+    return (prefix == previous.prefix)
+        && (suffix == previous.suffix)
+        && (number == (previous.number + 1));
+  }
+};
+
+std::optional<SequencedFileNameData>
+analyzeFileNameForSequenceData(QString const &fileName) {
+  QRegularExpression re{Q(R"(([^/\\]*)(\d+)([^\d]+)$)")};
+  auto match = re.match(fileName);
+
+  if (match.hasMatch())
+    return SequencedFileNameData{ match.captured(1), match.captured(3), match.captured(2).toUInt() };
+
+  return {};
+}
+
+int
+insertPriorityForSourceFile(SourceFile const &file) {
+  return file.hasVideoTrack()     ? 0
+       : file.hasAudioTrack()     ? 1
+       : file.hasSubtitlesTrack() ? 2
+       :                            3;
+}
+
+} // anonymous namespace
 
 SourceFileModel::SourceFileModel(QObject *parent)
   : QStandardItemModel{parent}
@@ -248,11 +284,80 @@ SourceFileModel::addOrAppendFilesAndTracks(QVector<SourceFilePtr> const &files,
     addFilesAndTracks(files);
 }
 
+QModelIndex
+SourceFileModel::addFileSortedByType(SourceFilePtr const &file) {
+  auto newFilePrio = insertPriorityForSourceFile(*file);
+
+  for (int idx = 0, numFiles = m_sourceFiles->size(); idx < numFiles; ++idx) {
+    auto existingFilePrio = insertPriorityForSourceFile(*m_sourceFiles->at(idx));
+
+    if (existingFilePrio <= newFilePrio)
+      continue;
+
+    m_sourceFileMap[reinterpret_cast<quint64>(file.get())] = file;
+    auto row                                               = createRow(file.get());
+
+    invisibleRootItem()->insertRow(idx, row);
+    m_sourceFiles->insert(idx, file);
+
+    return index(idx, 0);
+  }
+
+  return {};
+}
+
+QModelIndex
+SourceFileModel::addFileAtAppropriatePlace(SourceFilePtr const &file,
+                                           bool sortByType) {
+  QModelIndex insertPosIdx;
+
+  if (sortByType) {
+    insertPosIdx = addFileSortedByType(file);
+
+    if (insertPosIdx.isValid())
+      return insertPosIdx;
+  }
+
+  createAndAppendRow(invisibleRootItem(), file);
+  *m_sourceFiles << file;
+
+  return index(rowCount() - 1, 0);
+}
+
 void
 SourceFileModel::addFilesAndTracks(QVector<SourceFilePtr> const &files) {
-  for (auto const &file : files) {
-    createAndAppendRow(invisibleRootItem(), file);
-    *m_sourceFiles << file;
+  std::optional<SequencedFileNameData> previouslyAddedSequenceData;
+  QModelIndex previouslyAddedPosition;
+
+  auto &cfg                 = Util::Settings::get();
+  auto sortByType           = cfg.m_mergeSortFilesTracksByTypeWhenAdding;
+  auto reconstructSequences = cfg.m_mergeReconstructSequencesWhenAdding;
+  auto filesToProcess       = files;
+
+  if (reconstructSequences)
+    std::sort(filesToProcess.begin(), filesToProcess.end(), [](auto const &a, auto const &b) {
+        return a->m_fileName < b->m_fileName;
+      });
+
+  for (auto const &file : filesToProcess) {
+    auto sequenceData = analyzeFileNameForSequenceData(file->m_fileName);
+
+    if (   reconstructSequences
+        && previouslyAddedSequenceData
+        && previouslyAddedPosition.isValid()
+        && sequenceData
+        && sequenceData->follows(*previouslyAddedSequenceData)) {
+      appendFilesAndTracks({ file }, previouslyAddedPosition);
+      previouslyAddedSequenceData = sequenceData;
+
+      continue;
+    }
+
+    previouslyAddedPosition     = addFileAtAppropriatePlace(file, sortByType);
+    previouslyAddedSequenceData = sequenceData;
+
+    for (auto const &track : file->m_tracks)
+      m_tracksModel->addTrackAtAppropriatePlace(track, sortByType);
 
     if (file->m_additionalParts.isEmpty())
       continue;
@@ -263,7 +368,6 @@ SourceFileModel::addFilesAndTracks(QVector<SourceFilePtr> const &files) {
       createAndAppendRow(itemToAddTo, additionalPart, row++);
   }
 
-  m_tracksModel->addTracks(              std::accumulate(files.begin(), files.end(), QList<TrackPtr>{}, [](QList<TrackPtr> &accu, SourceFilePtr const &file) { return accu << file->m_tracks;        }));
   m_attachedFilesModel->addAttachedFiles(std::accumulate(files.begin(), files.end(), QList<TrackPtr>{}, [](QList<TrackPtr> &accu, SourceFilePtr const &file) { return accu << file->m_attachedFiles; }));
 }
 
