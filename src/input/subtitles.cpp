@@ -13,11 +13,13 @@
 
 #include "common/common_pch.h"
 
+#include <QRegularExpression>
+
 #include "common/endian.h"
 #include "common/mime.h"
 #include "common/mm_proxy_io.h"
 #include "common/mm_text_io.h"
-#include "common/regex.h"
+#include "common/qt.h"
 #include "common/strings/formatting.h"
 #include "common/strings/parsing.h"
 #include "common/strings/utf8.h"
@@ -28,6 +30,46 @@
 #include "merge/packet_extensions.h"
 
 // ------------------------------------------------------------
+
+subtitles_c::subtitles_c(std::string const &file_name,
+                         int64_t track_id)
+  : current{entries.end()}
+  , m_cc_utf8{charset_converter_c::init("UTF-8")}
+  , m_invalid_utf8_warned{g_identifying}
+  , m_file_name{file_name}
+  , m_track_id{track_id}
+{
+}
+
+void
+subtitles_c::set_charset_converter(charset_converter_cptr const &cc_utf8) {
+  if (cc_utf8)
+    m_cc_utf8 = cc_utf8;
+
+  else {
+    m_cc_utf8  = g_cc_local_utf8;
+    m_try_utf8 = true;
+  }
+}
+
+std::string
+subtitles_c::recode(std::string const &s,
+                     uint32_t replacement_marker) {
+  if (m_try_utf8 && !mtx::utf8::is_valid(s))
+    m_try_utf8 = false;
+
+  auto recoded = m_try_utf8 ? s : m_cc_utf8->utf8(s);
+
+  if (mtx::utf8::is_valid(recoded))
+    return recoded;
+
+  if (!m_invalid_utf8_warned) {
+    m_invalid_utf8_warned = true;
+    mxwarn_tid(m_file_name, m_track_id, fmt::format(Y("This text subtitle track contains invalid 8-bit characters outside valid multi-byte UTF-8 sequences. Please specify the correct encoding for this track.\n")));
+  }
+
+  return mtx::utf8::fix_invalid(recoded, replacement_marker);
+}
 
 void
 subtitles_c::process(generic_packetizer_c *p) {
@@ -62,8 +104,8 @@ srt_parser_c::probe(mm_text_io_c &io) {
       return false;
 
     s = io.getline(100);
-    mtx::regex::jp::Regex timestamp_re(SRT_RE_TIMESTAMP_LINE);
-    if (!timestamp_re.match(s))
+    QRegularExpression timestamp_re{SRT_RE_TIMESTAMP_LINE};
+    if (!Q(s).contains(timestamp_re))
       return false;
 
     s = io.getline();
@@ -78,19 +120,18 @@ srt_parser_c::probe(mm_text_io_c &io) {
 
 srt_parser_c::srt_parser_c(mm_text_io_cptr const &io,
                            const std::string &file_name,
-                           int64_t tid)
-  : m_io(io)
-  , m_file_name(file_name)
-  , m_tid(tid)
+                           int64_t track_id)
+  : subtitles_c{file_name, track_id}
+  , m_io(io)
   , m_coordinates_warning_shown(false)
 {
 }
 
 void
 srt_parser_c::parse() {
-  mtx::regex::jp::Regex timestamp_re(SRT_RE_TIMESTAMP_LINE, "S");
-  mtx::regex::jp::Regex number_re("^\\d+$", "S");
-  mtx::regex::jp::Regex coordinates_re(SRT_RE_COORDINATES, "S");
+  QRegularExpression timestamp_re{SRT_RE_TIMESTAMP_LINE};
+  QRegularExpression number_re{"^\\d+$"};
+  QRegularExpression coordinates_re{SRT_RE_COORDINATES};
 
   int64_t start                  = 0;
   int64_t end                    = 0;
@@ -108,6 +149,8 @@ srt_parser_c::parse() {
     std::string s;
     if (!m_io->getline2(s))
       break;
+
+    s = recode(s);
 
     line_number++;
     mtx::string::strip_back(s);
@@ -127,17 +170,17 @@ srt_parser_c::parse() {
     }
 
     if (STATE_INITIAL == state) {
-      if (!number_re.match(s)) {
-        mxwarn_tid(m_file_name, m_tid, fmt::format(Y("Error in line {0}: expected subtitle number and found some text.\n"), line_number));
+      if (!Q(s).contains(number_re)) {
+        mxwarn_tid(m_file_name, m_track_id, fmt::format(Y("Error in line {0}: expected subtitle number and found some text.\n"), line_number));
         break;
       }
       state = STATE_TIME;
       mtx::string::parse_number(s, subtitle_number);
 
     } else if (STATE_TIME == state) {
-      mtx::regex::jp::VecNum matches;
-      if (!mtx::regex::match(s, matches, timestamp_re)) {
-        mxwarn_tid(m_file_name, m_tid, fmt::format(Y("Error in line {0}: expected a SRT timestamp line but found something else. Aborting this file.\n"), line_number));
+      auto matches = timestamp_re.match(Q(s));
+      if (!matches.hasMatch()) {
+        mxwarn_tid(m_file_name, m_track_id, fmt::format(Y("Error in line {0}: expected a SRT timestamp line but found something else. Aborting this file.\n"), line_number));
         break;
       }
 
@@ -146,20 +189,20 @@ srt_parser_c::parse() {
       //      1       2         3    4          5   6                  7   8
       // "\\s*(-?)\\s*(\\d+):\\s(-?)*(\\d+):\\s*(-?)(\\d+)(?:[,\\.]\\s*(-?)(\\d+))?"
 
-      mtx::string::parse_number(matches[0][ 2], s_h);
-      mtx::string::parse_number(matches[0][ 4], s_min);
-      mtx::string::parse_number(matches[0][ 6], s_sec);
-      mtx::string::parse_number(matches[0][10], e_h);
-      mtx::string::parse_number(matches[0][12], e_min);
-      mtx::string::parse_number(matches[0][14], e_sec);
+      mtx::string::parse_number(to_utf8(matches.captured( 2)), s_h);
+      mtx::string::parse_number(to_utf8(matches.captured( 4)), s_min);
+      mtx::string::parse_number(to_utf8(matches.captured( 6)), s_sec);
+      mtx::string::parse_number(to_utf8(matches.captured(10)), e_h);
+      mtx::string::parse_number(to_utf8(matches.captured(12)), e_min);
+      mtx::string::parse_number(to_utf8(matches.captured(14)), e_sec);
 
-      std::string s_rest = matches[0][ 8];
-      std::string e_rest = matches[0][16];
+      std::string s_rest = to_utf8(matches.captured( 8));
+      std::string e_rest = to_utf8(matches.captured(16));
 
       auto neg_calculator = [&matches](auto start_idx) -> auto {
         int64_t neg = 1;
         for (auto idx = 0; idx < 4; ++idx)
-          if (matches[0][start_idx + (idx * 2)] == "-")
+          if (matches.captured(start_idx + (idx * 2)) == Q("-"))
             neg *= -1;
         return neg;
       };
@@ -167,8 +210,8 @@ srt_parser_c::parse() {
       int64_t s_neg = neg_calculator(1);
       int64_t e_neg = neg_calculator(9);
 
-      if (coordinates_re.match(s) && !m_coordinates_warning_shown) {
-        mxwarn_tid(m_file_name, m_tid,
+      if (Q(s).contains(coordinates_re) && !m_coordinates_warning_shown) {
+        mxwarn_tid(m_file_name, m_track_id,
                    Y("This file contains coordinates in the timestamp lines. "
                      "Such coordinates are not supported by the Matroska SRT subtitle format. "
                      "The coordinates will be removed automatically.\n"));
@@ -199,7 +242,7 @@ srt_parser_c::parse() {
       end    = ((e_h * 60 * 60 + e_min * 60 + e_sec) * 1'000'000'000ll + e_ns) * e_neg;
 
       if (0 > start) {
-        mxwarn_tid(m_file_name, m_tid,
+        mxwarn_tid(m_file_name, m_track_id,
                    fmt::format(Y("Line {0}: Negative timestamp encountered. The entry will be adjusted to start from 00:00:00.000.\n"), line_number));
         end   -= start;
         start  = 0;
@@ -212,7 +255,7 @@ srt_parser_c::parse() {
       // of this function, but warn the user that the original order is being
       // changed.
       if (!timestamp_warning_printed && (start < previous_start)) {
-        mxwarn_tid(m_file_name, m_tid, fmt::format(Y("Warning in line {0}: The start timestamp is smaller than that of the previous entry. "
+        mxwarn_tid(m_file_name, m_track_id, fmt::format(Y("Warning in line {0}: The start timestamp is smaller than that of the previous entry. "
                                                      "All entries from this file will be sorted by their start time.\n"), line_number));
         timestamp_warning_printed = true;
       }
@@ -227,7 +270,7 @@ srt_parser_c::parse() {
         subtitles += "\n";
       subtitles += s;
 
-    } else if (number_re.match(s)) {
+    } else if (Q(s).contains(number_re)) {
       state = STATE_TIME;
       mtx::string::parse_number(s, subtitle_number);
 
@@ -250,9 +293,9 @@ srt_parser_c::parse() {
 
 bool
 ssa_parser_c::probe(mm_text_io_c &io) {
-  mtx::regex::jp::Regex script_info_re("^\\s*\\[script\\s+info\\]",   "i");
-  mtx::regex::jp::Regex styles_re(     "^\\s*\\[V4\\+?\\s+Styles\\]", "i");
-  mtx::regex::jp::Regex comment_re(    "^\\s*$|^\\s*[!;]",            "i");
+  QRegularExpression script_info_re{"^\\s*\\[script\\s+info\\]",   QRegularExpression::CaseInsensitiveOption};
+  QRegularExpression styles_re{     "^\\s*\\[V4\\+?\\s+Styles\\]", QRegularExpression::CaseInsensitiveOption};
+  QRegularExpression comment_re{    "^\\s*$|^\\s*[!;]",            QRegularExpression::CaseInsensitiveOption};
 
   try {
     int line_number = 0;
@@ -266,12 +309,13 @@ ssa_parser_c::probe(mm_text_io_c &io) {
       if (100 < line_number)
         return false;
 
+      auto qline = Q(line);
       // Skip comments and empty lines.
-      if (comment_re.match(line))
+      if (qline.contains(comment_re))
         continue;
 
       // This is the line mkvmerge is looking for: positive match.
-      if (script_info_re.match(line) || styles_re.match(line))
+      if (qline.contains(script_info_re) || qline.contains(styles_re))
         return true;
 
       // Neither a wanted line nor an empty one/a comment: negative result.
@@ -286,37 +330,23 @@ ssa_parser_c::probe(mm_text_io_c &io) {
 ssa_parser_c::ssa_parser_c(generic_reader_c &reader,
                            mm_text_io_cptr const &io,
                            const std::string &file_name,
-                           int64_t tid)
-  : m_reader(reader)
+                           int64_t track_id)
+  : subtitles_c{file_name, track_id}
+  , m_reader(reader)
   , m_io(io)
-  , m_file_name(file_name)
-  , m_tid(tid)
-  , m_cc_utf8(charset_converter_c::init("UTF-8"))
   , m_is_ass(false)
   , m_attachment_id(0)
 {
 }
 
 void
-ssa_parser_c::set_charset_converter(charset_converter_cptr const &cc_utf8) {
-  if (cc_utf8)
-    m_cc_utf8 = cc_utf8;
-
-  else {
-    m_cc_utf8  = g_cc_local_utf8;
-    m_try_utf8 = true;
-  }
-}
-
-
-void
 ssa_parser_c::parse() {
-  mtx::regex::jp::Regex sec_styles_ass_re("^\\s*\\[V4\\+\\s+Styles\\]", "iS");
-  mtx::regex::jp::Regex sec_styles_re(    "^\\s*\\[V4\\s+Styles\\]",    "iS");
-  mtx::regex::jp::Regex sec_info_re(      "^\\s*\\[Script\\s+Info\\]",  "iS");
-  mtx::regex::jp::Regex sec_events_re(    "^\\s*\\[Events\\]",          "iS");
-  mtx::regex::jp::Regex sec_graphics_re(  "^\\s*\\[Graphics\\]",        "iS");
-  mtx::regex::jp::Regex sec_fonts_re(     "^\\s*\\[Fonts\\]",           "iS");
+  QRegularExpression sec_styles_ass_re{"^\\s*\\[V4\\+\\s+Styles\\]", QRegularExpression::CaseInsensitiveOption};
+  QRegularExpression sec_styles_re{    "^\\s*\\[V4\\s+Styles\\]",    QRegularExpression::CaseInsensitiveOption};
+  QRegularExpression sec_info_re{      "^\\s*\\[Script\\s+Info\\]",  QRegularExpression::CaseInsensitiveOption};
+  QRegularExpression sec_events_re{    "^\\s*\\[Events\\]",          QRegularExpression::CaseInsensitiveOption};
+  QRegularExpression sec_graphics_re{  "^\\s*\\[Graphics\\]",        QRegularExpression::CaseInsensitiveOption};
+  QRegularExpression sec_fonts_re{     "^\\s*\\[Fonts\\]",           QRegularExpression::CaseInsensitiveOption};
 
   int num                        = 0;
   ssa_section_e section          = SSA_SECTION_NONE;
@@ -332,30 +362,32 @@ ssa_parser_c::parse() {
     if (!m_io->getline2(line))
       break;
 
+    line               = recode(line);
+    auto qline         = Q(line);
     bool add_to_global = true;
 
     // A normal line. Let's see if this file is ASS and not SSA.
     if (!strcasecmp(line.c_str(), "ScriptType: v4.00+"))
       m_is_ass = true;
 
-    else if (sec_styles_ass_re.match(line)) {
+    else if (qline.contains(sec_styles_ass_re)) {
       m_is_ass = true;
       section  = SSA_SECTION_V4STYLES;
 
-    } else if (sec_styles_re.match(line))
+    } else if (qline.contains(sec_styles_re))
       section = SSA_SECTION_V4STYLES;
 
-    else if (sec_info_re.match(line))
+    else if (qline.contains(sec_info_re))
       section = SSA_SECTION_INFO;
 
-    else if (sec_events_re.match(line))
+    else if (qline.contains(sec_events_re))
       section = SSA_SECTION_EVENTS;
 
-    else if (sec_graphics_re.match(line)) {
+    else if (qline.contains(sec_graphics_re)) {
       section       = SSA_SECTION_GRAPHICS;
       add_to_global = false;
 
-    } else if (sec_fonts_re.match(line)) {
+    } else if (qline.contains(sec_fonts_re)) {
       section       = SSA_SECTION_FONTS;
       add_to_global = false;
 
@@ -395,7 +427,7 @@ ssa_parser_c::parse() {
         if (   (0     > start)
             || (0     > end)
             || (start > end)) {
-          mxwarn_tid(m_file_name, m_tid, fmt::format(Y("SSA/ASS: The following line will be skipped as one of the timestamps is less than 0, or the end timestamp is less than the start timestamp: {0}\n"), orig_line));
+          mxwarn_tid(m_file_name, m_track_id, fmt::format(Y("SSA/ASS: The following line will be skipped as one of the timestamps is less than 0, or the end timestamp is less than the start timestamp: {0}\n"), orig_line));
           continue;
         }
 
@@ -413,7 +445,7 @@ ssa_parser_c::parse() {
           + get_element("MarginR", fields)          + comma
           + get_element("MarginV", fields)          + comma
           + get_element("Effect", fields)           + comma
-          + recode(get_element("Text", fields));
+          + get_element("Text", fields);
 
         add(start, end, num, line);
         num++;
@@ -500,25 +532,6 @@ ssa_parser_c::parse_time(std::string &stime) {
   return (tds * 10 + ts * 1000 + tm * 60 * 1000 + th * 60 * 60 * 1000) * 1000000;
 }
 
-std::string
-ssa_parser_c::recode(std::string const &s,
-                     uint32_t replacement_marker) {
-  if (m_try_utf8 && !mtx::utf8::is_valid(s))
-    m_try_utf8 = false;
-
-  auto recoded = m_try_utf8 ? s : m_cc_utf8->utf8(s);
-
-  if (mtx::utf8::is_valid(recoded))
-    return recoded;
-
-  if (!m_invalid_utf8_warned) {
-    m_invalid_utf8_warned = true;
-    mxwarn_tid(m_file_name, m_tid, fmt::format(Y("This text subtitle track contains invalid 8-bit characters outside valid multi-byte UTF-8 sequences. Please specify the correct encoding for this track.\n")));
-  }
-
-  return mtx::utf8::fix_invalid(recoded, replacement_marker);
-}
-
 void
 ssa_parser_c::add_attachment_maybe(std::string &name,
                                    std::string &data_uu,
@@ -550,7 +563,7 @@ ssa_parser_c::add_attachment_maybe(std::string &name,
     short_name.erase(0, pos + 1);
 
   attachment.ui_id        = m_attachment_id;
-  attachment.name         = recode(name, static_cast<uint32_t>('_'));
+  attachment.name         = name;
   attachment.description  = fmt::format(SSA_SECTION_FONTS == section ? Y("Imported font from {0}") : Y("Imported picture from {0}"), short_name);
   attachment.to_all_files = true;
   attachment.source_file  = m_file_name;

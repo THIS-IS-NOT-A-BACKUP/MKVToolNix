@@ -31,6 +31,11 @@ to_qs(char const source) {
 }
 
 inline QString
+to_qs(QString const &source) {
+  return source;
+}
+
+inline QString
 to_qs(char const *source) {
   return QString{source};
 }
@@ -82,11 +87,6 @@ to_utf8(QString const &source) {
 inline std::wstring
 to_wide(QString const &source) {
   return source.toStdWString();
-}
-
-inline void
-mxinfo(QString const &s) {
-  mxinfo(to_utf8(s));
 }
 
 inline std::ostream &

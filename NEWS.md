@@ -13,14 +13,20 @@
 * MKVToolNix GUI: multiplexer: added an option for sorting files & tracks by
   track types when adding them to multiplex settings. The order is: video
   first followed by audio, subtitles and other types. Files & tracks can still
-  be reordered manually later. This option is enabled by default. Implements
+  be reordered manually later. The option is enabled by default & can be found
+  in the preferences → "Multiplexer" page → "Adding files" section. Implements
   #2366.
 * MKVToolNix GUI: multiplexer: added an option for recognizing file name
   sequences such as `movie.001.mp4`, `movie.002.mp4`, `movie.003.mp4` when
   adding multiple files at once. If a sequence is detected, the only first
   file will be added while the second and following file names will be
-  appended to the first one. This option is enabled by default. Implements
+  appended to the first one. The option is enabled by default & can be found
+  in the preferences → "Multiplexer" page → "Adding files" section. Implements
   #2866.
+* MKVToolNix GUI: multiplexer: added small colored boxes for each file & track
+  in order to indicate from which file each track is read. The colors used can
+  be configured in the preferences → "Multiplexer" page → "File & track
+  colors" section.
 
 ## Bug fixes
 
@@ -54,6 +60,10 @@
   dates before 1970-01-01 00:00:00 UTC or after 2038-01-19 03:14:08 UTC was
   broken. Note that the header editor was not affected. Fixes #3148.
 * build system: fixed compilation with fmt v8. Fixes #3151.
+* mkvmerge: SRT subtitle reader: characters that aren't valid according to the
+  assumed encoding of the file will now be replaced by the Unicode
+  "Replacement Character" U+FFFD instead of keeping the invalid characters,
+  potentially violating the Matroska specs.
 
 
 ## Build system changes
@@ -70,6 +80,8 @@
   of the relevant directories within an AppImage is now detected
   automatically.
 * The bundled `fmt` library was updated to v8.0.0.
+* The `PCRE2` & `JPCRE2` libraries are not used anymore. The bundled version
+  of `JPCRE2` was removed.
 
 
 # Version 58.0.0 "Supper's Ready" 2021-06-13

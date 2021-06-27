@@ -13,6 +13,8 @@
 
 #include "common/common_pch.h"
 
+#include <QRegularExpression>
+
 #include <ebml/EbmlVoid.h>
 #include <matroska/KaxSegment.h>
 
@@ -21,6 +23,7 @@
 #include "common/ebml.h"
 #include "common/mm_io_x.h"
 #include "common/mm_file_io.h"
+#include "common/qt.h"
 #include "common/strings/formatting.h"
 #include "common/strings/parsing.h"
 #include "common/strings/utf8.h"
@@ -264,8 +267,8 @@ ebml_converter_c::parse_binary(parser_context_t &ctx) {
     format = "base64";
 
   if (format == "hex") {
-    auto hex_content = mtx::regex::replace(content, mtx::regex::jp::Regex{"(0x|\\s|\\r|\\n)+", "i"}, "g", "");
-    if (mtx::regex::match(hex_content, mtx::regex::jp::Regex{"[^0-9a-f]", "i"}))
+    auto hex_content = to_utf8(Q(content).replace(QRegularExpression{"(0x|\\s|\\r|\\n)+", QRegularExpression::CaseInsensitiveOption}, {}));
+    if (Q(hex_content).contains(QRegularExpression{"[^0-9a-f]", QRegularExpression::CaseInsensitiveOption}))
       throw malformed_data_x{ ctx.name, ctx.node.offset_debug(), Y("Non-hex digits encountered.") };
 
     if ((hex_content.size() % 2) == 1)

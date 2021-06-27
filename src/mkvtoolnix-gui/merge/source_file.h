@@ -43,6 +43,8 @@ public:
   std::optional<mtx::bluray::disc_library::info_t> m_discLibraryInfoToAdd;
   bool m_discLibraryInfoSelected{};
 
+  int m_colorIndex{};
+
 public:
   explicit SourceFile(QString const &fileName = QString{""});
   SourceFile(SourceFile const &other) = default;

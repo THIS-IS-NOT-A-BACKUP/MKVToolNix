@@ -28,6 +28,8 @@ protected:
   TrackModel *m_tracksModel;
   AttachedFileModel *m_attachedFilesModel;
   bool m_nonAppendedSelected, m_appendedSelected, m_additionalPartSelected;
+  QVector<int> m_availableColorIndexes;
+  int m_nextColorIndex{};
 
 public:
   SourceFileModel(QObject *parent);
@@ -59,12 +61,16 @@ public:
 public Q_SLOTS:
   void updateSelectionStatus();
   void updateSourceFileLists();
+  void updateFileColors();
 
 protected:
   virtual void addFilesAndTracks(QVector<SourceFilePtr> const &files);
   virtual QModelIndex addFileAtAppropriatePlace(SourceFilePtr const &file, bool sortByType);
   virtual QModelIndex addFileSortedByType(SourceFilePtr const &file);
   virtual void appendFilesAndTracks(QVector<SourceFilePtr> const &files, QModelIndex const &fileToAddToIdx);
+
+  void assignColorIndex(SourceFile &file);
+  void initializeColorIndexes();
 
   void setItemsFromSourceFile(QList<QStandardItem *> const &items, SourceFile *sourceFile) const;
   QList<QStandardItem *> createRow(SourceFile *sourceFile) const;

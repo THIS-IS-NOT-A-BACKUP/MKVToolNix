@@ -41,6 +41,8 @@ public:
   int64_t m_size{};
   QString m_attachmentDescription;
 
+  int m_colorIndex{};
+
 public:
   explicit Track(SourceFile *file = nullptr, TrackType = TrackType::Audio);
   virtual ~Track();

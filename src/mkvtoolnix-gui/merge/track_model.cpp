@@ -16,6 +16,14 @@ namespace mtx::gui::Merge {
 
 namespace {
 
+QIcon
+createSourceIndicatorIcon(Track &track) {
+  QPixmap pixmap{8, 12};
+  pixmap.fill(Util::Settings::get().nthFileColor(track.m_colorIndex));
+
+  return pixmap;
+}
+
 int
 insertPriorityForTrack(Track const &track) {
   return track.isVideo()     ? 0
@@ -45,9 +53,10 @@ TrackModel::TrackModel(QObject *parent)
   , m_selectedTrackType{}
   , m_debug{"track_model"}
 {
-  connect(this, &TrackModel::rowsInserted, this, &TrackModel::updateTrackLists);
-  connect(this, &TrackModel::rowsRemoved,  this, &TrackModel::updateTrackLists);
-  connect(this, &TrackModel::rowsMoved,    this, &TrackModel::updateTrackLists);
+  connect(this,              &TrackModel::rowsInserted,       this, &TrackModel::updateTrackLists);
+  connect(this,              &TrackModel::rowsRemoved,        this, &TrackModel::updateTrackLists);
+  connect(this,              &TrackModel::rowsMoved,          this, &TrackModel::updateTrackLists);
+  connect(MainWindow::get(), &MainWindow::preferencesChanged, this, &TrackModel::updateTrackColors);
 }
 
 TrackModel::~TrackModel() {
@@ -133,7 +142,6 @@ TrackModel::setItemsFromTrack(QList<QStandardItem *> items,
   items[ProgramColumn]         ->setText(programInfoFor(*track));
   items[DelayColumn]           ->setText(track->m_delay);
 
-  items[CodecColumn]->setData(QVariant::fromValue(reinterpret_cast<qulonglong>(track)), Util::TrackRole);
   items[CodecColumn]->setCheckable(true);
   items[CodecColumn]->setCheckState(track->m_muxThis ? Qt::Checked : Qt::Unchecked);
 
@@ -151,6 +159,9 @@ TrackModel::setItemsFromTrack(QList<QStandardItem *> items,
 
   items[IDColumn]   ->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
   items[DelayColumn]->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+
+  items[0]->setIcon(createSourceIndicatorIcon(*track));
+  items[0]->setData(QVariant::fromValue(reinterpret_cast<qulonglong>(track)), Util::TrackRole);
 
   Util::setItemForegroundColorDisabled(items, !track->m_muxThis);
 }
@@ -710,6 +721,17 @@ TrackModel::programInfoFor(Track const &track) {
     return track.m_file->m_programMap[programNumber].m_serviceName;
 
   return QString::number(programNumber);
+}
+
+void
+TrackModel::updateTrackColors() {
+  Util::walkTree(*this, {}, [this](auto const &idx) {
+    auto item  = itemFromIndex(idx);
+    auto track = fromIndex(idx);
+
+    if (item && track)
+      item->setIcon(createSourceIndicatorIcon(*track));
+  });
 }
 
 }

@@ -1,5 +1,6 @@
 #include "common/common_pch.h"
 
+#include <QColor>
 #include <QDebug>
 #include <QRegularExpression>
 #include <QScreen>
@@ -14,7 +15,8 @@
 #include "common/iso3166.h"
 #include "common/path.h"
 #include "common/qt.h"
-#include "common/regex.h"
+#include "common/random.h"
+#include "common/sorting.h"
 #include "common/version.h"
 #include "mkvtoolnix-gui/app.h"
 #include "mkvtoolnix-gui/jobs/program_runner.h"
@@ -436,6 +438,7 @@ Settings::load() {
   loadDerivingTrackLanguagesSettings(reg);
   loadSplitterSizes(reg);
   loadDefaultInfoJobSettings(reg);
+  loadFileColors(reg);
   loadRunProgramConfigurations(reg);
   addDefaultRunProgramConfigurations(reg);
   setDefaults(enableMuxingTracksByTheseTypes);
@@ -590,6 +593,27 @@ Settings::loadRunProgramConfigurations(QSettings &reg) {
   }
 
   reg.endGroup();               // runProgramConfigurations
+}
+
+void
+Settings::loadFileColors(QSettings &reg) {
+  reg.beginGroup(s_grpSettings);
+  reg.beginGroup(s_grpFileColors);
+
+  auto childKeys = reg.childKeys();
+  mtx::sort::naturally(childKeys.begin(), childKeys.end());
+
+  m_mergeFileColors.clear();
+  m_mergeFileColors.reserve(childKeys.size());
+
+  for (auto const &key : childKeys)
+    m_mergeFileColors << reg.value(key).value<QColor>();
+
+  reg.endGroup();               // fileColors
+  reg.endGroup();               // settings
+
+  if (m_mergeFileColors.isEmpty())
+    m_mergeFileColors = defaultFileColors();
 }
 
 void
@@ -792,6 +816,7 @@ Settings::save()
   saveDerivingTrackLanguagesSettings(reg);
   saveSplitterSizes(reg);
   saveDefaultInfoJobSettings(reg);
+  saveFileColors(reg);
   saveRunProgramConfigurations(reg);
 }
 
@@ -886,6 +911,22 @@ Settings::saveRunProgramConfigurations(QSettings &reg)
   }
 
   reg.endGroup();               // runProgramConfigurations
+}
+
+void
+Settings::saveFileColors(QSettings &reg)
+  const {
+  reg.beginGroup(s_grpSettings);
+  reg.remove(s_grpFileColors);
+
+  reg.beginGroup(s_grpFileColors);
+
+  auto idx = 0;
+  for (auto const &color : m_mergeFileColors)
+    reg.setValue(Q("color%1").arg(idx++), color);
+
+  reg.endGroup();               // fileColors
+  reg.endGroup();               // settings
 }
 
 QString
@@ -1003,7 +1044,7 @@ Settings::localeToUse(QString const &requestedLocale)
     locale = "";
 
   if (locale.empty()) {
-    locale = mtx::regex::replace(translation_c::get_default_ui_locale(), mtx::regex::jp::Regex{"\\..*"}, "", "");
+    locale = to_utf8(Q(translation_c::get_default_ui_locale()).replace(QRegularExpression{"\\..*"}, {}));
     if (-1 == translation_c::look_up_translation(locale))
       locale = "";
   }
@@ -1064,6 +1105,46 @@ Settings::determineMediaInfoExePath() {
 QString
 Settings::defaultBoundaryCharsForDerivingLanguageFromFileName() {
   return Q("[](){}.+=#");
+}
+
+QVector<QColor>
+Settings::defaultFileColors() {
+  QVector<QColor> colors;
+
+  auto step = 64;
+
+  colors.clear();
+  colors.reserve(6 * (256 / step));
+
+  for (int value = 255; value > 0; value -= step) {
+    colors << QColor{0,     value, 0};
+    colors << QColor{0,     0,     value};
+    colors << QColor{value, 0,     0};
+    colors << QColor{value, value, 0};
+    colors << QColor{value, 0,     value};
+    colors << QColor{0,     value, value};
+  }
+
+  return colors;
+}
+
+QColor
+Settings::nthFileColor(int idx)
+  const {
+  static QVector<QColor> s_additionalColors;
+
+  if (idx < 0)
+    return {};
+
+  if (idx < m_mergeFileColors.size())
+    return m_mergeFileColors.at(idx);
+
+  idx -= m_mergeFileColors.size();
+
+  while (idx >= s_additionalColors.size())
+    s_additionalColors << QColor{random_c::generate_8bits(), random_c::generate_8bits(), random_c::generate_8bits()};
+
+  return s_additionalColors.at(idx);
 }
 
 }
