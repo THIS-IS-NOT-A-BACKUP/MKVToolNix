@@ -22,7 +22,7 @@
 #include "merge/input_x.h"
 #include "merge/output_control.h"
 
-static int64_rational_c s_probe_range_percentage{3, 10}; // 0.3%
+static mtx_mp_rational_t s_probe_range_percentage{3, 10}; // 0.3%
 
 // ----------------------------------------------------------------------
 
@@ -427,7 +427,7 @@ generic_reader_c::get_underlying_input(mm_io_c *actual_in)
 }
 
 void
-generic_reader_c::set_probe_range_percentage(int64_rational_c const &probe_range_percentage) {
+generic_reader_c::set_probe_range_percentage(mtx_mp_rational_t const &probe_range_percentage) {
   s_probe_range_percentage = probe_range_percentage;
 }
 
@@ -437,13 +437,13 @@ generic_reader_c::calculate_probe_range(int64_t file_size,
   const {
   static debugging_option_c s_debug{"probe_range"};
 
-  auto factor      = int64_rational_c{1, 100} * s_probe_range_percentage;
-  auto probe_range = boost::rational_cast<int64_t>(factor * file_size);
+  auto factor      = mtx_mp_rational_t{1, 100} * s_probe_range_percentage;
+  auto probe_range = static_cast<int64_t>(factor * file_size);
   auto to_use      = std::max(fixed_minimum, probe_range);
 
   mxdebug_if(s_debug,
              fmt::format("calculate_probe_range: calculated {0} based on file size {1} fixed minimum {2} percentage {3}/{4} percentage of size {5}\n",
-                         to_use, file_size, fixed_minimum, s_probe_range_percentage.numerator(), s_probe_range_percentage.denominator(), probe_range));
+                         to_use, file_size, fixed_minimum, boost::multiprecision::numerator(s_probe_range_percentage), boost::multiprecision::denominator(s_probe_range_percentage), probe_range));
 
   return to_use;
 }

@@ -91,7 +91,7 @@ public:
   parser_c();
   ~parser_c();
 
-  void set_default_duration(boost::rational<uint64_t> default_duration);
+  void set_default_duration(mtx_mp_rational_t default_duration);
   void set_parse_sequence_header_obus_only(bool parse_sequence_header_obus_only);
 
   void parse(unsigned char const *buffer, uint64_t buffer_size);
@@ -108,7 +108,7 @@ public:
   void debug_obu_types(memory_c const &buffer);
 
   std::pair<unsigned int, unsigned int> get_pixel_dimensions() const;
-  int64_rational_c get_frame_duration() const;
+  mtx_mp_rational_t get_frame_duration() const;
   bool headers_parsed() const;
   memory_cptr get_av1c() const;
 

@@ -122,7 +122,7 @@ generic_packetizer_c::generic_packetizer_c(generic_reader_c *reader,
   else if (mtx::includes(m_ti.m_timestamp_syncs, -1))
     m_ti.m_tcsync = m_ti.m_timestamp_syncs[-1];
   if (0 == m_ti.m_tcsync.factor)
-    m_ti.m_tcsync.factor = int64_rational_c{1, 1};
+    m_ti.m_tcsync.factor = mtx_mp_rational_t{1, 1};
 
   // Let's see if the user specified "reset timestamps" for this track.
   m_ti.m_reset_timestamps = mtx::includes(m_ti.m_reset_timestamps_specs, m_ti.m_id) || mtx::includes(m_ti.m_reset_timestamps_specs, -1);
@@ -465,7 +465,7 @@ generic_packetizer_c::set_track_default_duration(int64_t def_dur,
   if (!force && m_default_duration_forced)
     return;
 
-  m_htrack_default_duration = boost::rational_cast<int64_t>(m_ti.m_tcsync.factor * def_dur);
+  m_htrack_default_duration = static_cast<int64_t>(m_ti.m_tcsync.factor * def_dur);
 
   if (m_track_entry) {
     if (m_htrack_default_duration)
@@ -1420,7 +1420,7 @@ generic_packetizer_c::add_packet(packet_cptr pack) {
 void
 generic_packetizer_c::add_packet2(packet_cptr pack) {
   auto adjust_timestamp = [this](int64_t x) {
-    return boost::rational_cast<int64_t>(m_ti.m_tcsync.factor * (x + m_correction_timestamp_offset + m_append_timestamp_offset)) + m_ti.m_tcsync.displacement;
+    return static_cast<int64_t>(m_ti.m_tcsync.factor * (x + m_correction_timestamp_offset + m_append_timestamp_offset)) + m_ti.m_tcsync.displacement;
   };
 
   pack->timestamp = adjust_timestamp(pack->timestamp);
@@ -1429,7 +1429,7 @@ generic_packetizer_c::add_packet2(packet_cptr pack) {
   if (pack->has_fref())
     pack->fref = adjust_timestamp(pack->fref);
   if (pack->has_duration()) {
-    pack->duration = boost::rational_cast<int64_t>(m_ti.m_tcsync.factor * pack->duration);
+    pack->duration = static_cast<int64_t>(m_ti.m_tcsync.factor * pack->duration);
     if (pack->has_discard_padding())
       pack->duration -= std::min(pack->duration, pack->discard_padding.to_ns());
   }

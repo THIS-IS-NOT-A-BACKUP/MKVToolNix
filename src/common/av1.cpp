@@ -43,7 +43,7 @@ class parser_private_c {
   frame_t current_frame;
   std::deque<frame_t> frames;
   uint64_t frame_number{}, num_units_in_display_tick{}, time_scale{}, num_ticks_per_picture{};
-  boost::rational<uint64_t> forced_default_duration, bitstream_default_duration{1'000'000'000ull, 25};
+  mtx_mp_rational_t forced_default_duration, bitstream_default_duration = mtx::rational(1'000'000'000ull, 25);
 
   memory_cptr sequence_header_obu;
   std::vector<memory_cptr> metadata_obus;
@@ -79,7 +79,7 @@ parser_c::get_obu_type_name(unsigned int obu_type) {
 }
 
 void
-parser_c::set_default_duration(boost::rational<uint64_t> default_duration) {
+parser_c::set_default_duration(mtx_mp_rational_t default_duration) {
   p->forced_default_duration = default_duration;
 }
 
@@ -90,9 +90,9 @@ parser_c::set_parse_sequence_header_obus_only(bool parse_sequence_header_obus_on
 
 uint64_t
 parser_c::get_next_timestamp() {
-  auto &duration = p->forced_default_duration ? p->forced_default_duration : p->bitstream_default_duration;
+  auto duration = p->forced_default_duration ? p->forced_default_duration : p->bitstream_default_duration;
 
-  return boost::rational_cast<int64_t>(duration * p->frame_number++);
+  return static_cast<int64_t>(duration * p->frame_number++);
 }
 
 uint64_t
@@ -234,7 +234,7 @@ parser_c::parse_timing_info(mtx::bits::reader_c &r) {
     p->num_ticks_per_picture = 1;
 
   if (p->num_units_in_display_tick && p->time_scale && p->num_ticks_per_picture)
-    p->bitstream_default_duration.assign(1'000'000'000ull * p->num_units_in_display_tick * p->num_ticks_per_picture, p->time_scale);
+    p->bitstream_default_duration = mtx::rational(1'000'000'000ull * p->num_units_in_display_tick * p->num_ticks_per_picture, p->time_scale);
 
   mxdebug_if(p->debug_timing_info,
              fmt::format("parse_timing_info: num_units_in_display_tick {0} time_scale {1} equal_picture_interval {2} num_ticks_per_picture {3} bitstream_default_duration {4}\n",
@@ -242,7 +242,7 @@ parser_c::parse_timing_info(mtx::bits::reader_c &r) {
                          p->time_scale,
                          p->equal_picture_interval,
                          p->num_ticks_per_picture,
-                         mtx::string::format_timestamp(boost::rational_cast<uint64_t>(p->bitstream_default_duration))));
+                         mtx::string::format_timestamp(static_cast<uint64_t>(p->bitstream_default_duration))));
 }
 
 void
@@ -500,13 +500,13 @@ parser_c::get_pixel_dimensions()
   return { p->max_frame_width, p->max_frame_height };
 }
 
-int64_rational_c
+mtx_mp_rational_t
 parser_c::get_frame_duration()
   const {
   if (!p->sequence_header_obu || !p->time_scale)
     return {};
 
-  return { static_cast<int64_t>(p->num_units_in_display_tick) * 1'000'000'000ll, static_cast<int64_t>(p->time_scale) };
+  return mtx::rational(static_cast<int64_t>(p->num_units_in_display_tick) * 1'000'000'000ll, p->time_scale);
 }
 
 bool

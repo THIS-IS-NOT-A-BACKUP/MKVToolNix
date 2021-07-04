@@ -48,20 +48,20 @@ int_to_double(int64_t value) {
   return std::ldexp(((value & ((1ll << 52) - 1)) + (1ll << 52)) * (value >> 63 | 1), (value >> 52 & 0x7ff) - 1075);
 }
 
-int64_rational_c
-clamp_values_to(int64_rational_c const &r,
+mtx_mp_rational_t
+clamp_values_to(mtx_mp_rational_t const &r,
                 int64_t max_value) {
-  auto num = r.numerator();
-  auto den = r.denominator();
+  auto num = boost::multiprecision::numerator(r);
+  auto den = boost::multiprecision::denominator(r);
 
   if (!num || !den || ((num <= max_value) && (den <= max_value)))
     return r;
 
   // 333 / 1000 , clamp = 500, mul = 1/2 = 1/(max/clamp) = clamp/max
 
-  auto mult = int64_rational_c{ max_value, std::max(num, den) };
-  den       = boost::rational_cast<int64_t>(den * mult);
+  auto mult = mtx::rational(max_value, std::max(num, den));
+  den       = static_cast<int64_t>(den * mult);
 
-  return { boost::rational_cast<int64_t>(num * mult), den ? den : 1 };
+  return mtx::rational(static_cast<int64_t>(num * mult), den ? den : 1);
 }
 }

@@ -86,6 +86,8 @@
 * The bundled `fmt` library was updated to v8.0.0.
 * The `PCRE2` & `JPCRE2` libraries are not used anymore. The bundled version
   of `JPCRE2` was removed.
+* The `gmp` library is now required.
+* Boost's "rational" library is not used anymore.
 
 
 # Version 58.0.0 "Supper's Ready" 2021-06-13
