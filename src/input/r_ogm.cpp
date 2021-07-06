@@ -1392,15 +1392,15 @@ ogm_v_mscomp_demuxer_c::create_packetizer() {
 
   m_ti.m_private_data = memory_c::clone(&bih, sizeof(alBITMAPINFOHEADER));
 
-  double fps          = (double)10000000.0 / get_uint64_le(&sth->time_unit);
-  int width           = get_uint32_le(&sth->sh.video.width);
-  int height          = get_uint32_le(&sth->sh.video.height);
+  auto default_duration = get_uint64_le(&sth->time_unit) * 100;
+  int width             = get_uint32_le(&sth->sh.video.width);
+  int height            = get_uint32_le(&sth->sh.video.height);
 
   generic_packetizer_c *ptzr_obj;
   if (mtx::mpeg4_p2::is_fourcc(sth->subtype))
-    ptzr_obj = new mpeg4_p2_video_packetizer_c(reader, m_ti, fps, width, height, false);
+    ptzr_obj = new mpeg4_p2_video_packetizer_c(reader, m_ti, default_duration, width, height, false);
   else
-    ptzr_obj = new video_for_windows_packetizer_c(reader, m_ti, fps, width, height);
+    ptzr_obj = new video_for_windows_packetizer_c(reader, m_ti, default_duration, width, height);
 
   reader->show_packetizer_info(m_ti.m_id, *ptzr_obj);
 
@@ -1487,8 +1487,8 @@ generic_packetizer_c *
 ogm_v_theora_demuxer_c::create_packetizer() {
   m_ti.m_private_data            = lace_memory_xiph(packet_data);
 
-  double                fps      = (double)theora.frn / (double)theora.frd;
-  generic_packetizer_c *ptzr_obj = new theora_video_packetizer_c(reader, m_ti, fps, theora.fmbw, theora.fmbh);
+  auto frame_rate = mtx::rational(theora.frn, theora.frd);
+  auto ptzr_obj   = new theora_video_packetizer_c(reader, m_ti, mtx::to_int(1'000'000'000 / frame_rate), theora.fmbw, theora.fmbh);
 
   reader->show_packetizer_info(m_ti.m_id, *ptzr_obj);
 
@@ -1555,12 +1555,12 @@ ogm_v_vp8_demuxer_c::initialize() {
   unsigned int par_den = get_uint16_be(&vp8_header.par_den);
 
   if ((0 != par_num) && (0 != par_den)) {
-    if ((static_cast<double>(pixel_width) / static_cast<double>(pixel_height)) < (static_cast<double>(par_num) / static_cast<double>(par_den))) {
-      display_width  = std::llround(static_cast<double>(pixel_width) * par_num / par_den);
+    if (mtx::rational(pixel_width, pixel_height) < mtx::rational(par_num, par_den)) {
+      display_width  = mtx::to_int_rounded(mtx::rational(pixel_width * par_num, par_den));
       display_height = pixel_height;
     } else {
       display_width  = pixel_width;
-      display_height = std::llround(static_cast<double>(pixel_height) * par_den / par_num);
+      display_height = mtx::to_int_rounded(mtx::rational(pixel_height * par_den, par_num));
     }
 
   } else {
@@ -1570,7 +1570,7 @@ ogm_v_vp8_demuxer_c::initialize() {
 
   frame_rate_num   = static_cast<uint64_t>(get_uint32_be(&vp8_header.frame_rate_num));
   frame_rate_den   = static_cast<uint64_t>(get_uint32_be(&vp8_header.frame_rate_den));
-  default_duration = frame_rate_den * 1000000000ull / frame_rate_num;
+  default_duration = mtx::to_int(mtx::rational(frame_rate_den, frame_rate_num) * 1'000'000'000);
 }
 
 generic_packetizer_c *

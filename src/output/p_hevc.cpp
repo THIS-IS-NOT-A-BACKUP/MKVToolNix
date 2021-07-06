@@ -33,10 +33,10 @@ public:
 hevc_video_packetizer_c::
 hevc_video_packetizer_c(generic_reader_c *p_reader,
                         track_info_c &p_ti,
-                        double fps,
+                        int64_t default_duration,
                         int width,
                         int height)
-  : generic_video_packetizer_c{p_reader, p_ti, MKV_V_MPEGH_HEVC, fps, width, height}
+  : generic_video_packetizer_c{p_reader, p_ti, MKV_V_MPEGH_HEVC, default_duration, width, height}
   , p_ptr{new hevc_video_packetizer_private_c}
 {
   auto &p = *p_func();
@@ -62,7 +62,7 @@ hevc_video_packetizer_c::setup_default_duration() {
   auto &p                      = *p_func();
 
   auto source_default_duration = m_htrack_default_duration > 0 ? m_htrack_default_duration
-                               : m_fps                     > 0 ? static_cast<int64_t>(1'000'000'000 / m_fps)
+                               : m_default_duration        > 0 ? m_default_duration
                                :                                 0;
   auto stream_default_duration = p.parser->has_stream_default_duration() ? p.parser->get_stream_default_duration() : 0;
   auto diff_source_stream      = std::abs(stream_default_duration - source_default_duration);
@@ -99,10 +99,10 @@ hevc_video_packetizer_c::extract_aspect_ratio() {
   if (!result.is_valid() || display_dimensions_or_aspect_ratio_set())
     return;
 
-  auto par = static_cast<double>(result.numerator) / static_cast<double>(result.denominator);
+  auto par = mtx::rational(result.numerator, result.denominator);
 
-  set_video_display_dimensions(1 <= par ? std::llround(m_width * par) : m_width,
-                               1 <= par ? m_height                    : std::llround(m_height / par),
+  set_video_display_dimensions(1 <= par ? mtx::to_int_rounded(m_width * par) : m_width,
+                               1 <= par ? m_height                           : mtx::to_int_rounded(m_height / par),
                                generic_packetizer_c::ddu_pixels,
                                OPTION_SOURCE_BITSTREAM);
 

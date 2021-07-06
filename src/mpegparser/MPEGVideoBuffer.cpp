@@ -26,7 +26,6 @@
 #include <cstring>
 
 MPEG2SequenceHeader::MPEG2SequenceHeader() {
-  memset(this, 0, sizeof(*this));
 }
 
 MPEG2GOPHeader::MPEG2GOPHeader() {
@@ -136,47 +135,47 @@ void ParseSequenceHeader(MPEGChunk* chunk, MPEG2SequenceHeader & hdr){
   pos+=2;
   switch(pos[0] & 0xF0){
     case 0x10:
-      hdr.aspectRatio = 1.0;
+      hdr.aspectRatio = 1;
       break;
     case 0x20:
-      hdr.aspectRatio = (4.0 / 3.0);
+      hdr.aspectRatio = mtx::rational(4, 3);
       break;
     case 0x30:
-      hdr.aspectRatio = (16.0 / 9.0);
+      hdr.aspectRatio = mtx::rational(16, 9);
       break;
     case 0x40:
-      hdr.aspectRatio = 2.21;
+      hdr.aspectRatio = mtx::rational(221, 100);
       break;
     default:
-      hdr.aspectRatio = -1.0;
+      hdr.aspectRatio = 1;
   }
   switch(pos[0] & 0x0F){
     case 0x01:
-      hdr.frameRate = 24000.0/1001.0;//23.976
+      hdr.frameRate = mtx::rational(24000, 1001); // 23.976
       break;
     case 0x02:
-      hdr.frameRate = 24.0;//24
+      hdr.frameRate = 24;       // 24
       break;
     case 0x03:
-      hdr.frameRate = 25.0;//25
+      hdr.frameRate = 25;       // 25
       break;
     case 0x04:
-      hdr.frameRate = 30000.0/1001.0;//29.97
+      hdr.frameRate = mtx::rational(30000, 1001); // 29.97
       break;
     case 0x05:
-      hdr.frameRate = 30.0;//30
+      hdr.frameRate = 30;       // 30
       break;
     case 0x06:
-      hdr.frameRate = 50.0;//50
+      hdr.frameRate = 50;       // 50
       break;
     case 0x07:
-      hdr.frameRate = 60000.0 / 1001.0;//59.94
+      hdr.frameRate = mtx::rational(60000, 1001); // 59.94
       break;
     case 0x08:
-      hdr.frameRate = 60.0;//60
+      hdr.frameRate = 60;       // 60
       break;
     default:
-      hdr.frameRate = 0.0;
+      hdr.frameRate = 0;
   }
 
   //Seek to extension

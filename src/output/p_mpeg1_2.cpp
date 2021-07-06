@@ -26,13 +26,13 @@ mpeg1_2_video_packetizer_c::
 mpeg1_2_video_packetizer_c(generic_reader_c *p_reader,
                            track_info_c &p_ti,
                            int version,
-                           double fps,
+                           int64_t default_duration,
                            int width,
                            int height,
                            int dwidth,
                            int dheight,
                            bool framed)
-  : generic_video_packetizer_c{p_reader, p_ti, "V_MPEG1", fps, width, height}
+  : generic_video_packetizer_c{p_reader, p_ti, "V_MPEG1", default_duration, width, height}
   , m_framed{framed}
   , m_aspect_ratio_extracted{true}
   , m_num_removed_stuffing_bytes{}
@@ -182,7 +182,7 @@ mpeg1_2_video_packetizer_c::remove_stuffing_bytes_and_handle_sequence_headers(pa
 
 int
 mpeg1_2_video_packetizer_c::process(packet_cptr packet) {
-  if (0.0 > m_fps)
+  if (0 >= m_default_duration)
     extract_fps(packet->data->get_buffer(), packet->data->get_size());
 
   if (!m_aspect_ratio_extracted)
@@ -258,26 +258,28 @@ mpeg1_2_video_packetizer_c::extract_fps(const unsigned char *buffer,
   if (0 > idx)
     return;
 
-  m_fps = mtx::mpeg1_2::get_fps(idx);
-  if (0 < m_fps) {
-    set_track_default_duration((int64_t)(1000000000.0 / m_fps));
+  auto fps = mtx::mpeg1_2::get_fps(idx);
+  if (0 < fps) {
+    m_default_duration = static_cast<int64_t>(1'000'000'000.0 / fps);
+    set_track_default_duration(m_default_duration);
     rerender_track_headers();
+
   } else
-    m_fps = 0.0;
+    m_default_duration = 0;
 }
 
 void
 mpeg1_2_video_packetizer_c::extract_aspect_ratio(const unsigned char *buffer,
                                                  int size) {
-  double ar;
-
   if (display_dimensions_or_aspect_ratio_set())
     return;
 
-  if (!mtx::mpeg1_2::extract_ar(buffer, size, ar))
+  auto aspect_ratio = mtx::mpeg1_2::extract_aspect_ratio(buffer, size);
+
+  if (!aspect_ratio)
     return;
 
-  set_video_display_dimensions((0 >= ar) || (1 == ar) ? m_width : (int)(m_height * ar), m_height, generic_packetizer_c::ddu_pixels, OPTION_SOURCE_BITSTREAM);
+  set_video_display_dimensions(1 == *aspect_ratio ? m_width : mtx::to_int(m_height * *aspect_ratio), m_height, generic_packetizer_c::ddu_pixels, OPTION_SOURCE_BITSTREAM);
 
   rerender_track_headers();
   m_aspect_ratio_extracted = true;

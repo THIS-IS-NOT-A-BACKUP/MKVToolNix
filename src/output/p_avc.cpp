@@ -28,10 +28,10 @@
 avc_video_packetizer_c::
 avc_video_packetizer_c(generic_reader_c *p_reader,
                        track_info_c &p_ti,
-                       double fps,
+                       int64_t default_duration,
                        int width,
                        int height)
-  : generic_video_packetizer_c{p_reader, p_ti, MKV_V_MPEG4_AVC, fps, width, height}
+  : generic_video_packetizer_c{p_reader, p_ti, MKV_V_MPEG4_AVC, default_duration, width, height}
   , m_debug_fix_bistream_timing_info{"fix_bitstream_timing_info"}
 {
   m_relaxed_timestamp_checking = true;
@@ -61,17 +61,17 @@ avc_video_packetizer_c::set_headers() {
   if ((-1 == m_track_default_duration) && m_timestamp_factory)
     m_track_default_duration = m_timestamp_factory->get_default_duration(-1);
 
-  if ((-1 == m_track_default_duration) && (0.0 < m_fps))
-    m_track_default_duration = static_cast<int64_t>(1000000000.0 / m_fps);
+  if ((-1 == m_track_default_duration) && (0 < m_default_duration))
+    m_track_default_duration = m_default_duration;
 
   if (-1 != m_track_default_duration)
     m_track_default_duration /= divisor;
 
   mxdebug_if(m_debug_fix_bistream_timing_info,
-             fmt::format("fix_bitstream_timing_info [AVCC]: factory default_duration {0} default_duration_forced? {1} htrack_default_duration {2} fps {3} m_track_default_duration {4}\n",
+             fmt::format("fix_bitstream_timing_info [AVCC]: factory default_duration {0} default_duration_forced? {1} htrack_default_duration {2} default_duration {3} m_track_default_duration {4}\n",
                          m_timestamp_factory ? m_timestamp_factory->get_default_duration(-1) : -2,
                          m_default_duration_forced, m_htrack_default_duration,
-                         m_fps, m_track_default_duration));
+                         m_default_duration, m_track_default_duration));
 
   if (   m_ti.m_private_data
       && m_ti.m_private_data->get_size()
@@ -91,10 +91,10 @@ avc_video_packetizer_c::extract_aspect_ratio() {
   if (!result.is_valid() || display_dimensions_or_aspect_ratio_set())
     return;
 
-  auto par = static_cast<double>(result.numerator) / static_cast<double>(result.denominator);
+  auto par = mtx::rational(result.numerator, result.denominator);
 
-  set_video_display_dimensions(1 <= par ? std::llround(m_width * par) : m_width,
-                               1 <= par ? m_height                    : std::llround(m_height / par),
+  set_video_display_dimensions(1 <= par ? mtx::to_int_rounded(m_width * par) : m_width,
+                               1 <= par ? m_height                           : mtx::to_int_rounded(m_height / par),
                                generic_packetizer_c::ddu_pixels,
                                OPTION_SOURCE_BITSTREAM);
 
