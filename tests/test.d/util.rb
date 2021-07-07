@@ -41,14 +41,33 @@ class String
   end
 end
 
-# install md5 handler
-case RUBY_PLATFORM
-when /darwin/
-  def md5 name
-    `/sbin/md5 #{name}`.chomp.gsub(/.*=\s*/, "")
+def md5 name
+  case
+  when $is_macos   then `/sbin/md5 #{name}`.chomp.gsub(/.*=\s*/, "")
+  else             `md5sum #{name}`.chomp.gsub(/\s+.*/, "")
   end
-else
-  def md5 name
-    `md5sum #{name}`.chomp.gsub(/\s+.*/, "")
-  end
+end
+
+def run_bash command
+  return system command if !$is_windows
+
+  cmd_file = Tempfile.new
+  cmd_file.write command
+  cmd_file.close
+
+  FileUtils.chmod 0700, cmd_file.path
+
+  system "bash -c #{cmd_file.path}"
+end
+
+def capture_bash command
+  return `#{command}` if !$is_windows
+
+  cmd_file = Tempfile.new
+  cmd_file.write command
+  cmd_file.close
+
+  FileUtils.chmod 0700, cmd_file.path
+
+  `bash -c #{cmd_file.path}`
 end

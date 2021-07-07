@@ -67,7 +67,7 @@ class SimpleTest
   end
 
   def tmp_name_prefix
-    [ "/tmp/mkvtoolnix-auto-test-#{self.class.name}", $$.to_s, Thread.current[:number] ].join("-") + "-"
+    [ "#{$temp_dir}/mkvtoolnix-auto-test-#{self.class.name}", $$.to_s, Thread.current[:number] ].join("-") + "-"
   end
 
   def tmp_name
@@ -104,8 +104,8 @@ class SimpleTest
   def unlink_tmp_files
     return if ENV["KEEP_TMPFILES"] == "1"
     re = %r{^#{self.tmp_name_prefix}}
-    Dir.entries("/tmp").each do |entry|
-      file = "/tmp/#{entry}"
+    Dir.entries($temp_dir).each do |entry|
+      file = "#{$temp_dir}/#{entry}"
       File.unlink(file) if re.match(file) and File.exists?(file)
     end
   end
@@ -129,6 +129,7 @@ class SimpleTest
     options[:no_variable_data]   = true unless options.key?(:no_variable_data)
     @blocks[:tests] << {
       :name  => full_command_line,
+      :skip  => options[:skip_if],
       :block => lambda {
         output       = options[:output] || tmp
         _, exit_code = *merge(full_command_line, :exit_code => options[:exit_code], :output => output, :no_variable_data => options[:no_variable_data])
@@ -150,15 +151,20 @@ class SimpleTest
     options[:name]    ||= full_command_line
     @blocks[:tests] << {
       :name  => full_command_line,
+      :skip  => options[:skip_if],
       :block => lambda {
         sys "../src/mkvmerge #{full_command_line} --engage no_variable_data > #{tmp}", :exit_code => options[:exit_code]
 
-        text = IO.readlines(tmp).reject { |line| %r{^\s*"identification_format_version":\s*\d+}.match(line) }.join('')
-        File.open(tmp, 'w') { |tmp_file| tmp_file.puts text }
+        text = IO.readlines(tmp).
+          reject { |line| %r{^\s*"identification_format_version":\s*\d+}.match(line) }.
+          map    { |line| line.gsub(%r{\r}, '') }.
+          join('')
+
+        IO.write(tmp, text, mode: 'wb')
 
         if options[:filter]
-          text = options[:filter].call(IO.readlines(tmp).join(''))
-          File.open(tmp, 'w') { |tmp_file| tmp_file.puts text }
+          text = options[:filter].call(IO.readlines(tmp).map { |line| line.gsub(%r{\r}, '') }.join(''))
+          IO.write(tmp, text, mode: 'wb')
         end
         options[:keep_tmp] ? hash_file(tmp) : hash_tmp
       },
@@ -171,6 +177,7 @@ class SimpleTest
     options[:name]    ||= full_command_line
     @blocks[:tests] << {
       :name  => full_command_line,
+      :skip  => options[:skip_if],
       :block => lambda {
         output = options[:output] || tmp
         info full_command_line, :exit_code => options[:exit_code], :output => output
@@ -185,6 +192,7 @@ class SimpleTest
     options[:name]    ||= full_command_line
     @blocks[:tests] << {
       :name  => full_command_line,
+      :skip  => options[:skip_if],
       :block => lambda {
         json = identify_json full_command_line, :exit_code => 3
         (json["container"]["recognized"] == true) && (json["container"]["supported"] == false) ? :ok : :bad
@@ -193,6 +201,8 @@ class SimpleTest
   end
 
   def test_ui_locale locale, *args
+    skip_if $is_windows
+
     describe "mkvmerge / UI locale: #{locale}"
 
     @blocks[:tests] << {
@@ -219,13 +229,24 @@ class SimpleTest
     @description || fail("Class #{self.class.name} misses its description")
   end
 
-  def run_test
+  def run_test expected_results
     @blocks[:setup].each(&:call)
 
-    results = @blocks[:tests].collect do |test|
+    results = @blocks[:tests].each_with_index.map do |test, idx|
       result = nil
       begin
-        result = test[:block].call
+        if !test[:skip]
+          result = test[:block].call
+
+        elsif !expected_results || (expected_results.size <= idx)
+          show_message "Test case '#{self.class.name}', sub-test #{idx} '#{test[:name]}': attempting to skip but no expected result known"
+          result = :failed
+
+        else
+          result = expected_results[idx]
+          show_message "Test case '#{self.class.name}', sub-test #{idx} '#{test[:name]}': skipping & using result #{result}"
+        end
+
       rescue RuntimeError => ex
         show_message "Test case '#{self.class.name}', sub-test '#{test[:name]}': #{ex}"
         result = :failed
@@ -280,7 +301,7 @@ class SimpleTest
     output  = options[:output] || self.tmp
     output  = "> #{output}" unless %r{^[>\|]}.match(output)
     output  = '' if options[:output] == :return
-    command = "../src/mkvinfo --engage no_variable_data --ui-language en_US #{args.first} #{output}"
+    command = "../src/mkvinfo --engage no_variable_data --ui-language #{$ui_language_en_us} #{args.first} #{output}"
     self.sys command, :exit_code => options[:exit_code], :no_result => options[:no_result], :dont_record_command => options[:dont_record_command]
   end
 
@@ -324,7 +345,7 @@ class SimpleTest
     puts "COMMAND #{command}" if ENV['DEBUG']
 
     exit_code = 0
-    if !system(command)
+    if !run_bash command
       exit_code = $? >> 8
       self.error "system command failed: #{command} (#{exit_code})" if options[:exit_code] != exit_code
     end

@@ -1,5 +1,5 @@
 class Controller
-  attr_accessor :test_failed, :test_new, :test_date_after, :teset_date_before, :update_failed, :num_failed, :record_duration
+  attr_accessor :test_failed, :test_new, :test_date_after, :teset_date_before, :update_failed, :num_failed, :record_duration, :show_duration
   attr_reader   :num_threads, :results
 
   def initialize
@@ -11,6 +11,7 @@ class Controller
     @update_failed    = false
     @num_threads      = self.get_num_processors
     @record_duration  = false
+    @show_duration    = false
 
     @tests            = Array.new
     @exclusions       = Array.new
@@ -18,13 +19,11 @@ class Controller
   end
 
   def get_num_processors
-    case RUBY_PLATFORM
-    when /darwin/
-      np = `/usr/sbin/sysctl -n hw.availcpu`.to_i
-    else
-      np = IO.readlines("/proc/cpuinfo").collect { |line| /^processor\s+:\s+(\d+)/.match(line) ? $1.to_i : 0 }.max + 1
-    end
-    return np > 0 ? np : 1
+    np = case RUBY_PLATFORM
+         when $is_macos then `/usr/sbin/sysctl -n hw.availcpu`.to_i
+         else                `nproc`.to_i
+         end
+    [ np, 0 ].max + 1
   end
 
   def num_threads=(num)
@@ -124,20 +123,22 @@ class Controller
 
     show_message "Running '#{class_name}': #{current_test.description}"
 
+    expected_results = @results.exist?(class_name) ? @results.hash?(class_name).split(/-/) : nil
+
     start    = Time.now
-    result   = current_test.run_test
+    result   = current_test.run_test expected_results
     duration = Time.now - start
+
+    puts "Finished '#{class_name}' after #{sprintf('%0.3f', duration)}s" if self.show_duration
 
     if (result)
       if (!@results.exist? class_name)
         self.add_result class_name, :passed, :message => "  NEW test. Storing result '#{result}'.", :checksum => result, :duration => duration
 
       elsif (@results.hash?(class_name) != result)
-        msg =  "  #{class_name} FAILED: checksum is different. Commands:\n"
-
-        expected_results = @results.hash?(class_name).split(/-/)
-        actual_results   = result.split(/-/)
-        idx              = 0
+        msg            =  "  #{class_name} FAILED: checksum is different. Commands:\n"
+        actual_results = result.split(/-/)
+        idx            = 0
 
         current_test.commands.each do |command|
           command = { :command => command } unless command.is_a?(Hash)

@@ -21,10 +21,17 @@ rescue
 end
 
 def setup
-  ENV[ /darwin/i.match(RUBY_PLATFORM) ? 'LANG' : 'LC_ALL' ] = 'en_US.UTF-8'
-  ENV['PATH']                                               = "../src:" + ENV['PATH']
+  $is_windows                          = %r{win|mingw}i.match(RUBY_PLATFORM)
+  $is_macos                            = %r{darwin}i.match(RUBY_PLATFORM)
+  $is_linux                            = !$is_windows && !$is_macos
 
-  $config = read_build_config
+  $ui_language_en_us                   = $is_windows ? "English" : "en_US"
+
+  ENV[ $is_macos ? 'LANG' : 'LC_ALL' ] = 'en_US.UTF-8'
+  ENV['MTX_ALWAYS_USE_UNIX_NEWLINES']  = '1'
+  ENV['PATH']                          = "../src:" + ENV['PATH']
+
+  $config                              = read_build_config
 end
 
 def main
@@ -43,11 +50,13 @@ def main
       controller.test_date_after = Time.local($1, $2, $3, $4, $5, $6)
     elsif (arg =~ /-D([0-9]{4})([0-9]{2})([0-9]{2})-([0-9]{2})([0-9]{2})/)
       controller.test_date_before = Time.local($1, $2, $3, $4, $5, $6)
+    elsif ((arg == "-s") or (arg == "--show-duration"))
+      controller.show_duration = true
     elsif arg =~ /-j(\d+)/
       controller.num_threads = $1.to_i
-    elsif /^ (!)? (\d{1,3}) (?: - (\d{1,3}) )?$/x.match arg
+    elsif /^ (!)? (\d{1,4}) (?: - (\d{1,4}) )?$/x.match arg
       method = $1 == '!' ? :exclude_test_case : :add_test_case
-      $2.to_i.upto(($3 || $2).to_i) { |idx| controller.send(method, sprintf("%03d", idx)) }
+      $2.to_i.upto(($3 || $2).to_i) { |idx| controller.send(method, sprintf("%04d", idx)) }
     elsif %r{^ (!)? / (.+) / $}ix.match arg
       method = $1 == '!' ? :exclude_test_case : :add_test_case
       re     = Regexp.new "^T_(\\d+).*(?:#{$2})", Regexp::IGNORECASE
@@ -67,11 +76,12 @@ Syntax: run.rb [options]
   -DDATE                only run tests added before DATE (YYYYMMDD-HHMM)
   -u, --update-failed   update the results for tests that fail
   -r, --record-duration update the duration field of the tests run
+  -s, --show-duration   show how long each test took to run
   -jNUM                 run NUM tests at once (default: number of CPU cores)
   123                   run test 123 (any number; can be given multiple times)
-  123-456               run tests 123 through 456 (any range of numbers; can be given multiple times)
+  12-345                run tests 12 through 345 (any range of numbers; can be given multiple times)
   !123                  do not run test 123 (any number; can be given multiple times)
-  !123-456              do not run tests 123 through 456 (any range of numbers; can be given multiple times)
+  !12-345               do not run tests 12 through 345 (any range of numbers; can be given multiple times)
   /REGEX/               run tests whose names match REGEX (case insensitive; can be given multiple times)
   !/REGEX/              do not run tests whose names match REGEX (case insensitive; can be given multiple times)
 EOHELP
@@ -86,5 +96,8 @@ EOHELP
   exit controller.num_failed > 0 ? 1 : 0
 end
 
-setup
-main
+Dir.mktmpdir do |dir|
+  $temp_dir = dir
+  setup
+  main
+end

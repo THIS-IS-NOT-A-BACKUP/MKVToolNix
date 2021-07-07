@@ -10,20 +10,6 @@ class Test
     @tmp_num_mutex  = Mutex.new
     @commands       = Array.new
     @debug_commands = Array.new
-
-    # install md5 handler
-    case RUBY_PLATFORM
-      when /darwin/
-        @md5 = lambda do |name|
-          @debug_commands << "/sbin/md5 #{name}"
-          `/sbin/md5 #{name}`.chomp.gsub(/.*=\s*/, "")
-        end
-      else
-        @md5 = lambda do |name|
-          @debug_commands << "md5sum #{name}"
-          `md5sum #{name}`.chomp.gsub(/\s+.*/, "")
-      end
-    end
   end
 
   def description
@@ -37,13 +23,13 @@ class Test
   def unlink_tmp_files
     return if (ENV["KEEP_TMPFILES"] == "1")
     re = /^#{self.tmp_name_prefix}/
-    Dir.entries("/tmp").each do |entry|
-      file = "/tmp/#{entry}"
+    Dir.entries($temp_dir).each do |entry|
+      file = "#{$temp_dir}/#{entry}"
       File.unlink(file) if re.match(file) and File.exists?(file)
     end
   end
 
-  def run_test
+  def run_test expected_results
     result = nil
     begin
       result = run
@@ -66,11 +52,14 @@ class Test
     command         << " >/dev/null 2>/dev/null " unless (/>/.match(command))
 
     puts "COMMAND #{command}" if ENV['DEBUG']
-    error "system command failed: #{command} (" + ($? >> 8).to_s + ")" if !system(command) && ((arg.size == 0) || ((arg[0] << 8) != $?))
+
+    result = run_bash command
+
+    error "system command failed: #{command} (" + ($? >> 8).to_s + ")" if !result && ((arg.size == 0) || ((arg[0] << 8) != $?))
   end
 
   def tmp_name_prefix
-    [ "/tmp/mkvtoolnix-auto-test", $$.to_s, Thread.current[:number] ].join("-") + "-"
+    [ "#{$temp_dir}/mkvtoolnix-auto-test", $$.to_s, Thread.current[:number] ].join("-") + "-"
   end
 
   def tmp_name
@@ -88,7 +77,7 @@ class Test
   end
 
   def hash_file(name)
-    @md5.call name
+    md5 name
   end
 
   def hash_tmp(erase = true)
