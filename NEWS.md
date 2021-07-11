@@ -1,3 +1,22 @@
+# Version ?
+
+## Bug fixes
+
+* MKVToolNix GUI: multiplexer: when the option "use legacy MIME types for font
+  attachments" is enabled, the GUI will now use `application/x-truetype-font`
+  for font collection files.
+* all: IETF BCP 47/RFC 5646 language tags: fixed validating extended language
+  & variant subtags against their allowed prefixes when the whole tag contains
+  more than just the exact prefix (e.g. a country code as in `de-CH-1996`
+  instead of just `de-1996`, both of which are valid).
+* all: IETF BCP 47/RFC 5646 language tags: implemented support for Alpha 2
+  country codes of the "user-defined" category: `AA`, `QM`–`QZ`, `XA`–`XZ` and
+  `ZZ`.
+* MKVToolNix GUI: multiplexer: fixed escaping the `mkvmerge` argument in the
+  "Show command-line options" dialog for the "Windows (cmd.exe)" mode. Fixes
+  #3164.
+
+
 # Version 59.0.0 "Shining Star" 2021-07-10
 
 ## New features and enhancements
