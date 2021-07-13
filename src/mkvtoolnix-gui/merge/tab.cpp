@@ -119,6 +119,9 @@ Tab::Tab(QWidget *parent)
   p.emptyState = p.savedState;
 
   p.ui->files->setIconSize({ 28, 16 });
+
+  p.ui->trackLanguage->registerBuddyLabel(*p.ui->trackLanguageLabel);
+  p.ui->chapterLanguage->registerBuddyLabel(*p.ui->chapterLanguageLabel);
 }
 
 Tab::~Tab() {
