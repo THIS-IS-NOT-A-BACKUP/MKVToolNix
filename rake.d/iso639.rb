@@ -1,30 +1,99 @@
 def create_iso639_language_list_file
-  cpp_file_name = "src/common/iso639_language_list.cpp"
-  iso639_2      = JSON.parse(IO.readlines("/usr/share/iso-codes/json/iso_639-2.json").join('')) \
-    ["639-2"].
-    reject { |entry| %r{^qaa}.match(entry["alpha_3"]) }.
-    map do |entry|
-      entry["has_639_2"]      = true
-      entry["alpha_3_to_use"] = entry["bibliographic"] || entry["alpha_3"]
-      entry
+  list_2_file     = "iso-639-2.html"
+  list_3_file     = "iso-639-3.tab"
+  list_downloaded = false
+
+  if !FileTest.exists?(list_2_file) || !FileTest.exists?(list_3_file)
+    url = "https://www.loc.gov/standards/iso639-2/php/code_list.php"
+    runq "wget", url, "wget --quiet -O #{list_2_file} #{url}"
+
+    url = "https://iso639-3.sil.org/sites/iso639-3/files/downloads/iso-639-3.tab"
+    runq "wget", url, "wget --quiet -O #{list_3_file} #{url}"
+
+    list_downloaded = true
+  end
+
+  content = IO.read("iso-639-2.html").force_encoding("ASCII-8BIT")
+  if %r{<meta[^>]+charset="?([a-z0-9-]+)}im.match(content)
+    content = content.force_encoding($1).encode("UTF-8")
+  else
+    content = content.force_encoding("UTF-8")
+  end
+
+  content = content.
+    gsub(%r{<!--.*?-->}, '').                        # remove comments
+    gsub(%r{>[ \t\r\n]+<}, '><').                    # completely remove whitespace between tags
+    gsub(%r{[ \t\r\n]+}, ' ').                       # compress consecutive white space
+    gsub(%r{^.*?<table[^>]+>.*?<table[^>]+>}im, ''). # keep second table
+    gsub(%r{</table>.*}i, '').                       # drop stuff after second table
+    gsub(%r{^<tr.*?</tr>}i, '').                     # drop the table heading
+    gsub(%r{</tr><tr[^>]*>}i, '<row-sep>').          # convert consecutive table row end+start to line separators to split on later
+    gsub(%r{</td><td[^>]*>}i, '<col-sep>').          # convert consecutive table column end+start to column separators to split on later
+    gsub(%r{</?t[rd][^>]*>}i, '').                   # remove remaining table row/data tags
+    gsub(%r{&nbsp;}i, '').                           # ignore non-blanking spaces
+    split(%r{<row-sep>}).                            # split rows
+    map { |row| row.split(%r{<col-sep>}) }           # split each row into columns
+
+  entries_by_alpha_3 = {}
+
+  content.each do |row|
+    if %r{^([a-z]{3}) *\(([bt])\)<.*?>([a-z]{3})}.match(row[0].downcase)
+      alpha_3_b = $2 == 'b' ? $1 : $3
+      alpha_3_t = $2 == 'b' ? $3 : $1
+    else
+      alpha_3_b = row[0]
+      alpha_3_t = row[0]
     end
 
-  used_codes = Hash[ *iso639_2.map { |entry| [ entry["alpha_3"], true, entry["bibliographic"], true ] }.flatten ]
+    entries_by_alpha_3[alpha_3_b] = {
+      "name"           => row[2],
+      "bibliographic"  => alpha_3_b == alpha_3_t ? nil : alpha_3_b,
+      "alpha_2"        => row[1],
+      "alpha_3"        => alpha_3_t,
+      "alpha_3_to_use" => alpha_3_b,
+      "has_639_2"      => true,
+    }
+  end
 
-  JSON.parse(IO.readlines("/usr/share/iso-codes/json/iso_639-3.json").join('')) \
-    ["639-3"].
-    reject { |entry| entry["type"] != "L" }.
-    reject { |entry| used_codes.include?(entry["alpha_3"]) }.
+  lines   = IO.readlines(list_3_file).map(&:chomp)
+  headers = Hash[ *
+    lines.
+    shift.
+    split(%r{\t}).
+    map(&:downcase).
+    each_with_index.
+    map { |name, index| [ index, name ] }.
+    flatten
+  ]
+
+  lines.
+    map do |line|
+    parts = line.split(%r{\t})
+    entry = Hash[ *
+      (0..parts.size).
+      map { |idx| [ headers[idx], !parts[idx] || parts[idx].empty? ? nil : parts[idx] ] }.
+      flatten
+    ]
+
+    entry
+  end.
+    reject { |entry| !%r{^[CLS]$}.match(entry["language_type"]) }. # Constructed, Living & Special
     each do |entry|
-      iso639_2 << {
-        "name"           => entry["name"],
-        "alpha_3"        => entry["alpha_3"],
-        "alpha_3_to_use" => entry["alpha_3"],
-        "has_639_2"      => false,
-      }
-    end
+    alpha_3_to_use = entry["part2b"] || entry["id"]
 
-  rows = iso639_2.
+    entry_639_2                        = entries_by_alpha_3[alpha_3_to_use]
+    entries_by_alpha_3[alpha_3_to_use] = {
+      "name"           => entry["ref_name"],
+      "bibliographic"  => entry["part2b"] && (entry["part2b"] != entry["part2t"]) ? entry["part2b"] : nil,
+      "alpha_2"        => entry["part1"],
+      "alpha_3"        => entry["part2t"] || entry["id"],
+      "alpha_3_to_use" => alpha_3_to_use,
+      "has_639_2"      => !!entry_639_2,
+    }
+  end
+
+  rows = entries_by_alpha_3.
+    values.
     map do |entry|
     [ entry["name"].to_u8_cpp_string,
       entry["alpha_3_to_use"].to_cpp_string,
@@ -81,7 +150,12 @@ EOT
 } // namespace mtx::iso639
 EOT
 
-  content = header + format_table(rows.sort, :column_suffix => ',', :row_prefix => "  g_languages.emplace_back(", :row_suffix => ");").join("\n") + "\n" + footer
+  content       = header + format_table(rows.sort, :column_suffix => ',', :row_prefix => "  g_languages.emplace_back(", :row_suffix => ");").join("\n") + "\n" + footer
+  cpp_file_name = "src/common/iso639_language_list.cpp"
 
   runq("write", cpp_file_name) { IO.write("#{$source_dir}/#{cpp_file_name}", content); 0 }
+
+ensure
+  File.unlink(list_2_file) if list_downloaded && FileTest.exists?(list_2_file)
+  File.unlink(list_3_file) if list_downloaded && FileTest.exists?(list_3_file)
 end

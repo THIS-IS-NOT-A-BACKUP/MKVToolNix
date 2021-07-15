@@ -4,6 +4,8 @@
 
 * MKVToolNix GUI: multiplexer: pressing the keyboard shortcut for the track's
   "Language" label (Alt+L for English) will now open the language dialog.
+* all: updated the list of ISO 639-3 language codes with the latest official
+  changes.
 
 ## Bug fixes
 
@@ -11,15 +13,19 @@
   attachments" is enabled, the GUI will now use `application/x-truetype-font`
   for font collection files.
 * all: IETF BCP 47/RFC 5646 language tags: fixed validating extended language
-  & variant subtags against their allowed prefixes when the whole tag contains
-  more than just the exact prefix (e.g. a country code as in `de-CH-1996`
-  instead of just `de-1996`, both of which are valid).
+  & variant subtags against their allowed prefixes (e.g. a valid tag with a
+  country code as in `de-CH-1996` is recognized as valid while two generally
+  known variants that aren't allowed together as in `de-1901-1996` is
+  recognized as invalid).
 * all: IETF BCP 47/RFC 5646 language tags: implemented support for Alpha 2
   country codes of the "user-defined" category: `AA`, `QM`–`QZ`, `XA`–`XZ` and
   `ZZ`.
 * MKVToolNix GUI: multiplexer: fixed escaping the `mkvmerge` argument in the
   "Show command-line options" dialog for the "Windows (cmd.exe)" mode. Fixes
   #3164.
+* mkvmerge, mkvextract: HEVC/H.265 parser: fixed the programs aborting when
+  parsing VPS or SPS NALUs with invalid content due to unhandled
+  exceptions. Fixes #3162.
 
 
 # Version 59.0.0 "Shining Star" 2021-07-10
