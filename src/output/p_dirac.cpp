@@ -68,8 +68,8 @@ dirac_video_packetizer_c::set_headers() {
   m_track_entry->EnableLacing(false);
 }
 
-int
-dirac_video_packetizer_c::process(packet_cptr packet) {
+void
+dirac_video_packetizer_c::process_impl(packet_cptr const &packet) {
   if (-1 != packet->timestamp)
     m_parser.add_timestamp(packet->timestamp);
 
@@ -79,8 +79,6 @@ dirac_video_packetizer_c::process(packet_cptr packet) {
     headers_found();
 
   flush_frames();
-
-  return FILE_STATUS_MOREDATA;
 }
 
 void
@@ -106,7 +104,7 @@ dirac_video_packetizer_c::flush_frames() {
   while (m_parser.is_frame_available()) {
     mtx::dirac::frame_cptr frame = m_parser.get_frame();
 
-    add_packet(new packet_t(frame->data, frame->timestamp, frame->duration, frame->contains_sequence_header ? -1 : m_previous_timestamp));
+    add_packet(std::make_shared<packet_t>(frame->data, frame->timestamp, frame->duration, frame->contains_sequence_header ? -1 : m_previous_timestamp));
 
     m_previous_timestamp = frame->timestamp;
   }

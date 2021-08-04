@@ -81,8 +81,8 @@ hevc_es_video_packetizer_c::add_extra_data(memory_cptr data) {
   m_parser.add_bytes(data->get_buffer(), data->get_size());
 }
 
-int
-hevc_es_video_packetizer_c::process(packet_cptr packet) {
+void
+hevc_es_video_packetizer_c::process_impl(packet_cptr const &packet) {
   try {
     if (packet->has_timestamp())
       m_parser.add_timestamp(packet->timestamp);
@@ -95,8 +95,6 @@ hevc_es_video_packetizer_c::process(packet_cptr packet) {
                               "Either your file is damaged (which mkvmerge cannot cope with yet) or this is a bug in mkvmerge itself. "
                               "The error message was:\n{0}\n"), error.error()));
   }
-
-  return FILE_STATUS_MOREDATA;
 }
 
 void
@@ -164,9 +162,9 @@ hevc_es_video_packetizer_c::flush_frames() {
     }
 
     auto frame = m_parser.get_frame();
-    add_packet(new packet_t(frame.m_data, frame.m_start,
-                            frame.m_end > frame.m_start ? frame.m_end - frame.m_start : m_htrack_default_duration,
-                            frame.m_keyframe            ? -1                          : frame.m_start + frame.m_ref1));
+    add_packet(std::make_shared<packet_t>(frame.m_data, frame.m_start,
+                                          frame.m_end > frame.m_start ? frame.m_end - frame.m_start : m_htrack_default_duration,
+                                          frame.m_keyframe            ? -1                          : frame.m_start + frame.m_ref1));
   }
 }
 

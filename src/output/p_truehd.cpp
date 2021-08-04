@@ -81,16 +81,14 @@ truehd_packetizer_c::process_framed(mtx::truehd::frame_cptr const &frame,
   m_ref_timestamp = timestamp;
 }
 
-int
-truehd_packetizer_c::process(packet_cptr packet) {
+void
+truehd_packetizer_c::process_impl(packet_cptr const &packet) {
   m_timestamp_calculator.add_timestamp(packet);
   m_discard_padding.add_maybe(packet->discard_padding);
 
   m_parser.add_data(packet->data->get_buffer(), packet->data->get_size());
 
   flush_frames();
-
-  return FILE_STATUS_MOREDATA;
 }
 
 void

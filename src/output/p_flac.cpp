@@ -66,21 +66,19 @@ flac_packetizer_c::set_headers() {
   generic_packetizer_c::set_headers();
 }
 
-int
-flac_packetizer_c::process(packet_cptr packet) {
+void
+flac_packetizer_c::process_impl(packet_cptr const &packet) {
   m_num_packets++;
 
   packet->duration = mtx::flac::get_num_samples(packet->data->get_buffer(), packet->data->get_size(), m_stream_info);
 
   if (-1 == packet->duration) {
     mxwarn_tid(m_ti.m_fname, m_ti.m_id, fmt::format(Y("Packet number {0} contained an invalid FLAC header and is being skipped.\n"), m_num_packets));
-    return FILE_STATUS_MOREDATA;
+    return;
   }
 
   packet->duration = packet->duration * 1000000000ll / m_stream_info.sample_rate;
   add_packet(packet);
-
-  return FILE_STATUS_MOREDATA;
 }
 
 connection_result_e

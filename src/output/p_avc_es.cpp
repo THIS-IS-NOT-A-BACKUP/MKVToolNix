@@ -84,8 +84,8 @@ avc_es_video_packetizer_c::add_extra_data(memory_cptr data) {
   m_parser.add_bytes(data->get_buffer(), data->get_size());
 }
 
-int
-avc_es_video_packetizer_c::process(packet_cptr packet) {
+void
+avc_es_video_packetizer_c::process_impl(packet_cptr const &packet) {
   try {
     if (packet->has_timestamp())
       m_parser.add_timestamp(packet->timestamp);
@@ -98,8 +98,6 @@ avc_es_video_packetizer_c::process(packet_cptr packet) {
                               "Either your file is damaged (which mkvmerge cannot cope with yet) or this is a bug in mkvmerge itself. "
                               "The error message was:\n{0}\n"), error.error()));
   }
-
-  return FILE_STATUS_MOREDATA;
 }
 
 void
@@ -196,7 +194,7 @@ avc_es_video_packetizer_c::get_nalu_size_length()
 
 void
 avc_es_video_packetizer_c::connect(generic_packetizer_c *src,
-                                         int64_t p_append_timestamp_offset) {
+                                   int64_t p_append_timestamp_offset) {
   generic_packetizer_c::connect(src, p_append_timestamp_offset);
 
   if (2 != m_connected_to)

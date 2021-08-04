@@ -89,7 +89,7 @@ vc1_video_packetizer_c::set_headers() {
 }
 
 void
-vc1_video_packetizer_c::add_timestamps_to_parser(packet_cptr &packet) {
+vc1_video_packetizer_c::add_timestamps_to_parser(packet_cptr const &packet) {
   if (-1 != packet->timestamp)
     m_parser.add_timestamp(packet->timestamp, 0);
 
@@ -105,8 +105,8 @@ vc1_video_packetizer_c::add_timestamps_to_parser(packet_cptr &packet) {
   }
 }
 
-int
-vc1_video_packetizer_c::process(packet_cptr packet) {
+void
+vc1_video_packetizer_c::process_impl(packet_cptr const &packet) {
   add_timestamps_to_parser(packet);
 
   m_parser.add_bytes(packet->data->get_buffer(), packet->data->get_size());
@@ -115,8 +115,6 @@ vc1_video_packetizer_c::process(packet_cptr packet) {
     headers_found();
 
   flush_frames();
-
-  return FILE_STATUS_MOREDATA;
 }
 
 void
@@ -147,7 +145,7 @@ void
 vc1_video_packetizer_c::flush_frames() {
   while (m_parser.is_frame_available()) {
     auto frame = m_parser.get_frame();
-    add_packet(new packet_t(frame->data, frame->timestamp, frame->duration, frame->is_key() ? -1 : m_previous_timestamp));
+    add_packet(std::make_shared<packet_t>(frame->data, frame->timestamp, frame->duration, frame->is_key() ? -1 : m_previous_timestamp));
 
     m_previous_timestamp = frame->timestamp;
   }

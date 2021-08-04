@@ -54,8 +54,8 @@ wavpack_packetizer_c::set_headers() {
   m_track_entry->EnableLacing(!m_has_correction);
 }
 
-int
-wavpack_packetizer_c::process(packet_cptr packet) {
+void
+wavpack_packetizer_c::process_impl(packet_cptr const &packet) {
   int64_t samples = get_uint32_le(packet->data->get_buffer());
 
   if (-1 == packet->duration)
@@ -66,8 +66,6 @@ wavpack_packetizer_c::process(packet_cptr packet) {
 
   m_samples_output += samples;
   add_packet(packet);
-
-  return FILE_STATUS_MOREDATA;
 }
 
 connection_result_e

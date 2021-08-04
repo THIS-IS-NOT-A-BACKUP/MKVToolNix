@@ -75,8 +75,8 @@ vorbis_packetizer_c::set_headers() {
   generic_packetizer_c::set_headers();
 }
 
-int
-vorbis_packetizer_c::process(packet_cptr packet) {
+void
+vorbis_packetizer_c::process_impl(packet_cptr const &packet) {
   ogg_packet op;
 
   // Remember the very first timestamp we received.
@@ -110,8 +110,6 @@ vorbis_packetizer_c::process(packet_cptr packet) {
   packet->timestamp       = chosen_timestamp;
 
   add_packet(packet);
-
-  return FILE_STATUS_MOREDATA;
 }
 
 connection_result_e

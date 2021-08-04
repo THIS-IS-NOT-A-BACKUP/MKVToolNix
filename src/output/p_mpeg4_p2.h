@@ -58,20 +58,19 @@ public:
   mpeg4_p2_video_packetizer_c(generic_reader_c *p_reader, track_info_c &p_ti, int64_t default_duration, int width, int height, bool input_is_native);
   virtual ~mpeg4_p2_video_packetizer_c();
 
-  virtual int process(packet_cptr packet);
-
   virtual translatable_string_c get_format_name() const {
     return YT("MPEG-4");
   }
 
 protected:
-  virtual int process_native(packet_cptr packet);
-  virtual int process_non_native(packet_cptr packet);
+  virtual void process_impl(packet_cptr const &packet) override;
+  virtual void process_native(packet_cptr const &packet);
+  virtual void process_non_native(packet_cptr const &packet);
   virtual void flush_impl();
   virtual void flush_frames(bool end_of_file);
   virtual void extract_aspect_ratio(const unsigned char *buffer, int size);
   virtual void extract_size(const unsigned char *buffer, int size);
-  virtual void extract_config_data(packet_cptr &packet);
+  virtual void extract_config_data(packet_cptr const &packet);
   virtual void fix_codec_string();
   virtual void generate_timestamp_and_duration();
   virtual void get_next_timestamp_and_duration(int64_t &timestamp, int64_t &duration);

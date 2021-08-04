@@ -6,8 +6,6 @@
    see the file COPYING for details
    or visit https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
-   class definition for the WebVTT text subtitle packetizer
-
    Written by Moritz Bunkus <moritz@bunkus.org>.
 */
 
@@ -17,15 +15,22 @@
 
 #include "output/p_textsubs.h"
 
-class webvtt_packetizer_c: public textsubs_packetizer_c {
+class ssa_packetizer_c: public textsubs_packetizer_c {
+protected:
+  int m_highest_frame_number{-1};
+  ssa_packetizer_c *m_preceding_packetizer{};
+
 public:
-  webvtt_packetizer_c(generic_reader_c *p_reader, track_info_c &p_ti);
-  virtual ~webvtt_packetizer_c();
+  ssa_packetizer_c(generic_reader_c *p_reader, track_info_c &p_ti, const char *codec_id, bool recode);
+  virtual ~ssa_packetizer_c();
 
   virtual translatable_string_c get_format_name() const override {
-    return YT("WebVTT subtitles");
+    return YT("SSA/ASS text subtitles");
   }
   virtual connection_result_e can_connect_to(generic_packetizer_c *src, std::string &error_message) override;
+  virtual void connect(generic_packetizer_c *src, int64_t append_timestamp_offset) override;
+
+  virtual void fix_frame_number(packet_cptr const &packet);
 
 protected:
   virtual void process_impl(packet_cptr const &packet) override;

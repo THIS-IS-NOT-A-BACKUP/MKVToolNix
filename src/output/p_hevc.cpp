@@ -111,8 +111,8 @@ hevc_video_packetizer_c::extract_aspect_ratio() {
                          m_ti.m_display_width, m_ti.m_display_height));
 }
 
-int
-hevc_video_packetizer_c::process(packet_cptr packet) {
+void
+hevc_video_packetizer_c::process_impl(packet_cptr const &packet) {
   auto &p = *p_func();
 
   if (packet->is_key_frame() && (VFT_PFRAMEAUTOMATIC != packet->bref))
@@ -124,8 +124,6 @@ hevc_video_packetizer_c::process(packet_cptr packet) {
   p.parser->add_bytes_framed(packet->data, p.nalu_size_len);
 
   flush_frames();
-
-  return FILE_STATUS_MOREDATA;
 }
 
 connection_result_e
@@ -169,6 +167,6 @@ hevc_video_packetizer_c::flush_frames() {
     if (diff_to_default_duration < p.source_timestamp_resolution)
       duration = m_htrack_default_duration;
 
-    add_packet(new packet_t(frame.m_data, frame.m_start, duration, frame.m_keyframe ? -1 : frame.m_start + frame.m_ref1));
+    add_packet(std::make_shared<packet_t>(frame.m_data, frame.m_start, duration, frame.m_keyframe ? -1 : frame.m_start + frame.m_ref1));
   }
 }

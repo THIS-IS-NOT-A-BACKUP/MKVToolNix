@@ -106,8 +106,8 @@ ac3_packetizer_c::set_headers() {
   generic_packetizer_c::set_headers();
 }
 
-int
-ac3_packetizer_c::process(packet_cptr packet) {
+void
+ac3_packetizer_c::process_impl(packet_cptr const &packet) {
   // mxinfo(fmt::format("tc {0} size {1}\n", mtx::string::format_timestamp(packet->timestamp), packet->data->get_size()));
 
   m_timestamp_calculator.add_timestamp(packet, m_stream_position);
@@ -117,8 +117,6 @@ ac3_packetizer_c::process(packet_cptr packet) {
   add_to_buffer(packet->data->get_buffer(), packet->data->get_size());
 
   flush_packets();
-
-  return FILE_STATUS_MOREDATA;
 }
 
 void
