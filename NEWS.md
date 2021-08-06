@@ -8,6 +8,11 @@
 * MKVToolNix GUI: multiplexer: deriving track languages from file names: the
   GUI can now detect full BCP 47/RFC 5646 language tags in file names. Part of
   the implementation of #3173.
+* MKVToolNix GUI: multiplexer: the GUI now defaults to the "lower" process
+  priority setting for new installations in order to leave more room for other
+  applications, especially interactive ones. Up to and including v59 the
+  default was the "normal" process priority. v60 changed that to "lowest",
+  which turned out to be much slower on Windows for no real gain over "lower".
 
 ## Bug fixes
 
@@ -22,6 +27,13 @@
 * mkvmerge: SSA/ASS packetizer: the frame numbers will now be re-calculated
   when appending SSA/ASS tracks so that frame numbers of appended tracks are
   always strictly higher than frame numbers of the track they're appended to.
+* all: IETF BCP 47/RFC 5646 language tags: fixed a corner case of wrongfully
+  allowing scripts/variants not listed in any of the entries in the prefix
+  list when the prefix list contains prefixes restricting scripts/variants and
+  a prefix solely with the language at the same time (example: the variant
+  `ekavsk` with its prefixes `sr`, `sr-Cyrl` and `sr-Latn` where
+  e.g. `sr-ekavsk` and `sr-Cyrl-ekavsk` should be allowed but not
+  `sr-Bali-ekavsk`).
 
 ## Build system changes
 
