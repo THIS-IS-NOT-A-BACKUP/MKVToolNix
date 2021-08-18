@@ -13,7 +13,7 @@
 
 #include "common/endian.h"
 #include "common/hacks.h"
-#include "common/hevc.h"
+#include "common/hevc/util.h"
 #include "common/list_utils.h"
 #include "extract/xtr_hevc.h"
 
@@ -39,7 +39,7 @@ xtr_hevc_c::create_file(xtr_base_c *master,
     mxerror(fmt::format(Y("Track {0} CodecPrivate is too small.\n"), m_tid));
 
   m_parser.normalize_parameter_sets(m_normalize_parameter_sets);
-  m_parser.set_hevcc(m_decoded_codec_private);
+  m_parser.set_configuration_record(m_decoded_codec_private);
 
   m_nal_size_size = 1 + (m_decoded_codec_private->get_buffer()[21] & 3);
 }

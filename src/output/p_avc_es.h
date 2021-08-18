@@ -15,37 +15,22 @@
 
 #include "common/common_pch.h"
 
-#include "common/avc_es_parser.h"
-#include "merge/generic_packetizer.h"
+#include "common/avc/es_parser.h"
+#include "output/p_avc_hevc_es.h"
 
-class avc_es_video_packetizer_c: public generic_packetizer_c {
+class avc_es_video_packetizer_c: public avc_hevc_es_video_packetizer_c {
 protected:
-  mtx::avc::es_parser_c m_parser;
-  int64_t m_default_duration_for_interlaced_content;
-  bool m_first_frame, m_set_display_dimensions;
-  debugging_option_c m_debug_timestamps, m_debug_aspect_ratio;
+  mtx::avc::es_parser_c &m_parser;
 
 public:
   avc_es_video_packetizer_c(generic_reader_c *p_reader, track_info_c &p_ti);
 
-  virtual void add_extra_data(memory_cptr data);
-  virtual void set_headers();
-  virtual void set_container_default_field_duration(int64_t default_duration);
-  virtual unsigned int get_nalu_size_length() const;
-
-  virtual void flush_frames();
-
-  virtual translatable_string_c get_format_name() const {
+  virtual translatable_string_c get_format_name() const override {
     return YT("AVC/H.264 (unframed)");
   };
 
-  virtual void connect(generic_packetizer_c *src, int64_t p_append_timestamp_offset = -1);
-  virtual connection_result_e can_connect_to(generic_packetizer_c *src, std::string &error_message);
+  virtual connection_result_e can_connect_to(generic_packetizer_c *src, std::string &error_message) override;
 
 protected:
-  virtual void process_impl(packet_cptr const &packet) override;
-  virtual void handle_delayed_headers();
-  virtual void handle_aspect_ratio();
-  virtual void handle_actual_default_duration();
-  virtual void flush_impl();
+  virtual void check_if_default_duration_available() const override;
 };

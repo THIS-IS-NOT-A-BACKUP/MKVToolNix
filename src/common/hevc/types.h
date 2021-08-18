@@ -17,8 +17,6 @@
 
 namespace mtx::hevc {
 
-constexpr auto NALU_START_CODE                          = 0x00000001;
-
 // VCL NALs
 constexpr auto NALU_TYPE_TRAIL_N                        = 0;
 constexpr auto NALU_TYPE_TRAIL_R                        = 1;
@@ -111,16 +109,14 @@ constexpr auto SEI_DECODED_PICTURE_HASH                 = 132;
 constexpr auto SEI_SCALABLE_NESTING                     = 133;
 constexpr auto SEI_REGION_REFRESH_INFO                  = 134;
 
-constexpr auto SLICE_TYPE_P                             = 0;
-constexpr auto SLICE_TYPE_B                             = 1;
+constexpr auto SLICE_TYPE_B                             = 0;
+constexpr auto SLICE_TYPE_P                             = 1;
 constexpr auto SLICE_TYPE_I                             = 2;
 
 constexpr auto EXTENDED_SAR                             = 0xff;
 constexpr auto NUM_PREDEFINED_PARS                      = 17;
 
-struct frame_t;
 struct par_extraction_t;
-struct slice_info_t;
 
 /*
 Bytes                                    Bits

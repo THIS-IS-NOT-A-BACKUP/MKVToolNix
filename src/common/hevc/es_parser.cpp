@@ -23,9 +23,9 @@
 #include "common/mm_io.h"
 #include "common/mm_file_io.h"
 #include "common/mpeg.h"
-#include "common/hevc.h"
-#include "common/hevc_es_parser.h"
-#include "common/hevcc.h"
+#include "common/hevc/util.h"
+#include "common/hevc/es_parser.h"
+#include "common/hevc/hevcc.h"
 #include "common/list_utils.h"
 #include "common/memory_slice_cursor.h"
 #include "common/strings/formatting.h"
@@ -33,37 +33,8 @@
 
 namespace mtx::hevc {
 
-std::unordered_map<int, std::string> es_parser_c::ms_nalu_names_by_type;
-
-void
-slice_info_t::clear() {
-  *this = slice_info_t{};
-}
-
-void
-slice_info_t::dump()
-  const {
-  mxinfo(fmt::format("slice_info dump:\n"
-                     "  nalu_type:                  {0}\n"
-                     "  slice_type:                 {1}\n"
-                     "  pps_id:                     {2}\n"
-                     "  pic_order_cnt_lsb:          {3}\n"
-                     "  sps:                        {4}\n"
-                     "  pps:                        {5}\n",
-                     static_cast<unsigned int>(nalu_type),
-                     static_cast<unsigned int>(slice_type),
-                     static_cast<unsigned int>(pps_id),
-                     pic_order_cnt_lsb,
-                     sps,
-                     pps));
-}
-
-void
-frame_t::clear() {
-  *this = frame_t{};
-}
-
 es_parser_c::es_parser_c()
+  : mtx::avc_hevc::es_parser_c{"hevc"s, 3, 64}
 {
   if (debugging_c::requested("hevc_statistics"))
     init_nalu_names();
@@ -97,15 +68,10 @@ es_parser_c::~es_parser_c() {
 bool
 es_parser_c::headers_parsed()
   const {
-  return m_hevcc_ready
+  return m_configuration_record_ready
       && !m_sps_info_list.empty()
       && (m_sps_info_list.front().get_width()  > 0)
       && (m_sps_info_list.front().get_height() > 0);
-}
-
-void
-es_parser_c::discard_actual_frames(bool discard) {
-  m_discard_actual_frames = discard;
 }
 
 void
@@ -114,118 +80,10 @@ es_parser_c::normalize_parameter_sets(bool normalize) {
 }
 
 void
-es_parser_c::maybe_dump_raw_data(unsigned char const *buffer,
-                                 std::size_t size) {
-  static debugging_option_c s_dump_raw_data{"hevc_es_parser_dump_raw_data"};
-
-  if (!s_dump_raw_data)
-    return;
-
-  auto file_name = fmt::format("hevc_raw_data-{0:p}", static_cast<void *>(this));
-  mm_file_io_c out{file_name, std::filesystem::is_regular_file(file_name) ? MODE_WRITE : MODE_CREATE};
-
-  out.setFilePointer(0, libebml::seek_end);
-  out.write(buffer, size);
-}
-
-void
-es_parser_c::add_bytes(unsigned char *buffer,
-                       size_t size) {
-  maybe_dump_raw_data(buffer, size);
-
-  mtx::mem::slice_cursor_c cursor;
-  int marker_size              = 0;
-  int previous_marker_size     = 0;
-  int previous_pos             = -1;
-  uint64_t previous_parsed_pos = m_parsed_position;
-
-  if (m_unparsed_buffer && (0 != m_unparsed_buffer->get_size()))
-    cursor.add_slice(m_unparsed_buffer);
-  cursor.add_slice(buffer, size);
-
-  if (3 <= cursor.get_remaining_size()) {
-    uint32_t marker =                               1 << 24
-                    | (unsigned int)cursor.get_char() << 16
-                    | (unsigned int)cursor.get_char() <<  8
-                    | (unsigned int)cursor.get_char();
-
-    while (true) {
-      if (NALU_START_CODE == marker)
-        marker_size = 4;
-      else if (NALU_START_CODE == (marker & 0x00ffffff))
-        marker_size = 3;
-
-      if (0 != marker_size) {
-        if (-1 != previous_pos) {
-          auto new_size = cursor.get_position() - marker_size - previous_pos - previous_marker_size;
-          auto nalu     = memory_c::alloc(new_size);
-          cursor.copy(nalu->get_buffer(), previous_pos + previous_marker_size, new_size);
-          m_parsed_position = previous_parsed_pos + previous_pos;
-
-          mtx::mpeg::remove_trailing_zero_bytes(*nalu);
-          if (nalu->get_size())
-            handle_nalu(nalu, m_parsed_position);
-        }
-        previous_pos         = cursor.get_position() - marker_size;
-        previous_marker_size = marker_size;
-        marker_size          = 0;
-      }
-
-      if (!cursor.char_available())
-        break;
-
-      marker <<= 8;
-      marker  |= (unsigned int)cursor.get_char();
-    }
-  }
-
-  if (-1 == previous_pos)
-    previous_pos = 0;
-
-  m_stream_position += size;
-  m_parsed_position  = previous_parsed_pos + previous_pos;
-
-  int new_size = cursor.get_size() - previous_pos;
-  if (0 != new_size) {
-    m_unparsed_buffer = memory_c::alloc(new_size);
-    cursor.copy(m_unparsed_buffer->get_buffer(), previous_pos, new_size);
-
-  } else
-    m_unparsed_buffer.reset();
-}
-
-void
-es_parser_c::add_bytes_framed(unsigned char *buffer,
-                              size_t buffer_size,
-                              size_t nalu_size_length) {
-  maybe_dump_raw_data(buffer, buffer_size);
-
-  auto pos = buffer;
-  auto end = buffer + buffer_size;
-
-  while ((pos + nalu_size_length) <= end) {
-    auto nalu_size     = get_uint_be(pos, nalu_size_length);
-    pos               += nalu_size_length;
-    m_stream_position += nalu_size_length;
-
-    if (!nalu_size)
-      continue;
-
-    if ((pos + nalu_size) > end)
-      return;
-
-    handle_nalu(memory_c::borrow(pos, nalu_size), m_stream_position);
-
-    pos               += nalu_size;
-    m_stream_position += nalu_size;
-  }
-}
-
-void
 es_parser_c::flush() {
   if (m_unparsed_buffer && (5 <= m_unparsed_buffer->get_size())) {
     m_parsed_position += m_unparsed_buffer->get_size();
-    auto marker_size   = get_uint32_be(m_unparsed_buffer->get_buffer()) == NALU_START_CODE ? 4 : 3;
+    auto marker_size   = get_uint32_be(m_unparsed_buffer->get_buffer()) == mtx::avc_hevc::NALU_START_CODE ? 4 : 3;
     auto nalu_size     = m_unparsed_buffer->get_size() - marker_size;
     handle_nalu(memory_c::clone(m_unparsed_buffer->get_buffer() + marker_size, nalu_size), m_parsed_position - nalu_size);
   }
@@ -247,12 +105,6 @@ es_parser_c::clear() {
   m_pending_frame_data.clear();
 
   m_parsed_position = 0;
-}
-
-void
-es_parser_c::add_timestamp(int64_t timestamp) {
-  m_provided_timestamps.emplace_back(timestamp, m_stream_position);
-  ++m_stats.num_timestamps_in;
 }
 
 void
@@ -289,21 +141,13 @@ es_parser_c::add_parameter_sets_to_extra_data() {
 
 void
 es_parser_c::flush_incomplete_frame() {
-  if (m_pending_frame_data.empty() || !m_hevcc_ready)
+  if (m_pending_frame_data.empty() || !m_configuration_record_ready)
     return;
 
   build_frame_data();
 
   m_frames.push_back(m_incomplete_frame);
   m_incomplete_frame.clear();
-}
-
-void
-es_parser_c::flush_unhandled_nalus() {
-  for (auto const &nalu_with_pos : m_unhandled_nalus)
-    handle_nalu(nalu_with_pos.first, nalu_with_pos.second);
-
-  m_unhandled_nalus.clear();
 }
 
 void
@@ -327,12 +171,12 @@ es_parser_c::add_nalu_to_pending_frame_data(memory_cptr const &nalu) {
 void
 es_parser_c::handle_slice_nalu(memory_cptr const &nalu,
                                uint64_t nalu_pos) {
-  if (!m_hevcc_ready) {
+  if (!m_configuration_record_ready) {
     m_unhandled_nalus.emplace_back(nalu, nalu_pos);
     return;
   }
 
-  slice_info_t si;
+  mtx::avc_hevc::slice_info_t si;
   if (!parse_slice(nalu, si))   // no conversion to RBSP; the bit reader takes care of it
     return;
 
@@ -347,15 +191,17 @@ es_parser_c::handle_slice_nalu(memory_cptr const &nalu,
   bool is_i_slice = (SLICE_TYPE_I == si.slice_type);
   bool is_b_slice = (SLICE_TYPE_B == si.slice_type);
 
-  m_incomplete_frame.m_si       =  si;
-  m_incomplete_frame.m_keyframe =  m_recovery_point_valid
-                                || (   is_i_slice
-                                    && (   (m_debug_keyframe_detection && !m_b_frames_since_keyframe)
-                                        || (NALU_TYPE_IDR_W_RADL == si.nalu_type)
-                                        || (NALU_TYPE_IDR_N_LP   == si.nalu_type)
-                                        || (NALU_TYPE_CRA_NUT    == si.nalu_type)));
-  m_incomplete_frame.m_position = nalu_pos;
-  m_recovery_point_valid        = false;
+  m_incomplete_frame.m_si          =  si;
+  m_incomplete_frame.m_keyframe    =  m_recovery_point_valid
+                                   || (   is_i_slice
+                                       && (   (m_debug_keyframe_detection && !m_b_frames_since_keyframe)
+                                           || (NALU_TYPE_IDR_W_RADL == si.nalu_type)
+                                           || (NALU_TYPE_IDR_N_LP   == si.nalu_type)
+                                           || (NALU_TYPE_CRA_NUT    == si.nalu_type)));
+  m_incomplete_frame.m_type        =  m_incomplete_frame.m_keyframe ? 'I' : is_b_slice ? 'B' : 'P';
+  m_incomplete_frame.m_discardable =  m_incomplete_frame.m_type == 'B';
+  m_incomplete_frame.m_position    =  nalu_pos;
+  m_recovery_point_valid           =  false;
 
   if (m_incomplete_frame.m_keyframe) {
     m_first_keyframe_found    = true;
@@ -388,14 +234,14 @@ es_parser_c::handle_vps_nalu(memory_cptr const &nalu,
   if (m_vps_info_list.size() == i) {
     m_vps_list.push_back(nalu->clone());
     m_vps_info_list.push_back(vps_info);
-    m_hevcc_changed = true;
+    m_configuration_record_changed = true;
 
   } else if (m_vps_info_list[i].checksum != vps_info.checksum) {
     mxdebug_if(m_debug_parameter_sets, fmt::format("hevc: VPS ID {0:04x} changed; checksum old {1:04x} new {2:04x}\n", vps_info.id, m_vps_info_list[i].checksum, vps_info.checksum));
 
     m_vps_info_list[i] = vps_info;
     m_vps_list[i]      = nalu->clone();
-    m_hevcc_changed    = true;
+    m_configuration_record_changed    = true;
 
     // Update codec private if needed
     if (m_codec_private.vps_data_id == (int) vps_info.id)
@@ -444,7 +290,7 @@ es_parser_c::handle_sps_nalu(memory_cptr const &nalu,
   if (m_sps_info_list.size() == i) {
     m_sps_list.push_back(parsed_nalu->clone());
     m_sps_info_list.push_back(sps_info);
-    m_hevcc_changed = true;
+    m_configuration_record_changed = true;
 
   } else if (m_sps_info_list[i].checksum != sps_info.checksum) {
     mxdebug_if(m_debug_parameter_sets, fmt::format("hevc: SPS ID {0:04x} changed; checksum old {1:04x} new {2:04x}\n", sps_info.id, m_sps_info_list[i].checksum, sps_info.checksum));
@@ -453,7 +299,7 @@ es_parser_c::handle_sps_nalu(memory_cptr const &nalu,
 
     m_sps_info_list[i] = sps_info;
     m_sps_list[i]      = parsed_nalu->clone();
-    m_hevcc_changed    = true;
+    m_configuration_record_changed    = true;
 
     // Update codec private if needed
     if (m_codec_private.sps_data_id == (int) sps_info.id)
@@ -514,7 +360,7 @@ es_parser_c::handle_pps_nalu(memory_cptr const &nalu,
   if (m_pps_info_list.size() == i) {
     m_pps_list.push_back(nalu->clone());
     m_pps_info_list.push_back(pps_info);
-    m_hevcc_changed = true;
+    m_configuration_record_changed = true;
 
   } else if (m_pps_info_list[i].checksum != pps_info.checksum) {
     mxdebug_if(m_debug_parameter_sets, fmt::format("hevc: PPS ID {0:04x} changed; checksum old {1:04x} new {2:04x}\n", pps_info.id, m_pps_info_list[i].checksum, pps_info.checksum));
@@ -524,7 +370,7 @@ es_parser_c::handle_pps_nalu(memory_cptr const &nalu,
 
     m_pps_info_list[i] = pps_info;
     m_pps_list[i]      = nalu->clone();
-    m_hevcc_changed    = true;
+    m_configuration_record_changed    = true;
   }
 
   add_nalu_to_extra_data(nalu, extra_data_position);
@@ -613,8 +459,8 @@ es_parser_c::handle_nalu_internal(memory_cptr const &nalu,
     case NALU_TYPE_IDR_W_RADL:
     case NALU_TYPE_IDR_N_LP:
     case NALU_TYPE_CRA_NUT:
-      if (!m_hevcc_ready && !m_vps_info_list.empty() && !m_sps_info_list.empty() && !m_pps_info_list.empty()) {
-        m_hevcc_ready = true;
+      if (!m_configuration_record_ready && !m_vps_info_list.empty() && !m_sps_info_list.empty() && !m_pps_info_list.empty()) {
+        m_configuration_record_ready = true;
         flush_unhandled_nalus();
       }
       handle_slice_nalu(nalu, nalu_pos);
@@ -636,8 +482,8 @@ es_parser_c::handle_nalu_internal(memory_cptr const &nalu,
 
     default:
       flush_incomplete_frame();
-      if (!m_hevcc_ready && !m_vps_info_list.empty() && !m_sps_info_list.empty() && !m_pps_info_list.empty()) {
-        m_hevcc_ready = true;
+      if (!m_configuration_record_ready && !m_vps_info_list.empty() && !m_sps_info_list.empty() && !m_pps_info_list.empty()) {
+        m_configuration_record_ready = true;
         flush_unhandled_nalus();
       }
       add_nalu_to_extra_data(nalu);
@@ -659,7 +505,7 @@ es_parser_c::handle_nalu(memory_cptr const &nalu,
 
 bool
 es_parser_c::parse_slice(memory_cptr const &nalu,
-                         slice_info_t &si) {
+                         mtx::avc_hevc::slice_info_t &si) {
   try {
     mtx::bits::reader_c r(nalu->get_buffer(), nalu->get_size());
     r.enable_rbsp_mode();
@@ -774,7 +620,7 @@ es_parser_c::build_frame_data() {
 }
 
 int64_t
-es_parser_c::duration_for(slice_info_t const &si)
+es_parser_c::duration_for(mtx::avc_hevc::slice_info_t const &si)
   const {
   int64_t duration = -1 != m_forced_default_duration                                                  ? m_forced_default_duration * 2
                    : (m_sps_info_list.size() > si.sps) && m_sps_info_list[si.sps].timing_info_valid() ? m_sps_info_list[si.sps].default_duration()
@@ -782,49 +628,6 @@ es_parser_c::duration_for(slice_info_t const &si)
                    : -1 != m_container_default_duration                                               ? m_container_default_duration * 2
                    :                                                                                    20000000 * 2;
   return duration;
-}
-
-int64_t
-es_parser_c::get_most_often_used_duration()
-  const {
-  int64_t const s_common_default_durations[] = {
-    1000000000ll / 50,
-    1000000000ll / 25,
-    1000000000ll / 60,
-    1000000000ll / 30,
-    1000000000ll * 1001 / 48000,
-    1000000000ll * 1001 / 24000,
-    1000000000ll * 1001 / 60000,
-    1000000000ll * 1001 / 30000,
-  };
-
-  auto most_often = m_duration_frequency.begin();
-  for (auto current = m_duration_frequency.begin(); m_duration_frequency.end() != current; ++current)
-    if (current->second > most_often->second)
-      most_often = current;
-
-  // No duration at all!? No frame?
-  if (m_duration_frequency.end() == most_often) {
-    mxdebug_if(m_debug_timestamps, fmt::format("Duration frequency: none found, using 25 FPS\n"));
-    return 1000000000ll / 25;
-  }
-
-  auto best = std::make_pair(most_often->first, std::numeric_limits<uint64_t>::max());
-
-  for (auto common_default_duration : s_common_default_durations) {
-    uint64_t diff = std::abs(most_often->first - common_default_duration);
-    if ((diff < 20000) && (diff < best.second))
-      best = std::make_pair(common_default_duration, diff);
-  }
-
-  mxdebug_if(m_debug_timestamps,
-             fmt::format("Duration frequency. Result: {0}, diff {1}. Best before adjustment: {2}. All: {3}\n",
-                         best.first, best.second, most_often->first,
-                         std::accumulate(m_duration_frequency.begin(), m_duration_frequency.end(), ""s, [](std::string const &accu, std::pair<int64_t, int64_t> const &pair) {
-                           return accu + fmt::format(" <{0} {1}>", pair.first, pair.second);
-                         })));
-
-  return best.first;
 }
 
 void
@@ -890,161 +693,15 @@ es_parser_c::calculate_frame_order() {
   }
 }
 
-std::vector<int64_t>
-es_parser_c::calculate_provided_timestamps_to_use() {
-  auto frame_idx                     = 0u;
-  auto provided_timestamps_idx       = 0u;
-  auto const num_frames              = m_frames.size();
-  auto const num_provided_timestamps = m_provided_timestamps.size();
-
-  std::vector<int64_t> provided_timestamps_to_use;
-  provided_timestamps_to_use.reserve(num_frames);
-
-  while (   (frame_idx               < num_frames)
-         && (provided_timestamps_idx < num_provided_timestamps)) {
-    timestamp_c timestamp_to_use;
-    auto &frame = m_frames[frame_idx];
-
-    while (   (provided_timestamps_idx < num_provided_timestamps)
-           && (frame.m_position >= m_provided_timestamps[provided_timestamps_idx].second)) {
-      timestamp_to_use = timestamp_c::ns(m_provided_timestamps[provided_timestamps_idx].first);
-      ++provided_timestamps_idx;
-    }
-
-    if (timestamp_to_use.valid()) {
-      provided_timestamps_to_use.emplace_back(timestamp_to_use.to_ns());
-      frame.m_has_provided_timestamp = true;
-    }
-
-    ++frame_idx;
-  }
-
-  mxdebug_if(m_debug_timestamps,
-             fmt::format("cleanup; num frames {0} num provided timestamps available {1} num provided timestamps to use {2}\n"
-                         "  frames:\n{3}"
-                         "  provided timestamps (available):\n{4}"
-                         "  provided timestamps (to use):\n{5}",
-                         num_frames, num_provided_timestamps, provided_timestamps_to_use.size(),
-                         std::accumulate(m_frames.begin(), m_frames.end(), std::string{}, [](auto const &str, auto const &frame) {
-                           return str + fmt::format("    pos {0} size {1} key? {2}\n", frame.m_position, frame.m_data->get_size(), frame.m_keyframe);
-                         }),
-                         std::accumulate(m_provided_timestamps.begin(), m_provided_timestamps.end(), std::string{}, [](auto const &str, auto const &provided_timestamp) {
-                           return str + fmt::format("    pos {0} timestamp {1}\n", provided_timestamp.second, mtx::string::format_timestamp(provided_timestamp.first));
-                         }),
-                         std::accumulate(provided_timestamps_to_use.begin(), provided_timestamps_to_use.end(), std::string{}, [](auto const &str, auto const &provided_timestamp) {
-                           return str + fmt::format("    timestamp {0}\n", mtx::string::format_timestamp(provided_timestamp));
-                         })));
-
-  m_provided_timestamps.erase(m_provided_timestamps.begin(), m_provided_timestamps.begin() + provided_timestamps_idx);
-
-  std::sort(provided_timestamps_to_use.begin(), provided_timestamps_to_use.end());
-
-  return provided_timestamps_to_use;
-}
-
-void
-es_parser_c::calculate_frame_timestamps() {
-  auto provided_timestamps_to_use = calculate_provided_timestamps_to_use();
-
-  if (!m_simple_picture_order)
-    std::sort(m_frames.begin(), m_frames.end(), [](const frame_t &f1, const frame_t &f2) { return f1.m_presentation_order < f2.m_presentation_order; });
-
-  auto frames_begin           = m_frames.begin();
-  auto frames_end             = m_frames.end();
-  auto previous_frame_itr     = frames_begin;
-  auto provided_timestamp_itr = provided_timestamps_to_use.begin();
-
-  for (auto frame_itr = frames_begin; frames_end != frame_itr; ++frame_itr) {
-    if (frame_itr->m_has_provided_timestamp) {
-      frame_itr->m_start = *provided_timestamp_itr;
-      ++provided_timestamp_itr;
-
-      if (frames_begin != frame_itr)
-        previous_frame_itr->m_end = frame_itr->m_start;
-
-    } else {
-      frame_itr->m_start = frames_begin == frame_itr ? m_max_timestamp : previous_frame_itr->m_end;
-      ++m_stats.num_timestamps_generated;
-    }
-
-    frame_itr->m_end = frame_itr->m_start + duration_for(frame_itr->m_si);
-
-    previous_frame_itr = frame_itr;
-  }
-
-  m_max_timestamp = m_frames.back().m_end;
-
-  mxdebug_if(m_debug_timestamps,
-             fmt::format("CLEANUP frames <pres_ord dec_ord has_prov_ts tc dur>: {0}\n",
-                         std::accumulate(m_frames.begin(), m_frames.end(), ""s, [](std::string const &accu, frame_t const &frame) {
-                           return accu + fmt::format(" <{0} {1} {2} {3} {4}>", frame.m_presentation_order, frame.m_decode_order, frame.m_has_provided_timestamp, frame.m_start, frame.m_end - frame.m_start);
-                         })));
-
-  if (!m_simple_picture_order)
-    std::sort(m_frames.begin(), m_frames.end(), [](const frame_t &f1, const frame_t &f2) { return f1.m_decode_order < f2.m_decode_order; });
-}
-
-void
-es_parser_c::calculate_frame_references_and_update_stats() {
-  auto frames_begin       = m_frames.begin();
-  auto frames_end         = m_frames.end();
-  auto previous_frame_itr = frames_begin;
-
-  for (auto frame_itr = frames_begin; frames_end != frame_itr; ++frame_itr) {
-    if (frames_begin != frame_itr)
-      frame_itr->m_ref1 = previous_frame_itr->m_start - frame_itr->m_start;
-
-    previous_frame_itr = frame_itr;
-    m_duration_frequency[frame_itr->m_end - frame_itr->m_start]++;
-
-    ++m_stats.num_field_slices;
-  }
-}
-
-void
-es_parser_c::cleanup() {
-  if (m_frames.empty())
-    return;
-
-  if (m_discard_actual_frames) {
-    m_stats.num_frames_discarded     += m_frames.size();
-    m_stats.num_timestamps_discarded += m_provided_timestamps.size();
-
-    m_frames.clear();
-    m_provided_timestamps.clear();
-
-    return;
-  }
-
-  calculate_frame_order();
-  calculate_frame_timestamps();
-  calculate_frame_references_and_update_stats();
-
-  if (m_first_cleanup && !m_frames.front().m_keyframe) {
-    // Drop all frames before the first key frames as they cannot be
-    // decoded anyway.
-    m_stats.num_frames_discarded += m_frames.size();
-    m_frames.clear();
-
-    return;
-  }
-
-  m_first_cleanup = false;
-
-  m_stats.num_frames_out += m_frames.size();
-  m_frames_out.insert(m_frames_out.end(), m_frames.begin(), m_frames.end());
-  m_frames.clear();
-}
-
 memory_cptr
-es_parser_c::get_hevcc()
+es_parser_c::get_configuration_record()
   const {
   return hevcc_c{static_cast<unsigned int>(m_nalu_size_length), m_vps_list, m_sps_list, m_pps_list, m_user_data, m_codec_private}.pack();
 }
 
 void
-es_parser_c::set_hevcc(memory_cptr const &hevcc_bytes) {
-  auto hevcc = hevcc_c::unpack(hevcc_bytes);
+es_parser_c::set_configuration_record(memory_cptr const &bytes) {
+  auto hevcc = hevcc_c::unpack(bytes);
 
   for (auto const &nalu : hevcc.m_vps_list)
     handle_vps_nalu(nalu, extra_data_position_e::dont_store);
@@ -1057,47 +714,6 @@ es_parser_c::set_hevcc(memory_cptr const &hevcc_bytes) {
 
   for (auto const &nalu : hevcc.m_sei_list)
     handle_sei_nalu(nalu, extra_data_position_e::initial);
-}
-
-bool
-es_parser_c::has_par_been_found()
-  const {
-  assert(m_hevcc_ready);
-  return m_par_found;
-}
-
-mtx_mp_rational_t const &
-es_parser_c::get_par()
-  const {
-  assert(m_hevcc_ready && m_par_found);
-  return m_par;
-}
-
-std::pair<int64_t, int64_t> const
-es_parser_c::get_display_dimensions(int width,
-                                    int height)
-  const {
-  assert(m_hevcc_ready && m_par_found);
-
-  if (0 >= width)
-    width = get_width();
-  if (0 >= height)
-    height = get_height();
-
-  return std::make_pair<int64_t, int64_t>(1 <= m_par ? mtx::to_int_rounded(width * m_par) : width,
-                                          1 <= m_par ? height                             : mtx::to_int_rounded(height / m_par));
-}
-
-size_t
-es_parser_c::get_num_field_slices()
-  const {
-  return m_stats.num_field_slices;
-}
-
-size_t
-es_parser_c::get_num_frame_slices()
-  const {
-  return m_stats.num_frame_slices;
 }
 
 void
@@ -1128,15 +744,9 @@ es_parser_c::dump_info()
   }
 }
 
-std::string
-es_parser_c::get_nalu_type_name(int type) {
-  init_nalu_names();
-  auto name = ms_nalu_names_by_type.find(type);
-  return name == ms_nalu_names_by_type.end() ? "unknown" : name->second;
-}
-
 void
-es_parser_c::init_nalu_names() {
+es_parser_c::init_nalu_names()
+  const {
   if (!ms_nalu_names_by_type.empty())
     return;
 

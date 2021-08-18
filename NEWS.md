@@ -39,6 +39,12 @@
   `ekavsk` with its prefixes `sr`, `sr-Cyrl` and `sr-Latn` where
   e.g. `sr-ekavsk` and `sr-Cyrl-ekavsk` should be allowed but not
   `sr-Bali-ekavsk`).
+* mkvinfo, MKVToolNix GUI's info tool: in summary mode the frame type was
+  reported wrong for `BlockGroup` elements in which the `ReferenceBlock`
+  elements were located behind the `Block` element.
+* mkvmerge: HEVC/H.265: the frame type of B frames was often wrongfully
+  signalled as P frames instead, both with `BlockGroup` (missing second
+  references) and `SimpleBlock` ("discardable" flag not set) elements.
 
 ## Build system changes
 

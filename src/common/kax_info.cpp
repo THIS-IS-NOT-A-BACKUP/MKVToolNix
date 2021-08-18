@@ -52,8 +52,8 @@
 
 #include "avilib.h"
 #include "common/at_scope_exit.h"
-#include "common/avc.h"
-#include "common/avcc.h"
+#include "common/avc/avcc.h"
+#include "common/avc/util.h"
 #include "common/chapters/chapters.h"
 #include "common/checksums/base.h"
 #include "common/codec.h"
@@ -62,8 +62,8 @@
 #include "common/ebml.h"
 #include "common/endian.h"
 #include "common/fourcc.h"
-#include "common/hevc.h"
-#include "common/hevcc.h"
+#include "common/hevc/util.h"
+#include "common/hevc/hevcc.h"
 #include "common/kax_element_names.h"
 #include "common/kax_file.h"
 #include "common/kax_info.h"
@@ -921,18 +921,19 @@ kax_info_c::post_block(EbmlElement &e) {
 
     frame_pos += data.Size();
   }
+}
 
-
-  if (!p->m_show_summary)
-    return;
-
-  std::string position;
-  frame_pos = e.GetElementPosition() + e.ElementSize();
+void
+kax_info_c::show_frame_summary(EbmlElement &e) {
+  auto p         = p_func();
+  auto frame_pos = e.GetElementPosition() + e.ElementSize();
 
   for (auto size : p->m_frame_sizes)
     frame_pos -= size;
 
   for (auto fidx = 0u; fidx < p->m_frame_sizes.size(); fidx++) {
+    std::string position;
+
     if (p->m_show_positions) {
       position   = fmt::format(p->m_hex_positions ? Y(", position 0x{0:x}") : Y(", position {0}"), frame_pos);
       frame_pos += p->m_frame_sizes[fidx];
@@ -976,8 +977,11 @@ kax_info_c::pre_block_group(EbmlElement &) {
 }
 
 void
-kax_info_c::post_block_group([[maybe_unused]] EbmlElement &e) {
+kax_info_c::post_block_group(EbmlElement &e) {
   auto p = p_func();
+
+  if (p->m_show_summary)
+    show_frame_summary(e);
 
   auto &tinfo = p->m_track_info[p->m_lf_tnum];
 

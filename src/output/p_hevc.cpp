@@ -17,8 +17,8 @@
 #include "common/codec.h"
 #include "common/endian.h"
 #include "common/hacks.h"
-#include "common/hevc.h"
-#include "common/hevc_es_parser.h"
+#include "common/hevc/util.h"
+#include "common/hevc/es_parser.h"
 #include "common/strings/formatting.h"
 #include "merge/output_control.h"
 #include "output/p_hevc.h"
@@ -49,7 +49,7 @@ hevc_video_packetizer_c(generic_reader_c *p_reader,
   set_codec_private(m_ti.m_private_data);
 
   p.parser->normalize_parameter_sets(!mtx::hacks::is_engaged(mtx::hacks::DONT_NORMALIZE_PARAMETER_SETS));
-  p.parser->set_hevcc(m_hcodec_private);
+  p.parser->set_configuration_record(m_hcodec_private);
 }
 
 void
@@ -167,6 +167,8 @@ hevc_video_packetizer_c::flush_frames() {
     if (diff_to_default_duration < p.source_timestamp_resolution)
       duration = m_htrack_default_duration;
 
-    add_packet(std::make_shared<packet_t>(frame.m_data, frame.m_start, duration, frame.m_keyframe ? -1 : frame.m_start + frame.m_ref1));
+    add_packet(std::make_shared<packet_t>(frame.m_data, frame.m_start, duration,
+                                           frame.is_key_frame() ? -1 : frame.m_start + frame.m_ref1,
+                                          !frame.is_b_frame()   ? -1 : frame.m_start + frame.m_ref2));
   }
 }
