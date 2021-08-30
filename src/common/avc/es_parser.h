@@ -29,7 +29,6 @@ protected:
 
   std::optional<bool> m_current_key_frame_bottom_field;
 
-  std::vector<memory_cptr> m_extra_data;
   std::vector<sps_info_t> m_sps_info_list;
   std::vector<pps_info_t> m_pps_info_list;
 
@@ -39,7 +38,6 @@ protected:
 
 public:
   es_parser_c();
-  ~es_parser_c();
 
   bool has_timing_info() const {
     return !m_sps_info_list.empty() && m_sps_info_list[0].timing_info_valid();
@@ -75,8 +73,6 @@ public:
 
   bool headers_parsed() const;
 
-  void dump_info() const;
-
   virtual int64_t duration_for(mtx::avc_hevc::slice_info_t const &si) const override;
 
   bool parse_slice(memory_cptr const &nalu, mtx::avc_hevc::slice_info_t &si);
@@ -93,9 +89,9 @@ protected:
 
   int64_t duration_for_impl(unsigned int sps, bool field_pic_flag) const;
   virtual void calculate_frame_order() override;
+  virtual bool does_nalu_get_included_in_extra_data(memory_c const &nalu) const override;
 
   virtual void init_nalu_names() const override;
-
 };
 
 }

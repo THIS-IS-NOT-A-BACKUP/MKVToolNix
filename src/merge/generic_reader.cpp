@@ -77,17 +77,19 @@ generic_reader_c::demuxing_requested(char type,
                                      int64_t id,
                                      mtx::bcp47::language_c const &language)
   const {
-  auto const *tracks = 'v' == type ? &m_ti.m_vtracks
-                     : 'a' == type ? &m_ti.m_atracks
-                     : 's' == type ? &m_ti.m_stracks
-                     : 'b' == type ? &m_ti.m_btracks
-                     : 'T' == type ? &m_ti.m_track_tags
-                     :               nullptr;
+  static debugging_option_c s_debug{"demuxing_requested"};
 
-  if (!tracks)
-    mxerror(fmt::format("generic_reader_c::demuxing_requested: {1}", fmt::format(Y("Invalid track type {0}."), type)));
+  auto const &tracks = 'v' == type ? m_ti.m_vtracks
+                     : 'a' == type ? m_ti.m_atracks
+                     : 's' == type ? m_ti.m_stracks
+                     : 'b' == type ? m_ti.m_btracks
+                     :               m_ti.m_track_tags;
 
-  return tracks->selected(id, language);
+  auto result = tracks.selected(id, language);
+
+  mxdebug_if(s_debug, fmt::format("demuxing_requested? {4} type {0} id {1} language {2} item_selector {3}\n", type, id, language, tracks, result ? "yes" : "no"));
+
+  return result;
 }
 
 attach_mode_e
@@ -162,38 +164,18 @@ void
 generic_reader_c::check_track_ids_and_packetizers() {
   add_available_track_ids();
 
-  size_t r;
-  for (r = 0; m_requested_track_ids.size() > r; ++r) {
-    bool found = false;
-    size_t a;
-    for (a = 0; m_available_track_ids.size() > a; ++a)
-      if (m_requested_track_ids[r] == m_available_track_ids[a]) {
-        found = true;
-        break;
-      }
+  auto const available_ids = std::unordered_set<int64_t>{m_available_track_ids.begin(), m_available_track_ids.end()};
+  auto const not_found     = available_ids.end();
 
-    if (!found)
-      mxwarn_fn(m_ti.m_fname,
-                fmt::format(Y("A track with the ID {0} was requested but not found in the file. The corresponding option will be ignored.\n"),
-                            m_requested_track_ids[r]));
-  }
+  for (auto requested_id : m_requested_track_ids)
+    if (available_ids.find(requested_id) == not_found)
+      mxwarn_fn(m_ti.m_fname, fmt::format(Y("A track with the ID {0} was requested but not found in the file. The corresponding option will be ignored.\n"), requested_id));
 }
 
 void
 generic_reader_c::add_requested_track_id(int64_t id) {
-  if (-1 == id)
-    return;
-
-  bool found = false;
-  size_t i;
-  for (i = 0; i < m_requested_track_ids.size(); i++)
-    if (m_requested_track_ids[i] == id) {
-      found = true;
-      break;
-    }
-
-  if (!found)
-    m_requested_track_ids.push_back(id);
+  if (-1 != id)
+    m_requested_track_ids.insert(id);
 }
 
 int64_t

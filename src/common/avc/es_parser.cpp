@@ -18,10 +18,10 @@
 #include "common/avc/es_parser.h"
 #include "common/bit_reader.h"
 #include "common/byte_buffer.h"
-#include "common/checksums/base.h"
 #include "common/endian.h"
 #include "common/frame_timing.h"
 #include "common/hacks.h"
+#include "common/list_utils.h"
 #include "common/mpeg.h"
 #include "common/strings/formatting.h"
 
@@ -30,35 +30,7 @@ namespace mtx::avc {
 es_parser_c::es_parser_c()
   : mtx::avc_hevc::es_parser_c{"avc"s, 11, 13}
 {
-  if (m_debug_nalu_types || debugging_c::requested("avc_statistics"))
-    init_nalu_names();
-}
-
-es_parser_c::~es_parser_c() {
-  mxdebug_if(m_debug_timestamps, fmt::format("stream_position {0} parsed_position {1}\n", m_stream_position, m_parsed_position));
-
-  if (!debugging_c::requested("avc_statistics"))
-    return;
-
-  mxdebug(fmt::format("AVC statistics: #frames: out {0} discarded {1} #timestamps: in {2} generated {3} discarded {4} num_fields: {5} num_frames: {6} num_sei_nalus: {7} num_idr_slices: {8}\n",
-                      m_stats.num_frames_out,   m_stats.num_frames_discarded, m_stats.num_timestamps_in, m_stats.num_timestamps_generated, m_stats.num_timestamps_discarded,
-                      m_stats.num_field_slices, m_stats.num_frame_slices,     m_stats.num_sei_nalus,     m_stats.num_idr_slices));
-
-  static const char *s_slice_type_names[] = {
-    "P",  "B",  "I",  "SP",  "SI",
-    "P2", "B2", "I2", "SP2", "SI2",
-    "unknown"
-  };
-
-  mxdebug("mpeg4::p10: Number of NALUs by type:\n");
-  for (int i = 0, size = m_stats.num_nalus_by_type.size(); i < size; ++i)
-    if (0 != m_stats.num_nalus_by_type[i])
-      mxdebug(fmt::format("  {0}: {1}\n", get_nalu_type_name(i + 1), m_stats.num_nalus_by_type[i]));
-
-  mxdebug("mpeg4::p10: Number of slices by type:\n");
-  for (int i = 0, size = m_stats.num_slices_by_type.size(); i < size; ++i)
-    if (0 != m_stats.num_slices_by_type[i])
-      mxdebug(fmt::format("  {0}: {1}\n", s_slice_type_names[i], m_stats.num_slices_by_type[i]));
+  init_nalu_names();
 }
 
 bool
@@ -93,6 +65,45 @@ es_parser_c::clear() {
   m_unparsed_buffer.reset();
   m_have_incomplete_frame = false;
   m_parsed_position       = 0;
+}
+
+void
+es_parser_c::flush_incomplete_frame() {
+  if (!m_have_incomplete_frame || !m_configuration_record_ready)
+    return;
+
+  m_frames.push_back(m_incomplete_frame);
+  m_incomplete_frame.clear();
+  m_have_incomplete_frame = false;
+}
+
+bool
+es_parser_c::does_nalu_get_included_in_extra_data(memory_c const &nalu)
+  const {
+  auto nalu_type = (nalu.get_buffer())[0] & 0x1f;
+  return mtx::included_in(nalu_type, NALU_TYPE_SEQ_PARAM, NALU_TYPE_PIC_PARAM);
+}
+
+void
+es_parser_c::add_sps_and_pps_to_extra_data() {
+  mxdebug_if(m_debug_sps_pps_changes, fmt::format("avc: adding all SPS & PPS before key frame due to changes from AVCC\n"));
+
+  m_extra_data_pre.erase(std::remove_if(m_extra_data_pre.begin(), m_extra_data_pre.end(), [this](memory_cptr const &nalu) -> bool {
+    if (nalu->get_size() < static_cast<std::size_t>(m_nalu_size_length + 1))
+      return true;
+
+    auto const type = *(nalu->get_buffer() + m_nalu_size_length) & 0x1f;
+    return (type == NALU_TYPE_SEQ_PARAM) || (type == NALU_TYPE_PIC_PARAM);
+  }), m_extra_data_pre.end());
+
+  std::vector<memory_cptr> tmp;
+  tmp.reserve(m_extra_data_pre.size() + m_sps_list.size() + m_pps_list.size());
+
+  std::transform(m_sps_list.begin(), m_sps_list.end(), std::back_inserter(tmp), [this](memory_cptr const &nalu) { return create_nalu_with_size(nalu); });
+  std::transform(m_pps_list.begin(), m_pps_list.end(), std::back_inserter(tmp), [this](memory_cptr const &nalu) { return create_nalu_with_size(nalu); });
+  tmp.insert(tmp.end(), m_extra_data_pre.begin(), m_extra_data_pre.end());
+
+  m_extra_data_pre = std::move(tmp);
 }
 
 bool
@@ -134,42 +145,10 @@ es_parser_c::flush_decision(mtx::avc_hevc::slice_info_t &si,
 }
 
 void
-es_parser_c::flush_incomplete_frame() {
-  if (!m_have_incomplete_frame || !m_configuration_record_ready)
-    return;
-
-  m_frames.push_back(m_incomplete_frame);
-  m_incomplete_frame.clear();
-  m_have_incomplete_frame = false;
-}
-
-void
-es_parser_c::add_sps_and_pps_to_extra_data() {
-  mxdebug_if(m_debug_sps_pps_changes, fmt::format("mpeg4::p10: adding all SPS & PPS before key frame due to changes from AVCC\n"));
-
-  m_extra_data.erase(std::remove_if(m_extra_data.begin(), m_extra_data.end(), [this](memory_cptr const &nalu) -> bool {
-    if (nalu->get_size() < static_cast<std::size_t>(m_nalu_size_length + 1))
-      return true;
-
-    auto const type = *(nalu->get_buffer() + m_nalu_size_length) & 0x1f;
-    return (type == NALU_TYPE_SEQ_PARAM) || (type == NALU_TYPE_PIC_PARAM);
-  }), m_extra_data.end());
-
-  std::vector<memory_cptr> tmp;
-  tmp.reserve(m_extra_data.size() + m_sps_list.size() + m_pps_list.size());
-
-  std::transform(m_sps_list.begin(), m_sps_list.end(), std::back_inserter(tmp), [this](memory_cptr const &nalu) { return create_nalu_with_size(nalu); });
-  std::transform(m_pps_list.begin(), m_pps_list.end(), std::back_inserter(tmp), [this](memory_cptr const &nalu) { return create_nalu_with_size(nalu); });
-  tmp.insert(tmp.end(), m_extra_data.begin(), m_extra_data.end());
-
-  m_extra_data = std::move(tmp);
-}
-
-void
 es_parser_c::handle_slice_nalu(memory_cptr const &nalu,
                                uint64_t nalu_pos) {
   if (!m_configuration_record_ready) {
-    m_unhandled_nalus.emplace_back(nalu, nalu_pos);
+    add_nalu_to_unhandled_nalus(nalu, nalu_pos);
     return;
   }
 
@@ -276,7 +255,7 @@ es_parser_c::handle_sps_nalu(memory_cptr const &nalu) {
       m_configuration_record_changed = true;
 
   } else if (m_sps_info_list[i].checksum != sps_info.checksum) {
-    mxdebug_if(m_debug_sps_pps_changes, fmt::format("mpeg4::p10: SPS ID {0:04x} changed; checksum old {1:04x} new {2:04x}\n", sps_info.id, m_sps_info_list[i].checksum, sps_info.checksum));
+    mxdebug_if(m_debug_sps_pps_changes, fmt::format("avc: SPS ID {0:04x} changed; checksum old {1:04x} new {2:04x}\n", sps_info.id, m_sps_info_list[i].checksum, sps_info.checksum));
 
     cleanup();
 
@@ -289,7 +268,7 @@ es_parser_c::handle_sps_nalu(memory_cptr const &nalu) {
   } else
     use_sps_info = false;
 
-  m_extra_data.push_back(create_nalu_with_size(parsed_nalu));
+  add_nalu_to_extra_data(create_nalu_with_size(parsed_nalu));
 
   if (use_sps_info && m_debug_sps_info)
     sps_info.dump();
@@ -331,7 +310,7 @@ es_parser_c::handle_pps_nalu(memory_cptr const &nalu) {
       m_configuration_record_changed = true;
 
   } else if (m_pps_info_list[i].checksum != pps_info.checksum) {
-    mxdebug_if(m_debug_sps_pps_changes, fmt::format("mpeg4::p10: PPS ID {0:04x} changed; checksum old {1:04x} new {2:04x}\n", pps_info.id, m_pps_info_list[i].checksum, pps_info.checksum));
+    mxdebug_if(m_debug_sps_pps_changes, fmt::format("avc: PPS ID {0:04x} changed; checksum old {1:04x} new {2:04x}\n", pps_info.id, m_pps_info_list[i].checksum, pps_info.checksum));
 
     if (m_pps_info_list[i].sps_id != pps_info.sps_id)
       cleanup();
@@ -343,7 +322,7 @@ es_parser_c::handle_pps_nalu(memory_cptr const &nalu) {
       m_configuration_record_changed = true;
   }
 
-  m_extra_data.push_back(create_nalu_with_size(nalu));
+  add_nalu_to_extra_data(create_nalu_with_size(nalu));
 }
 
 void
@@ -430,7 +409,7 @@ es_parser_c::handle_nalu(memory_cptr const &nalu,
         m_configuration_record_ready = true;
         flush_unhandled_nalus();
       }
-      m_extra_data.push_back(create_nalu_with_size(nalu));
+      add_nalu_to_extra_data(create_nalu_with_size(nalu));
 
       if (NALU_TYPE_SEI == type)
         handle_sei_nalu(nalu);
@@ -599,10 +578,10 @@ es_parser_c::calculate_frame_order() {
 memory_cptr
 es_parser_c::create_nalu_with_size(const memory_cptr &src,
                                    bool add_extra_data) {
-  auto nalu = mtx::mpeg::create_nalu_with_size(src, m_nalu_size_length, add_extra_data ? m_extra_data : std::vector<memory_cptr>{});
+  auto nalu = mtx::mpeg::create_nalu_with_size(src, m_nalu_size_length, add_extra_data ? m_extra_data_pre : std::vector<memory_cptr>{});
 
   if (add_extra_data)
-    m_extra_data.clear();
+    m_extra_data_pre.clear();
 
   return nalu;
 }
@@ -625,21 +604,6 @@ es_parser_c::set_configuration_record(memory_cptr const &bytes) {
 }
 
 void
-es_parser_c::dump_info()
-  const {
-  mxinfo("Dumping m_frames_out:\n");
-  for (auto &frame : m_frames_out) {
-    mxinfo(fmt::format("size {0} key {1} start {2} end {3} ref1 {4} adler32 0x{5:08x}\n",
-                       frame.m_data->get_size(),
-                       frame.m_keyframe,
-                       mtx::string::format_timestamp(frame.m_start),
-                       mtx::string::format_timestamp(frame.m_end),
-                       mtx::string::format_timestamp(frame.m_ref1),
-                       mtx::checksum::calculate_as_uint(mtx::checksum::algorithm_e::adler32, *frame.m_data)));
-  }
-}
-
-void
 es_parser_c::init_nalu_names()
   const {
   if (!ms_nalu_names_by_type.empty())
@@ -657,6 +621,18 @@ es_parser_c::init_nalu_names()
   ms_nalu_names_by_type[NALU_TYPE_END_OF_SEQ]    = "end of sequence";
   ms_nalu_names_by_type[NALU_TYPE_END_OF_STREAM] = "end of stream";
   ms_nalu_names_by_type[NALU_TYPE_FILLER_DATA]   = "filler";
+
+  ms_slice_names_by_type[0]                      = "P";
+  ms_slice_names_by_type[1]                      = "B";
+  ms_slice_names_by_type[2]                      = "I";
+  ms_slice_names_by_type[3]                      = "SP";
+  ms_slice_names_by_type[4]                      = "SI";
+  ms_slice_names_by_type[5]                      = "P2";
+  ms_slice_names_by_type[6]                      = "B2";
+  ms_slice_names_by_type[7]                      = "I2";
+  ms_slice_names_by_type[8]                      = "SP2";
+  ms_slice_names_by_type[9]                      = "SI2";
+  ms_slice_names_by_type[10]                     = "unknown";
 }
 
 }
