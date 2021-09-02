@@ -1,5 +1,12 @@
 # Version ?
 
+## New features and enhancements
+
+* MKVToolNix GUI: chapter editor: removed the support for explicitly setting
+  the legacy country elements. Instead the legacy country elements are derived
+  from the region parts of the IETF BCP 47 languages. Part of the
+  implementation of #3193.
+
 ## Bug fixes
 
 * mkvmerge: Matroska reader, TrueHD: mkvmerge will now probe much more TrueHD
@@ -8,6 +15,26 @@
   source file's the result of splitting between sync frames.
 * mkvmerge: AVC/H.264 parser: re-added the hack `--engage
   all_i_slices_are_key_frames` which was accidentally removed in release v61.
+* mkvmerge, MKVToolNix GUI's chapter editor: IETF BCP 47/RFC 5646 language
+  tags: when reading chapters from MPLS playlist files, the `ChapLanguageIETF`
+  element will now be set to the configured default chapter language, not just
+  the legacy `ChapterLanguage` element. Part of the fix of #3193.
+* mkvmerge, mkvpropedit, MKVToolNix GUI's chapter editor: IETF BCP 47 elements
+  will now always be created before writing chapters unless IETF BCP 47
+  elements are disabled. Part of the fix of #3193.
+* mkvmerge, mkvpropedit, MKVToolNix GUI's chapter editor: when a chapter
+  display element contains legacy language & country elements but no IETF BCP
+  47 elements and IETF BCP 47 elements aren't disabled, the IETF BCP 47
+  elements created will contain the region from the legacy element. Part of
+  the fix of #3193.
+* mkvmerge, mkvpropedit, MKVToolNix GUI's chapter editor: Legacy country
+  elements are now created when IETF BCP 47 elements are present & contain a
+  region code allowed in legacy country elements. Part of the fix of #3193.
+* mkvmerge: fixed a crash when splitting by chapters is enabled but there are
+  no chapters at all. Part of the fix of #3198.
+* mkvmerge: the error message when trying to split by a chapter number that
+  doesn't exist contained the wrong number of chapters that actually do
+  exist. Part of the fix of #3198.
 
 
 # Version 61.0.0 "So" 2021-08-30

@@ -1125,6 +1125,7 @@ calc_max_chapter_size() {
   // Step 2: Fix the mandatory elements and count the size of all chapters.
   s_max_chapter_size = 0;
   if (g_kax_chapters) {
+    mtx::chapters::unify_legacy_and_bcp47_languages_and_countries(*g_kax_chapters);
     fix_mandatory_elements(g_kax_chapters.get());
     g_kax_chapters->UpdateSize(true);
     s_max_chapter_size += g_kax_chapters->ElementSize();
@@ -1391,6 +1392,9 @@ create_next_output_file() {
 void
 add_split_points_from_remainig_chapter_numbers() {
   if (g_splitting_by_chapter_numbers.empty() && !g_splitting_by_all_chapters)
+    return;
+
+  if (!g_kax_chapters)
     return;
 
   std::vector<int64_t> chapter_start_timestamps;

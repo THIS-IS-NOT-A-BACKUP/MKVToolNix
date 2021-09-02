@@ -182,9 +182,9 @@ ChapterModel::chapterNameForLanguage(KaxChapterAtom &chapter,
     if (!kDisplay)
       continue;
 
-    auto lists = NameModel::effectiveLanguagesAndCountriesForDisplay(*kDisplay);
-
+    auto lists          = NameModel::effectiveLanguagesForDisplay(*kDisplay);
     auto actualLanguage = mtx::chapters::get_language_from_display(*kDisplay, "eng"s);
+
     if (   language.empty()
         || (std::find_if(lists.languageCodes.begin(), lists.languageCodes.end(), [&language](auto const &actualLanguage) {
               return (language == actualLanguage.get_language())
@@ -394,6 +394,8 @@ ChaptersPtr
 ChapterModel::allChapters() {
   auto chapters = std::make_shared<KaxChapters>();
   cloneElementsForRetrieval(QModelIndex{}, *chapters);
+
+  mtx::chapters::unify_legacy_and_bcp47_languages_and_countries(*chapters);
 
   return chapters;
 }
