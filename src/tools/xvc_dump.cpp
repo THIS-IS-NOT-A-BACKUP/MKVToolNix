@@ -51,10 +51,10 @@ setup_help() {
     "                         deriving its type from its file name extension\n"
     "  -a, --annex-b          Treat input file as an ITU-T H.264/H.265 Annex B\n"
     "                         bitstream instead of trying to derive the type\n"
-    "                         from the content"
+    "                         from the content\n"
     "  -i, --iso-14496-15     Treat input file as an ISO/IEC 14496-15 bitstream\n"
     "                         (NALUs prefixed with a four-byte size field) instead\n"
-    "                         of trying to derive the type from the content"
+    "                         of trying to derive the type from the content\n"
     "  -p, --portable-format  Output a format that's comparable with e.g. 'diff'\n"
     "                         between the ISO/IEC 14496-15 bitstream and ITU-T\n"
     "                         H.264/H.265 Annex B bitsream variants by not\n"
@@ -118,8 +118,10 @@ parse_args(std::vector<std::string> &args) {
       file_name = arg;
   }
 
-  if (file_name.empty())
+  if (file_name.empty()) {
+    mxinfo(fmt::format("{0}\n", mtx::cli::g_usage_text));
     mxerror(Y("No file name given\n"));
+  }
 
   if (s_codec_type == codec_type_e::unknown) {
     auto file_name_q = Q(file_name);
