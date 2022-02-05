@@ -7,12 +7,30 @@
   selected tracks, e.g. `Ctrl+Alt+F, D` (that's `Ctrl` and `Alt` with `F`
   simultaneously followed by `D` without any other key pressed) for toggling
   the "default track" flag. Part of the implementation of #3253.
-* MKVToolNix GUI: multiplexer: added menu entries & keyboard shortcuts for
-  setting the language of the currently selected tracks to one from a
-  configurable list of languages. The shortcuts used are `Ctrl+Alt+A, 1`
-  through `Ctrl+Alt+A, 0` for the first ten entries of that list (that's
+* MKVToolNix GUI: multiplexer, header editor: added menu entries & keyboard
+  shortcuts for setting the language of the currently selected tracks to one
+  from a configurable list of languages. The shortcuts used are `Ctrl+Alt+A,
+  1` through `Ctrl+Alt+A, 0` for the first ten entries of that list (that's
   `Ctrl` and `Alt` with `A` simultaneously followed by a digit without any
   other key pressed). Part of the implementation of #3253.
+* mkvmerge: MP4 reader: `mkvmerge` will now evaluate the `flags` field of the
+  track header atom (`tkhd`) and set the track's "enabled" flag
+  accordingly. Implements #3272.
+* mkvmerge: added a new option `--track-enabled-flag` to set or unset the
+  "track enabled" track header flag.
+* MKVToolNix GUI: multiplexer: added support for the "track enabled" track
+  header flag.
+* mkvmerge: the options `--default-track` and `--forced-track` have been
+  renamed to `--default-track-flag` and `--forced-display-flag` respectively
+  for improved consistency with other option names & the wording used in the
+  GUI. However, the old names will be supported and recognized
+  indefinitely. What will remain unchanged is the property names for those
+  flags in mkvmerge's identification output. Existing third-party programs
+  will continue working as they are.
+* MKVToolNix GUI: chapter editor: if the user enters commas in start or end
+  timestamps they will automatically be changed to points as the decimal
+  separator, allowing for easier copy & paste from other
+  programs/sources. Implements #3273.
 
 ## Bug fixes
 
