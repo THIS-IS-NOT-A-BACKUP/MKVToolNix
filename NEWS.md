@@ -1,7 +1,31 @@
 # Version ?
 
+## Bug fixes
+
+* MKVToolNix GUI: multiplexer: fixed several issues with the tab order of
+  elements in the "properties" pane and the "output" tab. Also fixed the
+  language display widgets (e.g. "track language" in the "properties" pane)
+  never receiving tab focus. Fixes #3274.
+
+
+# Version 65.0.0 "Too Much" 2022-02-06
+
 ## New features and enhancements
 
+* mkvmerge: the options `--default-track` and `--forced-track` have been
+  renamed to `--default-track-flag` and `--forced-display-flag` respectively
+  for improved consistency with other option names & the wording used in the
+  GUI. However, the old names will be supported and recognized
+  indefinitely. What will remain unchanged is the property names for those
+  flags in mkvmerge's identification output. Existing third-party programs
+  will continue working as they are.
+* mkvmerge: added a new option `--track-enabled-flag` to set or unset the
+  "track enabled" track header flag.
+* mkvmerge: MP4 reader: `mkvmerge` will now evaluate the `flags` field of the
+  track header atom (`tkhd`) and set the track's "enabled" flag
+  accordingly. Implements #3272.
+* MKVToolNix GUI: multiplexer: added support for the "track enabled" track
+  header flag.
 * MKVToolNix GUI: multiplexer, header editor: added several menu entries &
   keyboard shortcuts for toggling various track flags of the currently
   selected tracks, e.g. `Ctrl+Alt+F, D` (that's `Ctrl` and `Alt` with `F`
@@ -13,24 +37,13 @@
   1` through `Ctrl+Alt+A, 0` for the first ten entries of that list (that's
   `Ctrl` and `Alt` with `A` simultaneously followed by a digit without any
   other key pressed). Part of the implementation of #3253.
-* mkvmerge: MP4 reader: `mkvmerge` will now evaluate the `flags` field of the
-  track header atom (`tkhd`) and set the track's "enabled" flag
-  accordingly. Implements #3272.
-* mkvmerge: added a new option `--track-enabled-flag` to set or unset the
-  "track enabled" track header flag.
-* MKVToolNix GUI: multiplexer: added support for the "track enabled" track
-  header flag.
-* mkvmerge: the options `--default-track` and `--forced-track` have been
-  renamed to `--default-track-flag` and `--forced-display-flag` respectively
-  for improved consistency with other option names & the wording used in the
-  GUI. However, the old names will be supported and recognized
-  indefinitely. What will remain unchanged is the property names for those
-  flags in mkvmerge's identification output. Existing third-party programs
-  will continue working as they are.
 * MKVToolNix GUI: chapter editor: if the user enters commas in start or end
   timestamps they will automatically be changed to points as the decimal
   separator, allowing for easier copy & paste from other
   programs/sources. Implements #3273.
+* MKVToolNix: header editor: the selected track or attached file can now be
+  moved up & down with the keyboard shortcuts `Ctrl+Up` & `Ctrl+Down`
+  respectively. Part of the implementation of #3253.
 
 ## Bug fixes
 
