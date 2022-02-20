@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mkvtoolnix\n"
 "Report-Msgid-Bugs-To: mo@bunkus.online\n"
-"POT-Creation-Date: 2022-02-05 16:33+0100\n"
-"PO-Revision-Date: 2022-02-05 16:35+0100\n"
+"POT-Creation-Date: 2022-02-20 11:24+0100\n"
+"PO-Revision-Date: 2022-02-12 12:26+0100\n"
 "Last-Translator: Moritz Bunkus <mo@bunkus.online>\n"
 "Language-Team: German <mo@bunkus.online>\n"
 "Language: de\n"
@@ -36,8 +36,8 @@ msgstr "65.0.0"
 #: doc/man/mkvmerge.xml:7
 #: doc/man/mkvpropedit.xml:7
 #: doc/man/mkvtoolnix-gui.xml:7
-msgid "2021-12-27"
-msgstr "2021-12-27"
+msgid "2022-02-06"
+msgstr "2022-02-06"
 
 #. type: Content of the mkvmerge entity
 #: doc/man/mkvextract.xml:9
@@ -4561,10 +4561,11 @@ msgstr ""
 "      String (UTF-8 string)\n"
 "      Binary (binary)"
 
-#. type: Content of: <refentry><refsect1><title>
+#. type: Content of: <refentry><refsect1><refsect2><title>
 #: doc/man/mkvmerge.xml:3176
-msgid "The segment info XML files"
-msgstr "Die Segmentinformations-XML-Dateien"
+#: doc/man/mkvpropedit.xml:517
+msgid "Segment information"
+msgstr "Segmentinformation"
 
 #. type: Content of: <refentry><refsect1><para>
 #: doc/man/mkvmerge.xml:3179
@@ -5130,11 +5131,6 @@ msgstr "Selektoren zur Bearbeitung"
 msgid "The <link linkend=\"mkvpropedit.description.edit\"><option>--edit</option></link> option sets the &matroska; file section (segment information or a certain track's headers) that all following <link linkend=\"mkvpropedit.description.add\">add</link>, <link linkend=\"mkvpropedit.description.set\">set</link> and <link linkend=\"mkvpropedit.description.delete\">delete</link> actions operate on. This stays valid until the next <link linkend=\"mkvpropedit.description.edit\"><option>--edit</option></link> option is found. The argument to this option is called the edit selector."
 msgstr "Die Option <link linkend=\"mkvpropedit.description.edit\"><option>--edit</option></link> setzt den &matroska;-Dateiabschnitt (Segmentinformationen oder die Kopfdaten einer bestimmten Spur) so, dass alle nachfolgenden <link linkend=\"mkvpropedit.description.add\">add</link>-, <link linkend=\"mkvpropedit.description.set\">set</link>- und <link linkend=\"mkvpropedit.description.delete\">delete</link>-Aktionen damit arbeiten. Dies bleibt gültig, bis die nächste <link linkend=\"mkvpropedit.description.edit\"><option>--edit</option></link>-Option gefunden wird. Das Argument für diese Option wird Selektor zur Bearbeitung genannt."
 
-#. type: Content of: <refentry><refsect1><refsect2><title>
-#: doc/man/mkvpropedit.xml:517
-msgid "Segment information"
-msgstr "Segmentinformation"
-
 #. type: Content of: <refentry><refsect1><refsect2><para>
 #: doc/man/mkvpropedit.xml:519
 msgid "The segment information can be selected with one of these three words: '<literal>info</literal>', '<literal>segment_info</literal>' or '<literal>segmentinfo</literal>'. It contains properties like the segment title or the segment <abbrev>UID</abbrev>."
@@ -5577,6 +5573,12 @@ msgstr "("
 msgid ")"
 msgstr ")"
 
+#~ msgid "The segment info XML files"
+#~ msgstr "Die Segmentinformations-XML-Dateien"
+
+#~ msgid "2021-12-27"
+#~ msgstr "2021-12-27"
+
 #~ msgid "<option>--forced-track</option> <parameter>TID<optional>:bool</optional></parameter>"
 #~ msgstr "<option>--forced-track</option> <parameter>TID<optional>:bool</optional></parameter>"
 
@@ -5628,9 +5630,6 @@ msgstr ")"
 
 #~ msgid "PGS bitmap subtitle files as found on BluRay discs"
 #~ msgstr "PGS-Bitmap-Untertiteldateien, wie sie auf Blu-Ray-Discs zu finden sind"
-
-#~ msgid "2019-12-06"
-#~ msgstr "2019-12-06"
 
 #~ msgid "2019-08-24"
 #~ msgstr "2019-08-24"
