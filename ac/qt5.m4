@@ -71,7 +71,6 @@ check_qt5() {
 
 
   if test x"$enable_static_qt" = "xyes"; then
-    AC_DEFINE(HAVE_STATIC_QT,,[define if building against a static Qt library])
     QT_PKG_CONFIG_STATIC=--static
   else
     QT_PKG_CONFIG_STATIC=
@@ -230,6 +229,7 @@ EOF
   AC_MSG_CHECKING(for Qt 5)
 
   if test x"$problem" = x; then
+    AC_DEFINE(HAVE_QMEDIAPLAYER, 1, [Define to 1 if you have the QMediaPlayer header file.])
     AC_DEFINE(HAVE_QT, 1, [Define if Qt is present])
     AC_MSG_RESULT(yes)
     have_qt5=yes
@@ -244,7 +244,7 @@ AC_ARG_ENABLE([qt5],
   AC_HELP_STRING([--enable-qt5],[compile with Qt 5 (yes if Qt 6 is not found)]),
   [],[enable_qt5=yes])
 AC_ARG_ENABLE([static_qt],
-  AC_HELP_STRING([--enable-static-qt],[link to static versions of the Qt 5 library (no)]))
+  AC_HELP_STRING([--enable-static-qt],[link to static versions of the Qt library (no)]))
 AC_ARG_WITH([qt_pkg_config_modules],
   AC_HELP_STRING([--with-qt-pkg-config-modules=modules],[gather include/link flags for additional Qt 5 modules from pkg-config]))
 AC_ARG_WITH([qt_pkg_config],
