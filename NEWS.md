@@ -1,11 +1,20 @@
 # Version ?
 
+## New features and enhancements
+
+* mkvpropedit: added a new option `--chapter-charset` allowing the user to
+  specify the character set to use when reading the following chapter
+  file. Implements #3276.
+
 ## Bug fixes
 
 * MKVToolNix GUI: multiplexer: fixed several issues with the tab order of
   elements in the "properties" pane and the "output" tab. Also fixed the
   language display widgets (e.g. "track language" in the "properties" pane)
   never receiving tab focus. Fixes #3274.
+* mkvmerge: Ogg/OGM reader: mkvmerge will no longer abort with an exception
+  when it encounters Vorbis comments that contain data that isn't valid
+  UTF-8. Fixes #3290.
 
 
 # Version 65.0.0 "Too Much" 2022-02-06
