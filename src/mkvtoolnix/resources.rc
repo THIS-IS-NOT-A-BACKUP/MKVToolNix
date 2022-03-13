@@ -1,6 +1,6 @@
 #include "winuser.h"
 
-MATROSKAICON ICON  "../../share/icons/windows/mkvmerge.ico"
+mkvtoolnix ICON  "../../share/icons/windows/mkvtoolnix-gui.ico"
 
 1 RT_MANIFEST "manifest.xml"
 
@@ -15,11 +15,11 @@ BEGIN
     BLOCK "040904B0"
     BEGIN
       VALUE "CompanyName", "Moritz Bunkus"
-      VALUE "FileDescription", "mkvmerge"
+      VALUE "FileDescription", "mkvtoolnix"
       VALUE "FileVersion", "66.0.0"
-      VALUE "InternalName", "mkvmerge"
+      VALUE "InternalName", "mkvtoolnix"
       VALUE "LegalCopyright", "Released under the GNU Pulic License http://www.gnu.org/licenses/gpl-2.0.html"
-      VALUE "OriginalFilename", "mkvmerge"
+      VALUE "OriginalFilename", "mkvtoolnix"
       VALUE "ProductName", "MKVToolNix"
       VALUE "ProductVersion", "66.0.0"
     END
