@@ -8,13 +8,10 @@
    Written by Moritz Bunkus <moritz@bunkus.org>.
 */
 
-#pragma once
-
-#include "common/os.h"
-
 #include "common/common_pch.h"
 
-#include "common/doc_type_version_handler.h"
+#include "propedit/globals.h"
 
-extern std::unique_ptr<mtx::doc_type_version_handler_c> g_doc_type_version_handler;
-extern std::unordered_map<uint64_t, uint64_t> g_track_uid_changes;
+std::unique_ptr<mtx::doc_type_version_handler_c> g_doc_type_version_handler;
+std::unordered_map<uint64_t, uint64_t> g_track_uid_changes;
+bool g_use_legacy_font_mime_types{};
