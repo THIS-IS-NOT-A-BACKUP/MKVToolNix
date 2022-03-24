@@ -240,6 +240,30 @@ convert66_0_0LanguageShortcuts() {
   reg->endGroup();               // languageShortcuts
 }
 
+void
+convert67_0_0AttachmentsAlwaysSkipForExistingName(version_number_t const &writtenByVersion) {
+  if (writtenByVersion >= version_number_t{"66.0.0.18"})
+    return;
+
+  auto reg = Settings::registry();
+
+  reg->beginGroup(s_grpSettings);
+  reg->setValue(s_valMergeAttachmentsAlwaysSkipForExistingName, false);
+  reg->endGroup();
+}
+
+void
+convert67_0_0UseISO639_3Languages(version_number_t const &writtenByVersion) {
+  if (writtenByVersion >= version_number_t{"66.0.0.35"})
+    return;
+
+  auto reg = Settings::registry();
+
+  reg->beginGroup(s_grpSettings);
+  reg->setValue(s_valUseISO639_3Languages, true);
+  reg->endGroup();
+}
+
 } // anonymous namespace
 
 QString
@@ -423,6 +447,8 @@ Settings::convertOldSettings() {
   convert60_0_0DerivingTrackLanguagesBoundaryChars(writtenByVersion);
   convert60_0_0ProcessPriority(writtenByVersion);
   convert66_0_0LanguageShortcuts();
+  convert67_0_0AttachmentsAlwaysSkipForExistingName(writtenByVersion);
+  convert67_0_0UseISO639_3Languages(writtenByVersion);
 }
 
 void
@@ -457,7 +483,7 @@ Settings::load() {
   m_oftenUsedLanguagesOnly                    = reg.value(s_valOftenUsedLanguagesOnly,                                                         false).toBool();
   m_oftenUsedRegionsOnly                      = reg.value(s_valOftenUsedRegionsOnly,                                                           false).toBool();
   m_oftenUsedCharacterSetsOnly                = reg.value(s_valOftenUsedCharacterSetsOnly,                                                     false).toBool();
-  m_useISO639_3Languages                      = reg.value(s_valUseISO639_3Languages,                                                           false).toBool();
+  m_useISO639_3Languages                      = reg.value(s_valUseISO639_3Languages,                                                           true).toBool();
 
   m_scanForPlaylistsPolicy                    = static_cast<ScanForPlaylistsPolicy>(reg.value(s_valScanForPlaylistsPolicy,                     static_cast<int>(AskBeforeScanning)).toInt());
   m_minimumPlaylistDuration                   = reg.value(s_valMinimumPlaylistDuration,                                                        120).toUInt();

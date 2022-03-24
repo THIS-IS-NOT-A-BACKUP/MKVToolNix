@@ -520,16 +520,28 @@ language_c::get_iso639_alpha_3_code()
 }
 
 std::string
-language_c::get_iso639_2_alpha_3_code_or(std::string const &value_if_invalid)
+language_c::get_closest_iso639_2_alpha_3_code()
   const noexcept {
   if (!m_valid || m_language.empty())
-    return value_if_invalid;
+    return "und"s;
 
   auto language = mtx::iso639::look_up(m_language);
-  if (language && language->is_part_of_iso639_2)
+  if (!language)
+    return "und"s;
+
+  if (language->is_part_of_iso639_2)
     return language->alpha_3_code;
 
-  return value_if_invalid;
+  auto extlang = mtx::iana::language_subtag_registry::look_up_extlang(language->alpha_3_code);
+  if (!extlang || extlang->prefixes.empty())
+    return "und"s;
+
+  auto prefix_language = mtx::iso639::look_up(extlang->prefixes.front());
+
+  if (prefix_language && prefix_language->is_part_of_iso639_2)
+    return prefix_language->alpha_3_code;
+
+  return "und"s;
 }
 
 language_c &
