@@ -21,6 +21,8 @@
   element to `chi`. Part of the implementation of #3307.
 * MKVToolNix GUI: IETF BCP 47/RFC 5646 language tags: ISO 639-3 and 639-5
   languages will now be used by default. Part of the implementation of #3307.
+* all: IETF BCP 47/RFC 5646 language tags: grandfathered language tags are now
+  supported. Part of the implementation of #3307.
 
 ## Bug fixes
 
@@ -32,6 +34,11 @@
   enough for files that contain a lot of comments at the start like the
   included `example-chapters-2.xml`. The detection range was extended to 10
   KB. Fixes #3302.
+* all: IETF BCP 47/RFC 5646 language tags: variants aren't validated wrt. to
+  prefixes anymore as BCP 47 doesn't actually pose restrictions on them,
+  saying only that prefixes "are suitable sequences" for use with the
+  variants. What is now verified, though, is that no variant is used multiple
+  times within the same language tag. Part of the implementation/fix of #3307.
 
 
 # Version 66.0.0 "Josie" 2022-03-13

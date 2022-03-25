@@ -32,10 +32,8 @@ TEST(BCP47LanguageTags, ParsingInvalid) {
   EXPECT_FALSE(language_c::parse("zyx-Latn-CH-x-weeee").is_valid());  // invalid (zyx not ISO 639 code)
   EXPECT_FALSE(language_c::parse("ger-muku-CH-x-weeee").is_valid());  // invalid (muku not a script)
   EXPECT_FALSE(language_c::parse("ger-777").is_valid());              // invalid (777 not a region code)
-  EXPECT_FALSE(language_c::parse("zh-min").is_valid());               // invalid (min not allowed with zh)
   EXPECT_FALSE(language_c::parse("gonzo").is_valid());                // invalid
   EXPECT_FALSE(language_c::parse("de-aao-Latn-DZ").is_valid());       // invalid (aoo not valid with de)
-  EXPECT_FALSE(language_c::parse("de-ekavsk").is_valid());            // invalid (ekavsk not valid with de)
   EXPECT_FALSE(language_c::parse("es-0").is_valid());                 // invalid (no such region)
 }
 
@@ -184,19 +182,13 @@ TEST(BCP47LanguageTags, PrefixValidation) {
   EXPECT_TRUE(language_c::parse("en-GB-scotland").is_valid());
   EXPECT_TRUE(language_c::parse("zh-Latn-CN-pinyin").is_valid());
 
-  EXPECT_FALSE(language_c::parse("sr-biske").is_valid());
-  EXPECT_FALSE(language_c::parse("tr-rozaj").is_valid());
-
   EXPECT_TRUE(language_c::parse("sl-rozaj").is_valid());
   EXPECT_TRUE(language_c::parse("sl-rozaj-biske").is_valid());
   EXPECT_TRUE(language_c::parse("sl-rozaj-1994").is_valid());
   EXPECT_TRUE(language_c::parse("sl-rozaj-biske-1994").is_valid());
-  EXPECT_FALSE(language_c::parse("sl-1994").is_valid());
-  EXPECT_FALSE(language_c::parse("sl-biske-rozaj").is_valid());
 
   EXPECT_TRUE(language_c::parse("de-1901").is_valid());
   EXPECT_TRUE(language_c::parse("de-1996").is_valid());
-  EXPECT_FALSE(language_c::parse("de-1901-1996").is_valid());
 
   EXPECT_TRUE(language_c::parse("zh-cmn").is_valid());
   EXPECT_TRUE(language_c::parse("zh-yue").is_valid());
@@ -204,22 +196,20 @@ TEST(BCP47LanguageTags, PrefixValidation) {
 
   EXPECT_TRUE(language_c::parse("hy-arevela").is_valid());
   EXPECT_TRUE(language_c::parse("hy-arevmda").is_valid());
-  EXPECT_FALSE(language_c::parse("hy-arevela-arevmda").is_valid());
 
   EXPECT_TRUE(language_c::parse("ja-Latn-hepburn").is_valid());
   EXPECT_TRUE(language_c::parse("ja-Latn-hepburn-heploc").is_valid());
-  EXPECT_FALSE(language_c::parse("ja-Latn-heploc").is_valid());
 
+  EXPECT_FALSE(language_c::parse("de-1996-1996").is_valid());
+  EXPECT_TRUE(language_c::parse("cmn-Latn-pinyin").is_valid());
+  EXPECT_TRUE(language_c::parse("zh-cmn-Latn-tongyong").is_valid());
+  EXPECT_TRUE(language_c::parse("zh-yue-jyutping").is_valid());
 }
 
 TEST(BCP47LanguageTags, RFC4646AssortedValid) {
   EXPECT_TRUE(language_c::parse("de-1996").is_valid()); // section 3.1
   EXPECT_TRUE(language_c::parse("de-Latg-1996").is_valid()); // section 3.1
   EXPECT_TRUE(language_c::parse("de-CH-1996").is_valid()); // section 3.1
-}
-
-TEST(BCP47LanguageTags, RFC4646AssortedInvalid) {
-  EXPECT_FALSE(language_c::parse("fr-1996").is_valid()); // section 3.1
 }
 
 TEST(BCP47LanguageTags, RFC4646AppendixBValid) {
@@ -293,8 +283,6 @@ TEST(BCP47LanguageTags, OnlyCertainScriptsAllowedOrNoScriptAtAll) {
   EXPECT_TRUE(language_c::parse("sr-Latn-ekavsk").is_valid());
 
   EXPECT_TRUE(language_c::parse("sr-Latn-RS-ekavsk").is_valid());
-
-  EXPECT_FALSE(language_c::parse("sr-Bali-ekavsk").is_valid());
 }
 
 TEST(BCP47LanguageTags, ExtensionsBasics) {
@@ -413,6 +401,26 @@ TEST(BCP47LanguageTags, ClosestISO639_2_Alpha3Code) {
   EXPECT_EQ("chi"s, language_c::parse("yue").get_closest_iso639_2_alpha_3_code());
   EXPECT_EQ("sgn"s, language_c::parse("bfi").get_closest_iso639_2_alpha_3_code());
   EXPECT_EQ("may"s, language_c::parse("zsm").get_closest_iso639_2_alpha_3_code());
+}
+
+TEST(BCP47LanguageTags, Grandfathered) {
+  EXPECT_TRUE(language_c::parse("i-klingon").is_valid());
+  EXPECT_TRUE(language_c::parse("i-KLiNGoN").is_valid());
+  EXPECT_TRUE(language_c::parse("no-NyN").is_valid());
+  EXPECT_TRUE(language_c::parse("sGn-be-FR").is_valid());
+
+  EXPECT_EQ("i-klingon"s, language_c::parse("i-klingon").format());
+  EXPECT_EQ("i-klingon"s, language_c::parse("i-KLiNGoN").format());
+  EXPECT_EQ("no-nyn"s, language_c::parse("no-NyN").format());
+  EXPECT_EQ("sgn-BE-FR"s, language_c::parse("sGn-be-FR").format());
+
+  auto l = language_c{};
+  l.set_valid(true);
+  l.set_language("DE");
+  l.set_grandfathered("i-KLINGON");
+
+  EXPECT_EQ("i-klingon"s, l.format());
+  EXPECT_EQ("i-KLINGON"s, l.get_grandfathered());
 }
 
 }

@@ -162,6 +162,13 @@ language_c::format_internal(bool force)
   if (!m_valid && !force)
     return {};
 
+  if (!m_grandfathered.empty()) {
+    auto idx = mtx::iana::language_subtag_registry::look_up_grandfathered(m_grandfathered);
+    if (idx)
+      return idx->code;
+    return {};
+  }
+
   auto output = mtx::string::to_lower_ascii(m_language);
 
   for (auto const &subtag : m_extended_language_subtags)
@@ -195,6 +202,13 @@ language_c::format_internal(bool force)
 std::string
 language_c::format_long(bool force)
   const noexcept {
+  if (!m_grandfathered.empty()) {
+    auto idx = mtx::iana::language_subtag_registry::look_up_grandfathered(m_grandfathered);
+    if (idx)
+      return fmt::format("{0} ({1})", idx->description, idx->code);;
+    return {};
+  }
+
   auto formatted = format(force);
 
   if (formatted.empty())
@@ -316,12 +330,10 @@ language_c::parse_extensions(std::string const &str) {
 
 bool
 language_c::matches_prefix(language_c const &prefix,
-                           std::size_t extlang_or_variant_index,
-                           bool is_extlang,
+                           std::size_t extlang_index,
                            prefix_restrictions_t const &restrictions)
   const noexcept {
-  if (   ( is_extlang && !m_extended_language_subtags.empty() && (extlang_or_variant_index > (prefix.m_extended_language_subtags.size())))
-      || (!is_extlang && !m_variants                 .empty() && (extlang_or_variant_index > (prefix.m_variants                 .size()))))
+  if (!m_extended_language_subtags.empty() && (extlang_index > (prefix.m_extended_language_subtags.size())))
     return false;
 
   if (   (restrictions.language                  && prefix.m_language                 .empty() && !m_language                 .empty())
@@ -360,17 +372,14 @@ language_c::matches_prefix(language_c const &prefix,
 }
 
 bool
-language_c::validate_one_extlang_or_variant(std::size_t extlang_or_variant_index,
-                                            bool is_extlang) {
-  auto const &extlang_or_variant_code = is_extlang ? m_extended_language_subtags[extlang_or_variant_index]
-                                      :              m_variants[extlang_or_variant_index];
-  auto extlang_or_variant             = is_extlang ? mtx::iana::language_subtag_registry::look_up_extlang(extlang_or_variant_code)
-                                      :              mtx::iana::language_subtag_registry::look_up_variant(extlang_or_variant_code);
+language_c::validate_one_extlang(std::size_t extlang_index) {
+  auto const &extlang_code = m_extended_language_subtags[extlang_index];
+  auto extlang             = mtx::iana::language_subtag_registry::look_up_extlang(extlang_code);
 
-  if (!extlang_or_variant)                   // Should not happen as the parsing checks this already.
+  if (!extlang)                 // Should not happen as the parsing checks this already.
     return false;
 
-  if (extlang_or_variant->prefixes.empty())
+  if (extlang->prefixes.empty())
     return true;
 
   prefix_restrictions_t restrictions;
@@ -381,7 +390,7 @@ language_c::validate_one_extlang_or_variant(std::size_t extlang_or_variant_index
       value = true;
   };
 
-  for (auto const &prefix : extlang_or_variant->prefixes) {
+  for (auto const &prefix : extlang->prefixes) {
     parsed_prefixes.emplace_back(parse(prefix));
     auto const &tag = parsed_prefixes.back();
 
@@ -393,23 +402,36 @@ language_c::validate_one_extlang_or_variant(std::size_t extlang_or_variant_index
   }
 
   for (auto const &parsed_prefix : parsed_prefixes)
-    if (matches_prefix(parsed_prefix, extlang_or_variant_index, is_extlang, restrictions))
+    if (matches_prefix(parsed_prefix, extlang_index, restrictions))
       return true;
 
-  auto message   = is_extlang ? Y("The extended language subtag '{}' must only be used with one of the following prefixes: {}.")
-                 :              Y("The variant '{}' must only be used with one of the following prefixes: {}.");
-  m_parser_error = fmt::format(message, extlang_or_variant_code, fmt::join(extlang_or_variant->prefixes, ", "));
+  auto message   = Y("The extended language subtag '{}' must only be used with one of the following prefixes: {}.");
+  m_parser_error = fmt::format(message, extlang_code, fmt::join(extlang->prefixes, ", "));
 
   return false;
 }
 
 bool
-language_c::validate_extlangs_or_variants(bool is_extlangs) {
-  auto const &extlangs_or_variants = is_extlangs ? m_extended_language_subtags : m_variants;
-
-  for (int idx = 0, num_entries = extlangs_or_variants.size(); idx < num_entries; ++idx)
-    if (!validate_one_extlang_or_variant(idx, is_extlangs))
+language_c::validate_extlangs() {
+  for (int idx = 0, num_entries = m_extended_language_subtags.size(); idx < num_entries; ++idx)
+    if (!validate_one_extlang(idx))
       return false;
+
+  return true;
+}
+
+bool
+language_c::validate_variants() {
+  std::map<std::string, bool> variants_seen;
+
+  for (auto const &variant : m_variants) {
+    if (variants_seen[variant]) {
+      m_parser_error = fmt::format(Y("The variant '{}' occurs more than once."), variant);
+      return false;
+    }
+
+    variants_seen[variant] = true;
+  }
 
   return true;
 }
@@ -452,7 +474,15 @@ language_c::parse(std::string const &language) {
 
   language_c l;
   auto language_lower = mtx::string::to_lower_ascii(language);
-  auto matches        = s_bcp47_re->match(Q(language_lower));
+  auto matches        = s_bcp47_grandfathered_re->match(Q(language_lower));
+
+  if (matches.hasMatch()) {
+    l.m_grandfathered = language;
+    l.m_valid         = true;
+    return l;
+  }
+
+  matches = s_bcp47_re->match(Q(language_lower));
 
   if (!matches.hasMatch()) {
     l.m_parser_error = Y("The value does not adhere to the general structure of IETF BCP 47/RFC 5646 language tags.");
@@ -497,8 +527,7 @@ language_c::parse(std::string const &language) {
   if (matches.capturedLength(9))
     l.m_private_use = mtx::string::split(to_utf8(matches.captured(9)).substr(1), "-");
 
-  if (   !l.validate_extlangs_or_variants(true)
-      || !l.validate_extlangs_or_variants(false))
+  if (!l.validate_extlangs() || !l.validate_variants())
     return l;
 
   l.m_valid = true;
@@ -627,6 +656,14 @@ language_c::set_private_use(std::vector<std::string> const &private_use) {
   return *this;
 }
 
+language_c &
+language_c::set_grandfathered(std::string const &grandfathered) {
+  m_grandfathered        = grandfathered;
+  m_formatted_up_to_date = false;
+
+  return *this;
+}
+
 std::string const &
 language_c::get_language()
   const noexcept {
@@ -667,6 +704,12 @@ std::vector<std::string> const &
 language_c::get_private_use()
   const noexcept {
   return m_private_use;
+}
+
+std::string const &
+language_c::get_grandfathered()
+  const noexcept {
+  return m_grandfathered;
 }
 
 bool
