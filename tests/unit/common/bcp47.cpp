@@ -28,6 +28,11 @@ TEST(BCP47LanguageTags, ParsingValidUNM49) {
   EXPECT_EQ("es-419"s, language_c::parse("es-419").format());
 }
 
+TEST(BCP47LanguageTags, ParsingValidInRegistryButNotISOLists) {
+  EXPECT_TRUE(language_c::parse("en-003").is_valid());
+  EXPECT_TRUE(language_c::parse("en-BU").is_valid());
+}
+
 TEST(BCP47LanguageTags, ParsingInvalid) {
   EXPECT_FALSE(language_c::parse("zyx-Latn-CH-x-weeee").is_valid());  // invalid (zyx not ISO 639 code)
   EXPECT_FALSE(language_c::parse("ger-muku-CH-x-weeee").is_valid());  // invalid (muku not a script)
@@ -84,6 +89,18 @@ TEST(BCP47LanguageTags, Formatting) {
   l.add_extension({ "t"s, { "test"s }});
   l.add_extension({ "u"s, { "attr"s, "co"s, "phonebk"s, "attr"s, "zz"s, "oooqqq"s }});
   l.set_valid(true);
+
+  EXPECT_EQ("ja-t-test-u-attr-co-phonebk-attr-zz-oooqqq"s, l.format());
+
+  l = language_c{};
+  l.set_language("ja");
+  l.add_extension({ "u"s, { "attr"s, "co"s, "phonebk"s, "attr"s, "zz"s, "oooqqq"s }});
+  l.add_extension({ "t"s, { "test"s }});
+  l.set_valid(true);
+
+  EXPECT_EQ("ja-u-attr-co-phonebk-attr-zz-oooqqq-t-test"s, l.format());
+
+  l.to_canonical_form();
 
   EXPECT_EQ("ja-t-test-u-attr-co-phonebk-attr-zz-oooqqq"s, l.format());
 }
@@ -314,7 +331,7 @@ TEST(BCP47LanguageTags, ExtensionsRFC6497) {
 
 TEST(BCP47LanguageTags, ExtensionsFormatting) {
   EXPECT_EQ("ja-t-test-u-attr-co-phonebk"s, language_c::parse("ja-T-Test-U-AttR-CO-phoNEbk").format());
-  EXPECT_EQ("ja-t-test-u-attr-co-phonebk"s, language_c::parse("ja-U-AttR-CO-phoNEbk-T-Test").format());
+  EXPECT_EQ("ja-u-attr-co-phonebk-t-test"s, language_c::parse("ja-U-AttR-CO-phoNEbk-T-Test").format());
 }
 
 TEST(BCP47LanguageTags, Matching) {
@@ -421,6 +438,60 @@ TEST(BCP47LanguageTags, Grandfathered) {
 
   EXPECT_EQ("i-klingon"s, l.format());
   EXPECT_EQ("i-KLINGON"s, l.get_grandfathered());
+}
+
+TEST(BCP47LanguageTags, ToCanonicalForm) {
+  // No changes as they're already normalized.
+  EXPECT_EQ("sgn"s, language_c::parse("sgn"s).to_canonical_form().format());
+  EXPECT_EQ("nsi"s, language_c::parse("nsi"s).to_canonical_form().format());
+
+  // No changes as even though they're listed as redundant, they don't have preferred values.
+  EXPECT_EQ("az-Arab"s, language_c::parse("az-Arab"s).to_canonical_form().format());
+
+  // For the following there are changes.
+  EXPECT_EQ("nsi"s,             language_c::parse("sgn-nsi"s).to_canonical_form().format());
+  EXPECT_EQ("ja-Latn-alalc97"s, language_c::parse("ja-Latn-hepburn-heploc"s).to_canonical_form().format());
+  EXPECT_EQ("jbo"s,             language_c::parse("art-lojban"s).to_canonical_form().format());
+  EXPECT_EQ("jsl"s,             language_c::parse("sgn-JP"s).to_canonical_form().format());
+  EXPECT_EQ("cmn"s,             language_c::parse("zh-cmn"s).to_canonical_form().format());
+  EXPECT_EQ("cmn-CN"s,          language_c::parse("zh-cmn-CN"s).to_canonical_form().format());
+  EXPECT_EQ("cmn-Hans"s,        language_c::parse("zh-cmn-Hans"s).to_canonical_form().format());
+  EXPECT_EQ("cmn"s,             language_c::parse("zh-guoyu"s).to_canonical_form().format());
+  EXPECT_EQ("hak"s,             language_c::parse("zh-hakka"s).to_canonical_form().format());
+  EXPECT_EQ("hak"s,             language_c::parse("i-hak"s).to_canonical_form().format());
+  EXPECT_EQ("yue-jyutping"s,    language_c::parse("zh-yue-jyutping"s).to_canonical_form().format());
+  EXPECT_EQ("zh-MM"s,           language_c::parse("zh-BU"s).to_canonical_form().format());
+  EXPECT_EQ("cmn-MM"s,          language_c::parse("zh-cmn-BU"s).to_canonical_form().format());
+}
+
+TEST(BCP47LanguageTags, ToExtlangForm) {
+  // No changes as they're already normalized.
+  EXPECT_EQ("sgn"s, language_c::parse("sgn"s).to_extlang_form().format());
+
+  // No changes as even though they're listed as redundant, they don't have preferred values.
+  EXPECT_EQ("az-Arab"s, language_c::parse("az-Arab"s).to_extlang_form().format());
+
+  // For the following there are changes.
+  EXPECT_EQ("sgn-nsi"s,         language_c::parse("nsi"s).to_extlang_form().format());
+  EXPECT_EQ("jbo"s,             language_c::parse("jbo"s).to_extlang_form().format());
+  EXPECT_EQ("zh-yue-jyutping"s, language_c::parse("yue-jyutping"s).to_extlang_form().format());
+}
+
+TEST(BCP47LanguageTags, Cloning) {
+  auto l  = language_c::parse("de-DE-1996");
+  auto l2 = l.clone();
+
+  EXPECT_TRUE(l.is_valid());
+  EXPECT_TRUE(l2.is_valid());
+  EXPECT_TRUE(l == l2);
+  EXPECT_TRUE(l.format() == l2.format());
+
+  l.set_region("CH");
+
+  EXPECT_TRUE(l.is_valid());
+  EXPECT_TRUE(l2.is_valid());
+  EXPECT_FALSE(l == l2);
+  EXPECT_FALSE(l.format() == l2.format());
 }
 
 }

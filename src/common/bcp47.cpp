@@ -74,6 +74,12 @@ language_c::clear()
   *this = mtx::bcp47::language_c{};
 }
 
+language_c
+language_c::clone()
+  const noexcept {
+  return language_c{*this};
+}
+
 bool
 language_c::is_valid()
   const noexcept {
@@ -138,8 +144,8 @@ language_c::get_error()
 std::string
 language_c::dump()
   const noexcept{
-  return fmt::format("[valid {0} language {1} extended_language_subtags {2} script {3} region {4} variants {5} extensions {6} private_use {7} parser_error {8}]",
-                     m_valid, m_language, m_extended_language_subtags, m_script, m_region, m_variants, m_extensions, m_private_use, m_parser_error);
+  return fmt::format("[valid {0} language {1} extended_language_subtags {2} script {3} region {4} variants {5} extensions {6} private_use {7} grandfathered {8} parser_error {9}]",
+                     m_valid, m_language, m_extended_language_subtags, m_script, m_region, m_variants, m_extensions, m_private_use, m_grandfathered, m_parser_error);
 }
 
 std::string
@@ -322,8 +328,6 @@ language_c::parse_extensions(std::string const &str) {
 
     else
       m_extensions.back().extensions.emplace_back(part);
-
-  std::sort(m_extensions.begin(), m_extensions.end());
 
   return validate_extensions();
 }
@@ -640,9 +644,7 @@ language_c::add_extension(extension_t const &extension) {
   for (auto const &extension_subtag : extension.extensions)
     extensions_lower.emplace_back(mtx::string::to_lower_ascii(extension_subtag));
 
-  auto cleaned_extension = extension_t{ mtx::string::to_lower_ascii(extension.identifier), extensions_lower };
-  m_extensions.insert(std::lower_bound(m_extensions.begin(), m_extensions.end(), cleaned_extension), cleaned_extension);
-
+  m_extensions.emplace_back(mtx::string::to_lower_ascii(extension.identifier), extensions_lower);
   m_formatted_up_to_date = false;
 
   return *this;
@@ -751,6 +753,9 @@ language_c::matches(language_c const &match)
   if (!match.m_private_use.empty() && (m_private_use != match.m_private_use))
     return false;
 
+  if (!match.m_grandfathered.empty() && (m_grandfathered != match.m_grandfathered))
+    return false;
+
   return true;
 }
 
@@ -778,6 +783,100 @@ language_c::find_best_match(std::vector<language_c> const &potential_matches)
   }
 
   return best_match;
+}
+
+language_c &
+language_c::canonicalize_preferred_values() {
+  auto &preferred_values = mtx::iana::language_subtag_registry::g_preferred_values;
+
+  for (auto const &[match, preferred] : preferred_values) {
+    if (!matches(match))
+      continue;
+
+     if (!preferred.m_language.empty()) {
+       if (!match.m_language.empty())
+         m_language.clear();
+
+       if (!match.m_extended_language_subtags.empty())
+         m_extended_language_subtags.clear();
+
+       if (!match.m_script.empty())
+         m_script.clear();
+
+       if (!match.m_region.empty())
+         m_region.clear();
+
+       if (!match.m_variants.empty())
+         m_variants.clear();
+
+       if (!match.m_extensions.empty())
+         m_extensions.clear();
+
+       if (!match.m_private_use.empty())
+         m_private_use.clear();
+
+       if (!match.m_grandfathered.empty())
+         m_grandfathered.clear();
+     }
+
+     if (!preferred.m_language.empty())
+       m_language = preferred.m_language;
+
+     if (!preferred.m_extended_language_subtags.empty())
+       m_extended_language_subtags = preferred.m_extended_language_subtags;
+
+     if (!preferred.m_script.empty())
+       m_script = preferred.m_script;
+
+     if (!preferred.m_region.empty())
+       m_region = preferred.m_region;
+
+     if (!preferred.m_variants.empty())
+       m_variants = preferred.m_variants;
+
+     if (!preferred.m_extensions.empty())
+       m_extensions = preferred.m_extensions;
+
+     if (!preferred.m_private_use.empty())
+       m_private_use = preferred.m_private_use;
+
+     if (!preferred.m_grandfathered.empty())
+       m_grandfathered = preferred.m_grandfathered;
+  }
+
+  m_formatted_up_to_date = false;
+
+  return *this;
+}
+
+language_c &
+language_c::to_canonical_form() {
+  m_formatted_up_to_date = false;
+
+  std::sort(m_extensions.begin(), m_extensions.end());
+
+  return canonicalize_preferred_values();
+}
+
+language_c &
+language_c::to_extlang_form() {
+  if (!m_valid)
+    return *this;
+
+  to_canonical_form();
+
+  if (m_language.empty())
+    return *this;
+
+  auto extlang = mtx::iana::language_subtag_registry::look_up_extlang(m_language);
+
+  if (!extlang || extlang->prefixes.empty())
+    return *this;
+
+  m_extended_language_subtags.insert(m_extended_language_subtags.begin(), m_language);
+  m_language = extlang->prefixes[0];
+
+  return *this;
 }
 
 void
