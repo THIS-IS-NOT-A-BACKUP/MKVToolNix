@@ -402,8 +402,9 @@
     <term><option>--normalize-language-ietf</option> <parameter>mode</parameter></term>
     <listitem>
      <para>
-      Enables normalizing all IETF BCP 47 language tags to either their canonical form with mode '<literal>canonical</literal>' or to their
-      extended language subtags form with mode '<literal>extlang</literal>'. By default no normalization is applied.
+      Enables normalizing all IETF BCP 47 language tags to either their canonical form with mode '<literal>canonical</literal>', to their
+      extended language subtags form with mode '<literal>extlang</literal>' or turns it off with mode '<literal>off</literal>'. By default
+      normalization to the canonical form is applied.
      </para>
 
      <para>
@@ -426,7 +427,7 @@
       <listitem>
        <para>
         When editing track headers only those track language elements that are set via edit specifications are affected. Languages of tracks
-        that aren't edit aren't changed. Editing a track but setting only properties other than the language won't affect the language
+        that aren't edited aren't changed. Editing a track but setting only properties other than the language won't affect the language
         either.
        </para>
       </listitem>
