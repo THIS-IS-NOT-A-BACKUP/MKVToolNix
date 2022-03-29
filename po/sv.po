@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sv\n"
 "Report-Msgid-Bugs-To: Moritz Bunkus <moritz@bunkus.org>\n"
-"POT-Creation-Date: 2022-03-28 18:51+0200\n"
+"POT-Creation-Date: 2022-03-29 15:28+0200\n"
 "PO-Revision-Date: 2019-06-17 20:25+0000\n"
 "Last-Translator: Moritz Bunkus <moritz@bunkus.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/moritz-bunkus/mkvtoolnix/language/sv/)\n"
@@ -1689,7 +1689,7 @@ msgstr ""
 msgid "&Expand all"
 msgstr "&"
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:391
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:383
 #, fuzzy, no-c-format
 msgid "&Extended language subtag:"
 msgstr "Argumentet '{0}' till '{1}' är ogiltigt: '{2}' är inte ett giltigt spår-ID.\n"
@@ -1719,7 +1719,7 @@ msgstr "Antalet kapitel:"
 msgid "&Font && size:"
 msgstr ""
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:384
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:376
 #, no-c-format
 msgid "&Free-form input"
 msgstr ""
@@ -1750,7 +1750,7 @@ msgstr ""
 msgid "&Hidden"
 msgstr "&Gömd"
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:385
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:377
 #, fuzzy, no-c-format
 msgid "&Individually selected components"
 msgstr "&Ta bort vald bilaga"
@@ -1786,7 +1786,7 @@ msgstr "&Språk av kapitelnamn att ersätta"
 #: src/mkvtoolnix-gui/forms/chapter_editor/generate_sub_chapters_parameters_dialog.h:182
 #: src/mkvtoolnix-gui/forms/main_window/prefs_language_shortcut_dialog.h:114
 #: src/mkvtoolnix-gui/forms/merge/tab.h:1815
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:387
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:379
 #, no-c-format
 msgid "&Language:"
 msgstr "&Språk:"
@@ -1961,12 +1961,12 @@ msgstr "Spara jobb-utmatning"
 msgid "&Previous multiplex settings"
 msgstr "Skapa en ny kapitelfil"
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:389
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:381
 #, no-c-format
 msgid "&Private use:"
 msgstr ""
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:386
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:378
 #, no-c-format
 msgid "&Region:"
 msgstr ""
@@ -2024,7 +2024,7 @@ msgstr "&Ta bort vald bilaga"
 msgid "&Remove selected edition or chapter"
 msgstr "&Ta bort den valda utgåvan eller kapitlet"
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:399
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:391
 #, no-c-format
 msgid "&Replace with normalized form"
 msgstr ""
@@ -2071,7 +2071,7 @@ msgstr "&Skanna mappen för andra spellistor:"
 msgid "&Scan for other playlists"
 msgstr "&Skanna efter andra spellistor"
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:393
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:385
 #, fuzzy, no-c-format
 msgid "&Script:"
 msgstr "&Beskrivning:"
@@ -2162,7 +2162,7 @@ msgstr "Segmentets information"
 msgid "&Validate values"
 msgstr "&Bekräfta värden"
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:388
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:380
 #, no-c-format
 msgid "&Variants:"
 msgstr ""
@@ -5762,7 +5762,7 @@ msgstr "A&vsluta"
 msgid "E&xpand chapter's start and end timestamps to include the minimum/maximum timestamps of all their sub-chapters"
 msgstr ""
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:394
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:386
 #, fuzzy, no-c-format
 msgid "E&xtensions:"
 msgstr "Undantagsdetaljer:"
@@ -5797,7 +5797,7 @@ msgstr "EBML-version: {0}"
 msgid "EBML void"
 msgstr "EBML-huvud"
 
-#: src/common/bcp47.cpp:453
+#: src/common/bcp47.cpp:484
 #, no-c-format
 msgid "Each extension identifier must be used at most once."
 msgstr ""
@@ -5822,8 +5822,8 @@ msgstr ""
 msgid "Each range consists of a start and end timestamp with a '-' in the middle, e.g. '00:01:15-00:03:20'."
 msgstr ""
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:382
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:383
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:374
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:375
 #, fuzzy, no-c-format
 msgid "Edit language"
 msgstr "Språk"
@@ -6264,7 +6264,7 @@ msgstr "Argumentet '{0}' till '{1}' är ogiltigt: '{2}' är inte ett giltigt sp�
 msgid "Extended language subtags form"
 msgstr "Argumentet '{0}' till '{1}' är ogiltigt: '{2}' är inte ett giltigt spår-ID.\n"
 
-#: src/common/bcp47.cpp:445
+#: src/common/bcp47.cpp:476
 #, no-c-format
 msgid "Extension subtags must follow at least a primary language subtag."
 msgstr ""
@@ -6509,7 +6509,7 @@ msgstr "Avslutade vid:"
 msgid "First chapter name regardless of its language"
 msgstr "Namn på kapitel och språk"
 
-#: src/common/bcp47.cpp:512
+#: src/common/bcp47.cpp:543
 #, no-c-format
 msgid "Five- to eight-letter language codes are currently not supported."
 msgstr ""
@@ -6619,7 +6619,7 @@ msgstr ""
 msgid "Found at least one B frame without second reference in a non closed GOP.\n"
 msgstr ""
 
-#: src/common/bcp47.cpp:507
+#: src/common/bcp47.cpp:538
 #, no-c-format
 msgid "Four-letter language codes are reserved for future use and not supported."
 msgstr ""
@@ -7411,6 +7411,11 @@ msgstr "&Verktyg för information"
 #: src/mkvtoolnix-gui/forms/info/element_viewer_dialog.h:221
 #, fuzzy, no-c-format
 msgid "Information"
+msgstr "Videospår"
+
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:388
+#, fuzzy, no-c-format
+msgid "Information & Warnings:"
 msgstr "Videospår"
 
 #: src/common/bitvalue.cpp:76
@@ -9411,7 +9416,7 @@ msgstr ""
 msgid "Parse the whole file instead of relying on the index."
 msgstr ""
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:398
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:390
 #, no-c-format
 msgid "Parser error:"
 msgstr ""
@@ -11195,7 +11200,7 @@ msgstr "Startade vid"
 msgid "Statistics for track number {0}: number of blocks: {1}; size in bytes: {2}; duration in seconds: {3}; approximate bitrate in bits/second: {4}\n"
 msgstr ""
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:395
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:387
 #: src/mkvtoolnix-gui/jobs/model.cpp:50
 #, no-c-format
 msgid "Status"
@@ -11203,7 +11208,7 @@ msgstr "Status"
 
 #: src/mkvtoolnix-gui/forms/header_editor/value_page.h:207
 #: src/mkvtoolnix-gui/forms/main_window/available_update_info_dialog.h:160
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:397
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:389
 #: src/mkvtoolnix-gui/forms/watch_jobs/tab.h:289
 #: src/mkvtoolnix-gui/header_editor/value_page.cpp:182
 #, no-c-format
@@ -11715,6 +11720,11 @@ msgstr "Val-fil skapad."
 msgid "The audio/video synchronization may have been lost."
 msgstr ""
 
+#: src/mkvtoolnix-gui/util/language_dialog.cpp:508
+#, no-c-format
+msgid "The canonical form does use a suitable prefix."
+msgstr ""
+
 #: src/propedit/propedit.cpp:169
 #, no-c-format
 msgid "The changes are written to the file.\n"
@@ -11791,15 +11801,15 @@ msgstr ""
 msgid "The corresponding canonical & extended language subtags forms are: %1."
 msgstr ""
 
-#: src/mkvtoolnix-gui/util/language_dialog.cpp:484
+#: src/mkvtoolnix-gui/util/language_dialog.cpp:486
 #, no-c-format
 msgid "The corresponding canonical form is: %1."
 msgstr ""
 
-#: src/mkvtoolnix-gui/util/language_dialog.cpp:487
-#, no-c-format
-msgid "The corresponding extended language subtags form: %1."
-msgstr ""
+#: src/mkvtoolnix-gui/util/language_dialog.cpp:491
+#, fuzzy, no-c-format
+msgid "The corresponding extended language subtags form is: %1."
+msgstr "Argumentet '{0}' till '{1}' är ogiltigt: '{2}' är inte ett giltigt spår-ID.\n"
 
 #: src/merge/output_control.cpp:1627
 #, no-c-format
@@ -11970,10 +11980,15 @@ msgstr ""
 msgid "The extended language subtag '%1' is deprecated."
 msgstr "Argumentet '{0}' till '{1}' är ogiltigt: '{2}' är inte ett giltigt spår-ID.\n"
 
-#: src/common/bcp47.cpp:417
+#: src/common/bcp47.cpp:448
 #, no-c-format
 msgid "The extended language subtag '{}' must only be used with one of the following prefixes: {}."
 msgstr ""
+
+#: src/mkvtoolnix-gui/util/language_dialog.cpp:511
+#, fuzzy, no-c-format
+msgid "The extended language subtags form does use a suitable prefix."
+msgstr "Argumentet '{0}' till '{1}' är ogiltigt: '{2}' är inte ett giltigt spår-ID.\n"
 
 #: src/output/p_mpeg4_p2.cpp:360
 #, no-c-format
@@ -12442,12 +12457,12 @@ msgstr ""
 msgid "The language set here is also used when chapters are generated."
 msgstr ""
 
-#: src/mkvtoolnix-gui/util/language_dialog.cpp:495
+#: src/mkvtoolnix-gui/util/language_dialog.cpp:521
 #, fuzzy, no-c-format
 msgid "The language tag is not valid."
 msgstr "Ett filnamn som är tomt är inte giltigt.\n"
 
-#: src/mkvtoolnix-gui/util/language_dialog.cpp:495
+#: src/mkvtoolnix-gui/util/language_dialog.cpp:521
 #, fuzzy, no-c-format
 msgid "The language tag is valid."
 msgstr "Argumentet '{0}' till '{1}' är ogiltigt: '{2}' är inte ett giltigt spår-ID.\n"
@@ -13039,7 +13054,7 @@ msgstr ""
 msgid "The value '{0}' is not a number.\n"
 msgstr "XML-taggfilen '{0}' kunde inte läsas.\n"
 
-#: src/common/bcp47.cpp:463
+#: src/common/bcp47.cpp:494
 #, fuzzy, no-c-format
 msgid "The value '{0}' is not a registered IANA language tag identifier."
 msgstr "'{0}' är inte en giltig ISO 639-2 språkkod."
@@ -13091,7 +13106,7 @@ msgstr ""
 msgid "The value can be negative, but keep in mind that any frame whose timestamp is negative after this calculation is dropped."
 msgstr ""
 
-#: src/common/bcp47.cpp:489
+#: src/common/bcp47.cpp:520
 #, no-c-format
 msgid "The value does not adhere to the general structure of IETF BCP 47/RFC 5646 language tags."
 msgstr ""
@@ -13112,7 +13127,12 @@ msgstr ""
 msgid "The variant '%1' is deprecated."
 msgstr "XML-taggfilen '{0}' innehåller ett fel: {1}\n"
 
-#: src/common/bcp47.cpp:429
+#: src/mkvtoolnix-gui/util/language_dialog.cpp:504
+#, no-c-format
+msgid "The variant '%1' is used with prefixes that aren't suited for it. Suitable prefixes are: %2."
+msgstr ""
+
+#: src/common/bcp47.cpp:460
 #, no-c-format
 msgid "The variant '{}' occurs more than once."
 msgstr ""
@@ -14577,7 +14597,6 @@ msgstr "Varningar:"
 msgid "Warnings/Errors"
 msgstr "Varningar:"
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:396
 #: src/mkvtoolnix-gui/forms/watch_jobs/tab.h:299
 #, no-c-format
 msgid "Warnings:"

@@ -430,72 +430,98 @@ LanguageDialog::setupFreeFormAndComponentControls() {
     updateFromFreeForm();
 }
 
-QStringList
-LanguageDialog::determineWarningsFor(mtx::bcp47::language_c const &tag) {
+std::pair<QStringList, QStringList>
+LanguageDialog::determineInfoAndWarningsFor(mtx::bcp47::language_c const &tag) {
   if (!tag.is_valid())
     return {};
 
-  QStringList warnings;
+  std::pair<QStringList, QStringList> lists;
 
   if (tag.has_valid_iso639_code() && !tag.has_valid_iso639_2_code() && (tag.get_closest_iso639_2_alpha_3_code() == "und"s))
-    warnings << QY("The selected language code '%1' is not an ISO 639-2 code. Players that only support the legacy Matroska language elements but not the IETF BCP 47 language elements will therefore display a different language such as 'und' (undetermined).").arg(Q(tag.get_language()));
+    lists.second << QY("The selected language code '%1' is not an ISO 639-2 code. Players that only support the legacy Matroska language elements but not the IETF BCP 47 language elements will therefore display a different language such as 'und' (undetermined).").arg(Q(tag.get_language()));
 
   if (!tag.get_language().empty()) {
     auto language = mtx::iso639::look_up(tag.get_language());
     if (language && language->is_deprecated)
-      warnings << QY("The language '%1' is deprecated.").arg(Q(tag.get_language()));
+      lists.second << QY("The language '%1' is deprecated.").arg(Q(tag.get_language()));
   }
 
   auto extlang = mtx::iana::language_subtag_registry::look_up_extlang(tag.get_extended_language_subtag());
   if (extlang && extlang->is_deprecated)
-    warnings << QY("The extended language subtag '%1' is deprecated.").arg(Q(tag.get_extended_language_subtag()));
+    lists.second << QY("The extended language subtag '%1' is deprecated.").arg(Q(tag.get_extended_language_subtag()));
 
   if (!tag.get_script().empty()) {
     auto script = mtx::iso15924::look_up(tag.get_script());
     if (script && script->is_deprecated)
-      warnings << QY("The script '%1' is deprecated.").arg(Q(tag.get_script()));
+      lists.second << QY("The script '%1' is deprecated.").arg(Q(tag.get_script()));
   }
 
   if (!tag.get_region().empty()) {
     auto region = mtx::iso3166::look_up(tag.get_region());
     if (region && region->is_deprecated)
-      warnings << QY("The region '%1' is deprecated.").arg(Q(tag.get_region()));
+      lists.second << QY("The region '%1' is deprecated.").arg(Q(tag.get_region()));
   }
 
-  for (auto const &variant_str : tag.get_variants()) {
-    auto variant = mtx::iana::language_subtag_registry::look_up_variant(variant_str);
+  for (auto const &variantStr : tag.get_variants()) {
+    auto variant = mtx::iana::language_subtag_registry::look_up_variant(variantStr);
     if (variant && variant->is_deprecated)
-      warnings << QY("The variant '%1' is deprecated.").arg(Q(variant_str));
+      lists.second << QY("The variant '%1' is deprecated.").arg(Q(variantStr));
   }
 
   if (!tag.get_grandfathered().empty())
-    warnings << QY("This language tag is a grandfathered element only supported for historical reasons.");
+    lists.second << QY("This language tag is a grandfathered element only supported for historical reasons.");
 
-  auto canonical_form = tag.clone().to_canonical_form();
-  auto extlang_form   = tag.clone().to_extlang_form();
+  auto const canonical_form    = tag.clone().to_canonical_form();
+  auto const extlang_form      = tag.clone().to_extlang_form();
+  auto const normalizationMode = Util::Settings::get().m_bcp47NormalizationMode;
 
-  if ((tag == canonical_form) && (tag == extlang_form))
-    return warnings;
+  if (   (tag               != canonical_form)
+      && (tag               != extlang_form)
+      && (normalizationMode == mtx::bcp47::normalization_mode_e::none))
+    lists.first << QY("The corresponding canonical & extended language subtags forms are: %1.").arg(Q(canonical_form.format()));
 
-  if (canonical_form == extlang_form)
-    warnings << QY("The corresponding canonical & extended language subtags forms are: %1.").arg(Q(canonical_form.format()));
+  else {
+    if (tag != canonical_form){
+      auto &typeContainer = normalizationMode == mtx::bcp47::normalization_mode_e::canonical ? lists.second : lists.first;
+      typeContainer << QY("The corresponding canonical form is: %1.").arg(Q(canonical_form.format()));
+    }
 
-  else if (tag != canonical_form)
-    warnings << QY("The corresponding canonical form is: %1.").arg(Q(canonical_form.format()));
+    if (tag != extlang_form){
+      auto &typeContainer = normalizationMode == mtx::bcp47::normalization_mode_e::extlang ? lists.second : lists.first;
+      typeContainer << QY("The corresponding extended language subtags form is: %1.").arg(Q(extlang_form.format()));
+    }
+  }
 
-  else
-    warnings << QY("The corresponding extended language subtags form: %1.").arg(Q(extlang_form.format()));
+  auto badVariantStr = tag.get_first_variant_not_matching_prefixes();
+  if (badVariantStr.empty())
+    return lists;
 
-  return warnings;
+  auto badVariant = mtx::iana::language_subtag_registry::look_up_variant(badVariantStr);
+  if (!badVariant || badVariant->prefixes.empty())
+    return lists;
+
+  QStringList sentences;
+  sentences << QY("The variant '%1' is used with prefixes that aren't suited for it. Suitable prefixes are: %2.")
+    .arg(Q(badVariantStr)).arg(Q(mtx::string::join(badVariant->prefixes, ", ")));
+
+  if ((canonical_form != tag) && canonical_form.get_first_variant_not_matching_prefixes().empty())
+    sentences << QY("The canonical form does use a suitable prefix.");
+
+  if ((extlang_form != tag) && extlang_form.get_first_variant_not_matching_prefixes().empty())
+    sentences << QY("The extended language subtags form does use a suitable prefix.");
+
+  lists.second << sentences.join(Q(" "));
+
+  return lists;
 }
 
 void
 LanguageDialog::setStatusFromLanguageTag(mtx::bcp47::language_c const &tag) {
-  auto &p         = *p_func();
-  auto statusText = tag.is_valid() ? QY("The language tag is valid.") : QY("The language tag is not valid.");
+  auto &p               = *p_func();
+  auto statusText       = tag.is_valid() ? QY("The language tag is valid.") : QY("The language tag is not valid.");
+  auto [info, warnings] = determineInfoAndWarningsFor(tag);
 
   QString warningsText;
-  auto warnings = determineWarningsFor(tag);
 
   if (warnings.isEmpty())
     warningsText = Q(u8"—");
@@ -507,12 +533,53 @@ LanguageDialog::setStatusFromLanguageTag(mtx::bcp47::language_c const &tag) {
     warningsText = Q("<ol style=\"margin-left:15px; -qt-list-indent: 0;\">%1</ol>").arg(warningsText);
   }
 
-  p.ui->lStatusOKIcon      ->setVisible( tag.is_valid() &&  warnings.isEmpty());
-  p.ui->lStatusWarningsIcon->setVisible( tag.is_valid() && !warnings.isEmpty());
-  p.ui->lStatusBadIcon     ->setVisible(!tag.is_valid());
-  p.ui->lStatusText        ->setText(statusText);
-  p.ui->lWarnings          ->setText(warningsText);
-  p.ui->lParserError       ->setText(tag.is_valid() ? Q(u8"—") : Q(tag.get_error()));
+  delete p.ui->wInfoWarnings->layout();
+  for (auto const &child : p.ui->wInfoWarnings->children())
+    delete child;
+
+  auto row    = 0;
+  auto layout = new QGridLayout;
+  layout->setContentsMargins(0, 0, 0, 0);
+
+  QSizePolicy sizePolicy{QSizePolicy::MinimumExpanding, QSizePolicy::Preferred};
+
+  auto addText = [&row, &layout, &p, &sizePolicy](bool isInfo, QString const &text) {
+    auto iconLabel = new QLabel{p.ui->wInfoWarnings};
+    auto textLabel = new QLabel{p.ui->wInfoWarnings};
+
+    sizePolicy.setHeightForWidth(textLabel->sizePolicy().hasHeightForWidth());
+
+    iconLabel->setPixmap({ Q(":/icons/16x16/%1.png").arg(isInfo ? Q("documentinfo") : Q("dialog-warning")) });
+    iconLabel->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+    textLabel->setSizePolicy(sizePolicy);
+    textLabel->setWordWrap(true);
+    textLabel->setText(text);
+
+    layout->addWidget(iconLabel, row, 0);
+    layout->addWidget(textLabel, row, 1);
+
+    ++row;
+  };
+
+  for (auto const &text : info)
+    addText(true, text);
+
+  for (auto const &text : warnings)
+    addText(false, text);
+
+  if (info.isEmpty() && warnings.isEmpty()) {
+    auto textLabel = new QLabel{p.ui->wInfoWarnings};
+    textLabel->setText(Q(u8"—"));
+
+    layout->addWidget(textLabel, 0, 0);
+  }
+
+  p.ui->lStatusOKIcon ->setVisible( tag.is_valid());
+  p.ui->lStatusBadIcon->setVisible(!tag.is_valid());
+  p.ui->lStatusText   ->setText(statusText);
+  p.ui->lParserError  ->setText(tag.is_valid() ? Q(u8"—") : Q(tag.get_error()));
+  p.ui->wInfoWarnings ->setLayout(layout);
+  p.ui->wInfoWarnings ->updateGeometry();
 }
 
 int

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: Moritz Bunkus <moritz@bunkus.org>\n"
-"POT-Creation-Date: 2022-03-28 18:51+0200\n"
+"POT-Creation-Date: 2022-03-29 15:28+0200\n"
 "PO-Revision-Date: 2022-02-28 23:11+0000\n"
 "Last-Translator: overdrive80 <lukillas.ole@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/moritz-bunkus/mkvtoolnix/"
@@ -1972,7 +1972,7 @@ msgstr "Argumentos de &escape para:"
 msgid "&Expand all"
 msgstr "&Expandir todo"
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:391
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:383
 #, fuzzy, no-c-format
 msgid "&Extended language subtag:"
 msgstr "Subetiquetas extendidas"
@@ -2002,7 +2002,7 @@ msgstr "&Primer registro a renumerar:"
 msgid "&Font && size:"
 msgstr "&Fuente &y tamaño:"
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:384
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:376
 #, no-c-format
 msgid "&Free-form input"
 msgstr "Entrada estilo li&bre"
@@ -2033,7 +2033,7 @@ msgstr "&Volcados hex:"
 msgid "&Hidden"
 msgstr "&Oculto"
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:385
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:377
 #, no-c-format
 msgid "&Individually selected components"
 msgstr "Componentes seleccionados &individualmente"
@@ -2069,7 +2069,7 @@ msgstr "&Idioma de los nombres de capítulos a reemplazar:"
 #: src/mkvtoolnix-gui/forms/chapter_editor/generate_sub_chapters_parameters_dialog.h:182
 #: src/mkvtoolnix-gui/forms/main_window/prefs_language_shortcut_dialog.h:114
 #: src/mkvtoolnix-gui/forms/merge/tab.h:1815
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:387
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:379
 #, no-c-format
 msgid "&Language:"
 msgstr "I&dioma:"
@@ -2244,12 +2244,12 @@ msgstr "&Anterior pestaña de tarea"
 msgid "&Previous multiplex settings"
 msgstr "&Anteriores ajustes de multiplexado"
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:389
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:381
 #, no-c-format
 msgid "&Private use:"
 msgstr "Uso &Privado:"
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:386
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:378
 #, no-c-format
 msgid "&Region:"
 msgstr "&Region:"
@@ -2307,7 +2307,7 @@ msgstr "Elimina&r el adjunto seleccionado"
 msgid "&Remove selected edition or chapter"
 msgstr "&Eliminar la edición o capítulo seleccionado"
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:399
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:391
 #, no-c-format
 msgid "&Replace with normalized form"
 msgstr ""
@@ -2354,7 +2354,7 @@ msgstr "&Buscar en el directorio otros playlists:"
 msgid "&Scan for other playlists"
 msgstr "&Buscar otros playlists"
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:393
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:385
 #, no-c-format
 msgid "&Script:"
 msgstr "&Script:"
@@ -2445,7 +2445,7 @@ msgstr "&Usar información"
 msgid "&Validate values"
 msgstr "Valores &válidos"
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:388
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:380
 #, no-c-format
 msgid "&Variants:"
 msgstr "&Variantes:"
@@ -6045,7 +6045,7 @@ msgstr "S&alir"
 msgid "E&xpand chapter's start and end timestamps to include the minimum/maximum timestamps of all their sub-chapters"
 msgstr "&Expandir los códigos de tiempo de inicio y fin del capítulo para incluir las máximas/mínimas códigos de tiempo de todos sus sub-capítulos"
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:394
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:386
 #, no-c-format
 msgid "E&xtensions:"
 msgstr "E&xtensiones:"
@@ -6080,7 +6080,7 @@ msgstr "Versión de EBML"
 msgid "EBML void"
 msgstr "EBML void"
 
-#: src/common/bcp47.cpp:453
+#: src/common/bcp47.cpp:484
 #, no-c-format
 msgid "Each extension identifier must be used at most once."
 msgstr "Cada identificador de extensión debe usarse una vez como máximo."
@@ -6105,8 +6105,8 @@ msgstr "Cada rango se compone de un numero inicial y final, de fotograma/campo, 
 msgid "Each range consists of a start and end timestamp with a '-' in the middle, e.g. '00:01:15-00:03:20'."
 msgstr "Cada rango tiene un código de tiempo inicial y final, separados en el medio por un  '-', p.e. '00:01:15-00:03:20'."
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:382
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:383
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:374
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:375
 #, no-c-format
 msgid "Edit language"
 msgstr "Editar idioma"
@@ -6547,7 +6547,7 @@ msgstr "Subetiquetas extendidas"
 msgid "Extended language subtags form"
 msgstr "Subetiquetas extendidas"
 
-#: src/common/bcp47.cpp:445
+#: src/common/bcp47.cpp:476
 #, no-c-format
 msgid "Extension subtags must follow at least a primary language subtag."
 msgstr "Las subetiquetas de extensión deben seguir como mínimo a un subetiqueta de idioma principal."
@@ -6792,7 +6792,7 @@ msgstr "Finalizado:"
 msgid "First chapter name regardless of its language"
 msgstr "Nombre del primer capítulo sin importar su idioma"
 
-#: src/common/bcp47.cpp:512
+#: src/common/bcp47.cpp:543
 #, no-c-format
 msgid "Five- to eight-letter language codes are currently not supported."
 msgstr "Actualmente, no se admiten códigos de idioma de cinco a ocho letras."
@@ -6902,7 +6902,7 @@ msgstr "Fuerza el factor de escala para los códigos de tiempo a un valor dado."
 msgid "Found at least one B frame without second reference in a non closed GOP.\n"
 msgstr "Se encontró al menos un fotograma B sin una segunda referencia en un GOP no cerrado.\n"
 
-#: src/common/bcp47.cpp:507
+#: src/common/bcp47.cpp:538
 #, no-c-format
 msgid "Four-letter language codes are reserved for future use and not supported."
 msgstr "No se admiten los códigos de idioma de cuatro letras y están reservados para un uso futuro."
@@ -7696,6 +7696,11 @@ msgstr ""
 #: src/mkvtoolnix-gui/forms/info/element_viewer_dialog.h:221
 #, no-c-format
 msgid "Information"
+msgstr "Información"
+
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:388
+#, fuzzy, no-c-format
+msgid "Information & Warnings:"
 msgstr "Información"
 
 #: src/common/bitvalue.cpp:76
@@ -9696,7 +9701,7 @@ msgstr "El número de paquete {0} contenido en la cabecera FLAC no es válido y 
 msgid "Parse the whole file instead of relying on the index."
 msgstr "Analizar el archivo completo en lugar de confiar en el índice."
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:398
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:390
 #, no-c-format
 msgid "Parser error:"
 msgstr "Error del analizador:"
@@ -11480,7 +11485,7 @@ msgstr "Iniciado:"
 msgid "Statistics for track number {0}: number of blocks: {1}; size in bytes: {2}; duration in seconds: {3}; approximate bitrate in bits/second: {4}\n"
 msgstr "Estadísticas para la pista número {0}: número de bloques: {1}; tamaño en bytes: {2}; duración en segundos: {3}; bitrate aproximado en bits/segundo: {4}\n"
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:395
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:387
 #: src/mkvtoolnix-gui/jobs/model.cpp:50
 #, no-c-format
 msgid "Status"
@@ -11488,7 +11493,7 @@ msgstr "Estado"
 
 #: src/mkvtoolnix-gui/forms/header_editor/value_page.h:207
 #: src/mkvtoolnix-gui/forms/main_window/available_update_info_dialog.h:160
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:397
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:389
 #: src/mkvtoolnix-gui/forms/watch_jobs/tab.h:289
 #: src/mkvtoolnix-gui/header_editor/value_page.cpp:182
 #, no-c-format
@@ -12000,6 +12005,11 @@ msgstr "El archivo de audio a reproducir aún no ha sido configurado."
 msgid "The audio/video synchronization may have been lost."
 msgstr "La sincronización entre el audio/vídeo puede haberse perdido."
 
+#: src/mkvtoolnix-gui/util/language_dialog.cpp:508
+#, no-c-format
+msgid "The canonical form does use a suitable prefix."
+msgstr ""
+
 #: src/propedit/propedit.cpp:169
 #, no-c-format
 msgid "The changes are written to the file.\n"
@@ -12076,15 +12086,15 @@ msgstr "La cabecera del archivo de corrección no fue posible leer correctamente
 msgid "The corresponding canonical & extended language subtags forms are: %1."
 msgstr ""
 
-#: src/mkvtoolnix-gui/util/language_dialog.cpp:484
+#: src/mkvtoolnix-gui/util/language_dialog.cpp:486
 #, no-c-format
 msgid "The corresponding canonical form is: %1."
 msgstr ""
 
-#: src/mkvtoolnix-gui/util/language_dialog.cpp:487
-#, no-c-format
-msgid "The corresponding extended language subtags form: %1."
-msgstr ""
+#: src/mkvtoolnix-gui/util/language_dialog.cpp:491
+#, fuzzy, no-c-format
+msgid "The corresponding extended language subtags form is: %1."
+msgstr "El idioma de etiqueta es correcto."
 
 #: src/merge/output_control.cpp:1627
 #, no-c-format
@@ -12257,10 +12267,15 @@ msgstr "El mensaje de error fue:"
 msgid "The extended language subtag '%1' is deprecated."
 msgstr "El idioma de etiqueta es correcto."
 
-#: src/common/bcp47.cpp:417
+#: src/common/bcp47.cpp:448
 #, no-c-format
 msgid "The extended language subtag '{}' must only be used with one of the following prefixes: {}."
 msgstr "La subetiqueta de idioma extendida '{}' sólo se debe usar con uno de los siguientes prefijos: {}."
+
+#: src/mkvtoolnix-gui/util/language_dialog.cpp:511
+#, fuzzy, no-c-format
+msgid "The extended language subtags form does use a suitable prefix."
+msgstr "El idioma de etiqueta es correcto."
 
 #: src/output/p_mpeg4_p2.cpp:360
 #, no-c-format
@@ -12729,12 +12744,12 @@ msgstr "El idioma seleccionado aquí se usa para pistas de vídeo cuyo archivo d
 msgid "The language set here is also used when chapters are generated."
 msgstr "El idioma establecido aquí se usa también cuando se generen los capítulos."
 
-#: src/mkvtoolnix-gui/util/language_dialog.cpp:495
+#: src/mkvtoolnix-gui/util/language_dialog.cpp:521
 #, no-c-format
 msgid "The language tag is not valid."
 msgstr "La etiqueta de idioma no es válida."
 
-#: src/mkvtoolnix-gui/util/language_dialog.cpp:495
+#: src/mkvtoolnix-gui/util/language_dialog.cpp:521
 #, no-c-format
 msgid "The language tag is valid."
 msgstr "El idioma de etiqueta es correcto."
@@ -13329,7 +13344,7 @@ msgstr "El usuario puede entonces seleccionar que playlist añadir."
 msgid "The value '{0}' is not a number.\n"
 msgstr "El valor '{0}' no es un número.\n"
 
-#: src/common/bcp47.cpp:463
+#: src/common/bcp47.cpp:494
 #, no-c-format
 msgid "The value '{0}' is not a registered IANA language tag identifier."
 msgstr "El valor '{0}' no está registrado como un identificador de etiqueta de idioma IANA."
@@ -13381,7 +13396,7 @@ msgstr "El valor puede ser asignado como un número flotante (e.g. 12.345) o una
 msgid "The value can be negative, but keep in mind that any frame whose timestamp is negative after this calculation is dropped."
 msgstr "El valor puede ser negativo, pero tenga presente que cualquier fotograma cuya marca de tiempo sea negativa, después de este calculo, será omitido."
 
-#: src/common/bcp47.cpp:489
+#: src/common/bcp47.cpp:520
 #, no-c-format
 msgid "The value does not adhere to the general structure of IETF BCP 47/RFC 5646 language tags."
 msgstr "El valor no sigue la estructura general de las etiquetas de idioma IETF BCP 47/RFC 5646."
@@ -13402,7 +13417,12 @@ msgstr "Los valores estarán disponibles para seleccionarlos en el multiplexador
 msgid "The variant '%1' is deprecated."
 msgstr "El archivo '%1' ya existe."
 
-#: src/common/bcp47.cpp:429
+#: src/mkvtoolnix-gui/util/language_dialog.cpp:504
+#, no-c-format
+msgid "The variant '%1' is used with prefixes that aren't suited for it. Suitable prefixes are: %2."
+msgstr ""
+
+#: src/common/bcp47.cpp:460
 #, no-c-format
 msgid "The variant '{}' occurs more than once."
 msgstr ""
@@ -14867,7 +14887,6 @@ msgstr "Advertencias"
 msgid "Warnings/Errors"
 msgstr "Advertencias/Errores"
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:396
 #: src/mkvtoolnix-gui/forms/watch_jobs/tab.h:299
 #, no-c-format
 msgid "Warnings:"

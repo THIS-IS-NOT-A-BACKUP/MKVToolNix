@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: Moritz Bunkus <moritz@bunkus.org>\n"
-"POT-Creation-Date: 2022-03-28 18:51+0200\n"
+"POT-Creation-Date: 2022-03-29 15:28+0200\n"
 "PO-Revision-Date: 2016-01-14 08:27+0000\n"
 "Last-Translator: Andrei Stepanov, 2018-2022\n"
 "Language-Team: Russian (http://www.transifex.com/moritz-bunkus/mkvtoolnix/language/ru/)\n"
@@ -1660,7 +1660,7 @@ msgstr "&Escape-аргументы для:"
 msgid "&Expand all"
 msgstr "&Развернуть все"
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:391
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:383
 #, fuzzy, no-c-format
 msgid "&Extended language subtag:"
 msgstr "Соответствующая форма подтегов расширенного языка: %1."
@@ -1690,7 +1690,7 @@ msgstr "&Перенумерация начинается с:"
 msgid "&Font && size:"
 msgstr "&Шрифт и размер:"
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:384
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:376
 #, no-c-format
 msgid "&Free-form input"
 msgstr "Ввод в свободной &форме"
@@ -1721,7 +1721,7 @@ msgstr "&Шестнадцатеричное представление:"
 msgid "&Hidden"
 msgstr "&Скрытый"
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:385
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:377
 #, no-c-format
 msgid "&Individually selected components"
 msgstr "&Индивидуально выбранные компоненты"
@@ -1757,7 +1757,7 @@ msgstr "&Язык названий глав для замены:"
 #: src/mkvtoolnix-gui/forms/chapter_editor/generate_sub_chapters_parameters_dialog.h:182
 #: src/mkvtoolnix-gui/forms/main_window/prefs_language_shortcut_dialog.h:114
 #: src/mkvtoolnix-gui/forms/merge/tab.h:1815
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:387
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:379
 #, no-c-format
 msgid "&Language:"
 msgstr "&Язык:"
@@ -1932,12 +1932,12 @@ msgstr "&Предыдущая вкладка вывода задания"
 msgid "&Previous multiplex settings"
 msgstr "&Предыдущие настройки слияния"
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:389
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:381
 #, no-c-format
 msgid "&Private use:"
 msgstr "&Личное пользование:"
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:386
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:378
 #, no-c-format
 msgid "&Region:"
 msgstr "&Регион:"
@@ -2001,7 +2001,7 @@ msgstr "&Удалить выбранное вложение"
 msgid "&Remove selected edition or chapter"
 msgstr "&Удалить выбранный раздел или главу"
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:399
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:391
 #, no-c-format
 msgid "&Replace with normalized form"
 msgstr ""
@@ -2048,7 +2048,7 @@ msgstr "&Сканировать папку на наличие других пл
 msgid "&Scan for other playlists"
 msgstr "&Проверить наличие других плей-листов"
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:393
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:385
 #, no-c-format
 msgid "&Script:"
 msgstr "&Сценарий:"
@@ -2141,7 +2141,7 @@ msgstr "&Использовать информацию"
 msgid "&Validate values"
 msgstr "&Проверить значения"
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:388
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:380
 #, no-c-format
 msgid "&Variants:"
 msgstr "&Варианты:"
@@ -5747,7 +5747,7 @@ msgstr "Вы&ход"
 msgid "E&xpand chapter's start and end timestamps to include the minimum/maximum timestamps of all their sub-chapters"
 msgstr "Рас&ширить временные рамки меток начала и конца глав так, чтобы включить минимальные/максимальные метки времени всех их подглав"
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:394
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:386
 #, no-c-format
 msgid "E&xtensions:"
 msgstr "Р&асширения:"
@@ -5782,7 +5782,7 @@ msgstr "Версия EBML"
 msgid "EBML void"
 msgstr "EBML пусто"
 
-#: src/common/bcp47.cpp:453
+#: src/common/bcp47.cpp:484
 #, no-c-format
 msgid "Each extension identifier must be used at most once."
 msgstr "Каждый идентификатор расширения должен использоваться не более одного раза."
@@ -5807,8 +5807,8 @@ msgstr "Каждый диапазон состоит из номеров нач�
 msgid "Each range consists of a start and end timestamp with a '-' in the middle, e.g. '00:01:15-00:03:20'."
 msgstr "Каждый диапазон состоит из меток времени начала и конца, разделённых \"-\", например \"00:01:15-00:03:20\"."
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:382
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:383
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:374
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:375
 #, no-c-format
 msgid "Edit language"
 msgstr "Править язык"
@@ -6249,7 +6249,7 @@ msgstr "Соответствующая форма подтегов расшир�
 msgid "Extended language subtags form"
 msgstr "Соответствующая форма подтегов расширенного языка: %1."
 
-#: src/common/bcp47.cpp:445
+#: src/common/bcp47.cpp:476
 #, no-c-format
 msgid "Extension subtags must follow at least a primary language subtag."
 msgstr "Подтеги расширения должны следовать, по крайней мере, за подтегом основного языка."
@@ -6494,7 +6494,7 @@ msgstr "Завершено в:"
 msgid "First chapter name regardless of its language"
 msgstr "Название первой главы независимо от языка"
 
-#: src/common/bcp47.cpp:512
+#: src/common/bcp47.cpp:543
 #, no-c-format
 msgid "Five- to eight-letter language codes are currently not supported."
 msgstr "Языковые коды из пяти-восьми букв в настоящее время не поддерживаются."
@@ -6604,7 +6604,7 @@ msgstr "Принудительно установить множитель ме�
 msgid "Found at least one B frame without second reference in a non closed GOP.\n"
 msgstr "Найден B-кадр без второй ссылки на незакрытый GOP. Исправьте видеопоток MPEG2, прежде чем пытаться обработать его.\n"
 
-#: src/common/bcp47.cpp:507
+#: src/common/bcp47.cpp:538
 #, no-c-format
 msgid "Four-letter language codes are reserved for future use and not supported."
 msgstr "Четырёхбуквенные языковые коды зарезервированы для использования в будущем и в настоящее время не поддерживаются."
@@ -7398,6 +7398,11 @@ msgstr "Информация"
 #: src/mkvtoolnix-gui/forms/info/element_viewer_dialog.h:221
 #, no-c-format
 msgid "Information"
+msgstr "Информация"
+
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:388
+#, fuzzy, no-c-format
+msgid "Information & Warnings:"
 msgstr "Информация"
 
 #: src/common/bitvalue.cpp:76
@@ -9410,7 +9415,7 @@ msgstr "Пакет номер {0} содержит неправильный за
 msgid "Parse the whole file instead of relying on the index."
 msgstr "Анализировать файл целиком, не полагаясь на индекс."
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:398
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:390
 #, no-c-format
 msgid "Parser error:"
 msgstr "Ошибка анализатора:"
@@ -10194,7 +10199,7 @@ msgstr "Заменить вложение новым файлом и &взять
 #: src/mkvtoolnix-gui/util/language_dialog.cpp:178
 #, no-c-format
 msgid "Replace with canonical form once"
-msgstr ""
+msgstr "Заменить канонической формой один раз"
 
 #: src/mkvtoolnix-gui/util/language_dialog.cpp:181
 #, fuzzy, no-c-format
@@ -11207,7 +11212,7 @@ msgstr "Запущено в:"
 msgid "Statistics for track number {0}: number of blocks: {1}; size in bytes: {2}; duration in seconds: {3}; approximate bitrate in bits/second: {4}\n"
 msgstr "Статистика для дорожки {0}: количество блоков: {1}; размер в байтах: {2}, длительность в секундах: {3}; приблизительный битрейт (бит в секунду): {4}\n"
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:395
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:387
 #: src/mkvtoolnix-gui/jobs/model.cpp:50
 #, no-c-format
 msgid "Status"
@@ -11215,7 +11220,7 @@ msgstr "Состояние"
 
 #: src/mkvtoolnix-gui/forms/header_editor/value_page.h:207
 #: src/mkvtoolnix-gui/forms/main_window/available_update_info_dialog.h:160
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:397
+#: src/mkvtoolnix-gui/forms/util/language_dialog.h:389
 #: src/mkvtoolnix-gui/forms/watch_jobs/tab.h:289
 #: src/mkvtoolnix-gui/header_editor/value_page.cpp:182
 #, no-c-format
@@ -11729,6 +11734,11 @@ msgstr "Звуковой файл для воспроизведения ещё �
 msgid "The audio/video synchronization may have been lost."
 msgstr "Возможна рассинхронизация аудио и видео потоков"
 
+#: src/mkvtoolnix-gui/util/language_dialog.cpp:508
+#, no-c-format
+msgid "The canonical form does use a suitable prefix."
+msgstr ""
+
 #: src/propedit/propedit.cpp:169
 #, no-c-format
 msgid "The changes are written to the file.\n"
@@ -11805,14 +11815,14 @@ msgstr "Заголовок файла коррекции не был прочи�
 msgid "The corresponding canonical & extended language subtags forms are: %1."
 msgstr "Соответствующими формами канонического вида и подтегами расширенного языка являются: %1."
 
-#: src/mkvtoolnix-gui/util/language_dialog.cpp:484
+#: src/mkvtoolnix-gui/util/language_dialog.cpp:486
 #, no-c-format
 msgid "The corresponding canonical form is: %1."
 msgstr "Соответствующая каноническая форма: %1."
 
-#: src/mkvtoolnix-gui/util/language_dialog.cpp:487
-#, no-c-format
-msgid "The corresponding extended language subtags form: %1."
+#: src/mkvtoolnix-gui/util/language_dialog.cpp:491
+#, fuzzy, no-c-format
+msgid "The corresponding extended language subtags form is: %1."
 msgstr "Соответствующая форма подтегов расширенного языка: %1."
 
 #: src/merge/output_control.cpp:1627
@@ -11988,10 +11998,15 @@ msgstr "Сообщение об ошибке:"
 msgid "The extended language subtag '%1' is deprecated."
 msgstr "Расширенный языковой подтег «%1» устарел."
 
-#: src/common/bcp47.cpp:417
+#: src/common/bcp47.cpp:448
 #, no-c-format
 msgid "The extended language subtag '{}' must only be used with one of the following prefixes: {}."
 msgstr "Расширенный подтег языка \"{}\" должен использоваться только с одним из следующих префиксов: {}."
+
+#: src/mkvtoolnix-gui/util/language_dialog.cpp:511
+#, fuzzy, no-c-format
+msgid "The extended language subtags form does use a suitable prefix."
+msgstr "Расширенный языковой подтег «%1» устарел."
 
 #: src/output/p_mpeg4_p2.cpp:360
 #, no-c-format
@@ -12460,12 +12475,12 @@ msgstr "Выбранный здесь язык будет использован
 msgid "The language set here is also used when chapters are generated."
 msgstr "Установленный здесь язык также используется при создании глав."
 
-#: src/mkvtoolnix-gui/util/language_dialog.cpp:495
+#: src/mkvtoolnix-gui/util/language_dialog.cpp:521
 #, no-c-format
 msgid "The language tag is not valid."
 msgstr "Тег языка неправильный."
 
-#: src/mkvtoolnix-gui/util/language_dialog.cpp:495
+#: src/mkvtoolnix-gui/util/language_dialog.cpp:521
 #, no-c-format
 msgid "The language tag is valid."
 msgstr "Тег языка правильный."
@@ -13060,7 +13075,7 @@ msgstr "Пользователь может выбрать, какой имен�
 msgid "The value '{0}' is not a number.\n"
 msgstr "Значение \"{0}\" не является числом.\n"
 
-#: src/common/bcp47.cpp:463
+#: src/common/bcp47.cpp:494
 #, no-c-format
 msgid "The value '{0}' is not a registered IANA language tag identifier."
 msgstr "Значение «{0}» не является зарегистрированным языковым идентификатором тега IANA."
@@ -13112,7 +13127,7 @@ msgstr "Значение может быть задано или как числ
 msgid "The value can be negative, but keep in mind that any frame whose timestamp is negative after this calculation is dropped."
 msgstr "Значение может быть отрицательным, но имейте в виду, что любой кадр, метка времени которого отрицательна, после перерасчёта отбрасывается."
 
-#: src/common/bcp47.cpp:489
+#: src/common/bcp47.cpp:520
 #, no-c-format
 msgid "The value does not adhere to the general structure of IETF BCP 47/RFC 5646 language tags."
 msgstr "Значение не соответствует общей структуре языковых тегов IETF BCP 47/RFC 5646."
@@ -13133,7 +13148,12 @@ msgstr "Значения будут легко доступны для выбо�
 msgid "The variant '%1' is deprecated."
 msgstr "Вариант «%1» устарел."
 
-#: src/common/bcp47.cpp:429
+#: src/mkvtoolnix-gui/util/language_dialog.cpp:504
+#, no-c-format
+msgid "The variant '%1' is used with prefixes that aren't suited for it. Suitable prefixes are: %2."
+msgstr ""
+
+#: src/common/bcp47.cpp:460
 #, no-c-format
 msgid "The variant '{}' occurs more than once."
 msgstr "Вариант «{}» встречается более одного раза."
@@ -14600,7 +14620,6 @@ msgstr "Предупреждения"
 msgid "Warnings/Errors"
 msgstr "Предупреждения/ошибки"
 
-#: src/mkvtoolnix-gui/forms/util/language_dialog.h:396
 #: src/mkvtoolnix-gui/forms/watch_jobs/tab.h:299
 #, no-c-format
 msgid "Warnings:"
@@ -15076,7 +15095,7 @@ msgstr "кнопки"
 #: src/mkvtoolnix-gui/main_window/preferences_dialog.cpp:843
 #, no-c-format
 msgid "canonical form"
-msgstr ""
+msgstr "каноническая форма"
 
 #: src/common/kax_info.cpp:635
 #, no-c-format
@@ -15619,9 +15638,9 @@ msgid "no language selected"
 msgstr "язык не выбран"
 
 #: src/mkvtoolnix-gui/main_window/preferences_dialog.cpp:842
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "no normalization"
-msgstr "Информация"
+msgstr "без нормализации"
 
 #: src/common/kax_info.cpp:824
 #, no-c-format
