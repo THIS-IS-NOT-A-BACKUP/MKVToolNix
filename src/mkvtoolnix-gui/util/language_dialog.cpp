@@ -346,10 +346,10 @@ LanguageDialog::setupConnections() {
   connect(p.ui->pbAddExtension,           &QPushButton::clicked,               this,     &LanguageDialog::addExtensionRowAndUpdateLayout);
   connect(p.ui->pbAddPrivateUse,          &QPushButton::clicked,               this,     &LanguageDialog::addPrivateUseRowAndUpdateLayout);
 
-  connect(p.replaceCanonicalAction,       &QAction::triggered,                 [this]() { replaceWithCanonicalForm(false); });
-  connect(p.replaceCanonicalAlwaysAction, &QAction::triggered,                 [this]() { replaceWithCanonicalForm(true);  });
-  connect(p.replaceExtlangAction,         &QAction::triggered,                 [this]() { replaceWithExtlangForm(false);   });
-  connect(p.replaceExtlangAlwaysAction,   &QAction::triggered,                 [this]() { replaceWithExtlangForm(true);    });
+  connect(p.replaceCanonicalAction,       &QAction::triggered,                 [this]() { replaceWithNormalizedForm(mtx::bcp47::normalization_mode_e::canonical, false); });
+  connect(p.replaceCanonicalAlwaysAction, &QAction::triggered,                 [this]() { replaceWithNormalizedForm(mtx::bcp47::normalization_mode_e::canonical, true);  });
+  connect(p.replaceExtlangAction,         &QAction::triggered,                 [this]() { replaceWithNormalizedForm(mtx::bcp47::normalization_mode_e::extlang,   false); });
+  connect(p.replaceExtlangAlwaysAction,   &QAction::triggered,                 [this]() { replaceWithNormalizedForm(mtx::bcp47::normalization_mode_e::extlang,   true);  });
 }
 
 void
@@ -456,6 +456,10 @@ LanguageDialog::determineInfoAndWarningsFor(mtx::bcp47::language_c const &tag) {
       lists.second << QY("The script '%1' is deprecated.").arg(Q(tag.get_script()));
   }
 
+  if (tag.should_script_be_suppressed())
+    lists.second << QY("The script '%1' should not be used for the language '%2' as it is the script the overwhelming majority of documents for this language is written in.")
+      .arg(Q(tag.get_script())).arg(Q(tag.get_language().empty() ? tag.get_extended_language_subtag() : tag.get_language()));
+
   if (!tag.get_region().empty()) {
     auto region = mtx::iso3166::look_up(tag.get_region());
     if (region && region->is_deprecated)
@@ -468,12 +472,28 @@ LanguageDialog::determineInfoAndWarningsFor(mtx::bcp47::language_c const &tag) {
       lists.second << QY("The variant '%1' is deprecated.").arg(Q(variantStr));
   }
 
-  if (!tag.get_grandfathered().empty())
-    lists.second << QY("This language tag is a grandfathered element only supported for historical reasons.");
-
   auto const canonical_form    = tag.clone().to_canonical_form();
   auto const extlang_form      = tag.clone().to_extlang_form();
   auto const normalizationMode = Util::Settings::get().m_bcp47NormalizationMode;
+  auto const badVariantStr     = tag.get_first_variant_not_matching_prefixes();
+  auto const badVariant        = mtx::iana::language_subtag_registry::look_up_variant(badVariantStr);
+
+  if (badVariant && !badVariant->prefixes.empty()) {
+    QStringList sentences;
+    sentences << QY("The variant '%1' is used with prefixes that aren't suited for it. Suitable prefixes are: %2.")
+      .arg(Q(badVariantStr)).arg(Q(mtx::string::join(badVariant->prefixes, ", ")));
+
+    if ((canonical_form != tag) && canonical_form.get_first_variant_not_matching_prefixes().empty())
+      sentences << QY("The canonical form does use a suitable prefix.");
+
+    if ((extlang_form != tag) && extlang_form.get_first_variant_not_matching_prefixes().empty())
+      sentences << QY("The extended language subtags form does use a suitable prefix.");
+
+    lists.second << sentences.join(Q(" "));
+
+    if (!tag.get_grandfathered().empty())
+      lists.second << QY("This language tag is a grandfathered element only supported for historical reasons.");
+  }
 
   if (   (tag               != canonical_form)
       && (tag               != extlang_form)
@@ -491,26 +511,6 @@ LanguageDialog::determineInfoAndWarningsFor(mtx::bcp47::language_c const &tag) {
       typeContainer << QY("The corresponding extended language subtags form is: %1.").arg(Q(extlang_form.format()));
     }
   }
-
-  auto badVariantStr = tag.get_first_variant_not_matching_prefixes();
-  if (badVariantStr.empty())
-    return lists;
-
-  auto badVariant = mtx::iana::language_subtag_registry::look_up_variant(badVariantStr);
-  if (!badVariant || badVariant->prefixes.empty())
-    return lists;
-
-  QStringList sentences;
-  sentences << QY("The variant '%1' is used with prefixes that aren't suited for it. Suitable prefixes are: %2.")
-    .arg(Q(badVariantStr)).arg(Q(mtx::string::join(badVariant->prefixes, ", ")));
-
-  if ((canonical_form != tag) && canonical_form.get_first_variant_not_matching_prefixes().empty())
-    sentences << QY("The canonical form does use a suitable prefix.");
-
-  if ((extlang_form != tag) && extlang_form.get_first_variant_not_matching_prefixes().empty())
-    sentences << QY("The extended language subtags form does use a suitable prefix.");
-
-  lists.second << sentences.join(Q(" "));
 
   return lists;
 }
@@ -857,35 +857,20 @@ LanguageDialog::updateFromComponents() {
 }
 
 void
-LanguageDialog::replaceWithCanonicalForm(bool always) {
+LanguageDialog::replaceWithNormalizedForm(mtx::bcp47::normalization_mode_e mode,
+                                          bool always) {
   auto currentLanguage = language();
 
   if (!currentLanguage.is_valid())
     return;
 
-  auto canonicalForm = currentLanguage.clone().to_canonical_form();
-
-  if (currentLanguage != canonicalForm)
-    setLanguage(canonicalForm);
-
   if (always)
-    changeNormalizationMode(mtx::bcp47::normalization_mode_e::canonical);
-}
+    changeNormalizationMode(mode);
 
-void
-LanguageDialog::replaceWithExtlangForm(bool always) {
-  auto currentLanguage = language();
+  auto normalizedForm = currentLanguage.clone().normalize(mode);
 
-  if (!currentLanguage.is_valid())
-    return;
-
-  auto extlangForm = currentLanguage.clone().to_extlang_form();
-
-  if (currentLanguage != extlangForm)
-    setLanguage(extlangForm);
-
-  if (always)
-    changeNormalizationMode(mtx::bcp47::normalization_mode_e::extlang);
+  if (currentLanguage != normalizedForm)
+    setLanguage(normalizedForm);
 }
 
 int
