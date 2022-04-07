@@ -69,6 +69,7 @@
 * MKVToolNix GUI: IETF BCP 47/RFC 5646 language tags: the language dialog now
   shows a warning if a script is used with a language for which it should be
   suppressed. Part of the implementation of #3307.
+* all: added a new translation to Chinese Simplified (Singapore) by Dian Li.
 
 ## Bug fixes
 
@@ -85,6 +86,11 @@
   saying only that prefixes "are suitable sequences" for use with the
   variants. What is now verified, though, is that no variant is used multiple
   times within the same language tag. Part of the implementation/fix of #3307.
+
+## Build system changes
+
+* build system: fixed compilation on Unices other than Linux & macOS
+  (e.g. FreeBSD). Fixes #3316.
 
 
 # Version 66.0.0 "Josie" 2022-03-13
