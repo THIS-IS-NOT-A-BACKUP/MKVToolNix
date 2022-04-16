@@ -283,8 +283,17 @@ kax_analyzer_c::process() {
 
     return result;
 
+  } catch (std::exception const &ex) {
+    mxdebug_if(m_debug, fmt::format("kax_analyzer: parsing file '{0}' failed with an exception of type {1}: {2}\n", m_file->get_file_name(), typeid(ex).name(), ex.what()));
+
+    show_progress_done();
+
+    if (m_throw_on_error)
+      throw;
+    return false;
+
   } catch (...) {
-    mxdebug_if(m_debug, fmt::format("kax_analyzer: parsing file '{0}' failed with an exception\n", m_file->get_file_name()));
+    mxdebug_if(m_debug, fmt::format("kax_analyzer: parsing file '{0}' failed with an unknown exception\n", m_file->get_file_name()));
 
     show_progress_done();
 
@@ -1023,9 +1032,14 @@ kax_analyzer_c::merge_void_elements() {
   if (m_data.size() <= start_idx)
     return;
 
+  mxdebug_if(m_debug, fmt::format("merge_void_elements: removing trailing void elements from start_idx {0} to m_data.size {1}\n", start_idx, m_data.size()));
+
   // Truncate the file after the last non-void element and update the segment size.
   m_file->truncate(m_data[start_idx]->m_pos);
   adjust_segment_size();
+
+  // Lastly remove the elements from our internal records.
+  m_data.erase(m_data.begin() + start_idx, m_data.end());
 }
 
 /** \brief Finds a suitable spot for an element and writes it to the file
@@ -1199,7 +1213,7 @@ kax_analyzer_c::try_adding_to_existing_meta_seek(EbmlElement *e) {
       continue;
 
     // Calculate how much free space there is behind the seek head.
-    // merge_void_elemens() guarantees that there is no EbmlVoid element
+    // merge_void_elements() guarantees that there is no EbmlVoid element
     // at the end of the file and that all consecutive EbmlVoid elements
     // have been merged into a single element.
     size_t available_space = m_data[data_idx]->m_size;
