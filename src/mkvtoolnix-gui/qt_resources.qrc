@@ -3,444 +3,316 @@
 <RCC version='1.0'>
  <qresource>
   <file alias='CODE_OF_CONDUCT.md'>../../CODE_OF_CONDUCT.md</file>
-  <file alias='icons/128x128/application-exit.png'>../../share/icons/128x128/application-exit.png</file>
-  <file alias='icons/128x128/application-octet-stream.png'>../../share/icons/128x128/application-octet-stream.png</file>
-  <file alias='icons/128x128/application-octet-stream@2x.png'>../../share/icons/256x256/application-octet-stream.png</file>
-  <file alias='icons/128x128/applications-internet.png'>../../share/icons/128x128/applications-internet.png</file>
-  <file alias='icons/128x128/applications-internet@2x.png'>../../share/icons/256x256/applications-internet.png</file>
-  <file alias='icons/128x128/clock.png'>../../share/icons/128x128/clock.png</file>
-  <file alias='icons/128x128/clock@2x.png'>../../share/icons/256x256/clock.png</file>
-  <file alias='icons/128x128/dialog-error-grayscale.png'>../../share/icons/128x128/dialog-error-grayscale.png</file>
-  <file alias='icons/128x128/dialog-error.png'>../../share/icons/128x128/dialog-error.png</file>
-  <file alias='icons/128x128/dialog-ok-apply.png'>../../share/icons/128x128/dialog-ok-apply.png</file>
-  <file alias='icons/128x128/dialog-warning-grayscale.png'>../../share/icons/128x128/dialog-warning-grayscale.png</file>
-  <file alias='icons/128x128/dialog-warning.png'>../../share/icons/128x128/dialog-warning.png</file>
-  <file alias='icons/128x128/document-edit.png'>../../share/icons/128x128/document-edit.png</file>
-  <file alias='icons/128x128/document-preview-archive.png'>../../share/icons/128x128/document-preview-archive.png</file>
-  <file alias='icons/128x128/folder-favorites.png'>../../share/icons/128x128/folder-favorites.png</file>
-  <file alias='icons/128x128/folder-favorites@2x.png'>../../share/icons/256x256/folder-favorites.png</file>
-  <file alias='icons/128x128/kbugbuster.png'>../../share/icons/128x128/kbugbuster.png</file>
-  <file alias='icons/128x128/list-remove.png'>../../share/icons/128x128/list-remove.png</file>
-  <file alias='icons/128x128/mkvextract.png'>../../share/icons/128x128/mkvextract.png</file>
-  <file alias='icons/128x128/mkvextract@2x.png'>../../share/icons/256x256/mkvextract.png</file>
-  <file alias='icons/128x128/mkvinfo.png'>../../share/icons/128x128/mkvinfo.png</file>
-  <file alias='icons/128x128/mkvinfo@2x.png'>../../share/icons/256x256/mkvinfo.png</file>
-  <file alias='icons/128x128/mkvmerge.png'>../../share/icons/128x128/mkvmerge.png</file>
-  <file alias='icons/128x128/mkvmerge@2x.png'>../../share/icons/256x256/mkvmerge.png</file>
-  <file alias='icons/128x128/mkvpropedit.png'>../../share/icons/128x128/mkvpropedit.png</file>
-  <file alias='icons/128x128/mkvpropedit@2x.png'>../../share/icons/256x256/mkvpropedit.png</file>
-  <file alias='icons/128x128/mkvtoolnix-gui.png'>../../share/icons/128x128/mkvtoolnix-gui.png</file>
-  <file alias='icons/128x128/mkvtoolnix-gui@2x.png'>../../share/icons/256x256/mkvtoolnix-gui.png</file>
-  <file alias='icons/128x128/preferences-other.png'>../../share/icons/128x128/preferences-other.png</file>
-  <file alias='icons/128x128/preferences-other@2x.png'>../../share/icons/256x256/preferences-other.png</file>
-  <file alias='icons/128x128/system-run.png'>../../share/icons/128x128/system-run.png</file>
-  <file alias='icons/128x128/system-software-update.png'>../../share/icons/128x128/system-software-update.png</file>
-  <file alias='icons/128x128/tool-animator.png'>../../share/icons/128x128/tool-animator.png</file>
-  <file alias='icons/128x128/tools-wizard.png'>../../share/icons/128x128/tools-wizard.png</file>
-  <file alias='icons/128x128/utilities-terminal.png'>../../share/icons/128x128/utilities-terminal.png</file>
-  <file alias='icons/16x16/application-exit.png'>../../share/icons/16x16/application-exit.png</file>
-  <file alias='icons/16x16/application-exit@2x.png'>../../share/icons/32x32/application-exit.png</file>
-  <file alias='icons/16x16/application-octet-stream.png'>../../share/icons/16x16/application-octet-stream.png</file>
-  <file alias='icons/16x16/application-octet-stream@2x.png'>../../share/icons/32x32/application-octet-stream.png</file>
-  <file alias='icons/16x16/application-pgp-signature.png'>../../share/icons/16x16/application-pgp-signature.png</file>
-  <file alias='icons/16x16/application-pgp-signature@2x.png'>../../share/icons/32x32/application-pgp-signature.png</file>
-  <file alias='icons/16x16/applications-internet.png'>../../share/icons/16x16/applications-internet.png</file>
-  <file alias='icons/16x16/applications-internet@2x.png'>../../share/icons/32x32/applications-internet.png</file>
-  <file alias='icons/16x16/archive-remove.png'>../../share/icons/16x16/archive-remove.png</file>
-  <file alias='icons/16x16/archive-remove@2x.png'>../../share/icons/32x32/archive-remove.png</file>
-  <file alias='icons/16x16/arrow-down.png'>../../share/icons/16x16/arrow-down.png</file>
-  <file alias='icons/16x16/arrow-down@2x.png'>../../share/icons/32x32/arrow-down.png</file>
-  <file alias='icons/16x16/arrow-left-double.png'>../../share/icons/16x16/arrow-left-double.png</file>
-  <file alias='icons/16x16/arrow-left-double@2x.png'>../../share/icons/32x32/arrow-left-double.png</file>
-  <file alias='icons/16x16/arrow-left.png'>../../share/icons/16x16/arrow-left.png</file>
-  <file alias='icons/16x16/arrow-left@2x.png'>../../share/icons/32x32/arrow-left.png</file>
-  <file alias='icons/16x16/arrow-right-double.png'>../../share/icons/16x16/arrow-right-double.png</file>
-  <file alias='icons/16x16/arrow-right-double@2x.png'>../../share/icons/32x32/arrow-right-double.png</file>
-  <file alias='icons/16x16/arrow-right.png'>../../share/icons/16x16/arrow-right.png</file>
-  <file alias='icons/16x16/arrow-right@2x.png'>../../share/icons/32x32/arrow-right.png</file>
-  <file alias='icons/16x16/arrow-up.png'>../../share/icons/16x16/arrow-up.png</file>
-  <file alias='icons/16x16/arrow-up@2x.png'>../../share/icons/32x32/arrow-up.png</file>
-  <file alias='icons/16x16/character-set.png'>../../share/icons/16x16/character-set.png</file>
-  <file alias='icons/16x16/character-set@2x.png'>../../share/icons/32x32/character-set.png</file>
-  <file alias='icons/16x16/checkbox-unchecked.png'>../../share/icons/16x16/checkbox-unchecked.png</file>
-  <file alias='icons/16x16/checkbox-unchecked@2x.png'>../../share/icons/32x32/checkbox-unchecked.png</file>
-  <file alias='icons/16x16/checkbox.png'>../../share/icons/16x16/checkbox.png</file>
-  <file alias='icons/16x16/checkbox@2x.png'>../../share/icons/32x32/checkbox.png</file>
-  <file alias='icons/16x16/clock.png'>../../share/icons/16x16/clock.png</file>
-  <file alias='icons/16x16/clock@2x.png'>../../share/icons/32x32/clock.png</file>
-  <file alias='icons/16x16/code-class.png'>../../share/icons/16x16/code-class.png</file>
-  <file alias='icons/16x16/code-class@2x.png'>../../share/icons/32x32/code-class.png</file>
-  <file alias='icons/16x16/dialog-cancel.png'>../../share/icons/16x16/dialog-cancel.png</file>
-  <file alias='icons/16x16/dialog-cancel@2x.png'>../../share/icons/32x32/dialog-cancel.png</file>
-  <file alias='icons/16x16/dialog-error-grayscale.png'>../../share/icons/16x16/dialog-error-grayscale.png</file>
-  <file alias='icons/16x16/dialog-error-grayscale@2x.png'>../../share/icons/32x32/dialog-error-grayscale.png</file>
-  <file alias='icons/16x16/dialog-error.png'>../../share/icons/16x16/dialog-error.png</file>
-  <file alias='icons/16x16/dialog-error@2x.png'>../../share/icons/32x32/dialog-error.png</file>
-  <file alias='icons/16x16/dialog-ok-apply.png'>../../share/icons/16x16/dialog-ok-apply.png</file>
-  <file alias='icons/16x16/dialog-ok-apply@2x.png'>../../share/icons/32x32/dialog-ok-apply.png</file>
-  <file alias='icons/16x16/dialog-warning-grayscale.png'>../../share/icons/16x16/dialog-warning-grayscale.png</file>
-  <file alias='icons/16x16/dialog-warning-grayscale@2x.png'>../../share/icons/32x32/dialog-warning-grayscale.png</file>
-  <file alias='icons/16x16/dialog-warning.png'>../../share/icons/16x16/dialog-warning.png</file>
-  <file alias='icons/16x16/dialog-warning@2x.png'>../../share/icons/32x32/dialog-warning.png</file>
-  <file alias='icons/16x16/distribute-horizontal-margin.png'>../../share/icons/16x16/distribute-horizontal-margin.png</file>
-  <file alias='icons/16x16/distribute-horizontal-margin@2x.png'>../../share/icons/32x32/distribute-horizontal-margin.png</file>
-  <file alias='icons/16x16/distribute-horizontal-x.png'>../../share/icons/16x16/distribute-horizontal-x.png</file>
-  <file alias='icons/16x16/distribute-horizontal-x@2x.png'>../../share/icons/32x32/distribute-horizontal-x.png</file>
-  <file alias='icons/16x16/distribute-vertical-page.png'>../../share/icons/16x16/distribute-vertical-page.png</file>
-  <file alias='icons/16x16/distribute-vertical-page@2x.png'>../../share/icons/32x32/distribute-vertical-page.png</file>
-  <file alias='icons/16x16/distribute-vertical-top.png'>../../share/icons/16x16/distribute-vertical-top.png</file>
-  <file alias='icons/16x16/distribute-vertical-top@2x.png'>../../share/icons/32x32/distribute-vertical-top.png</file>
-  <file alias='icons/16x16/document-close.png'>../../share/icons/16x16/document-close.png</file>
-  <file alias='icons/16x16/document-close@2x.png'>../../share/icons/32x32/document-close.png</file>
-  <file alias='icons/16x16/document-edit-sign-encrypt.png'>../../share/icons/16x16/document-edit-sign-encrypt.png</file>
-  <file alias='icons/16x16/document-edit-sign-encrypt@2x.png'>../../share/icons/32x32/document-edit-sign-encrypt.png</file>
-  <file alias='icons/16x16/document-edit.png'>../../share/icons/16x16/document-edit.png</file>
-  <file alias='icons/16x16/document-edit@2x.png'>../../share/icons/32x32/document-edit.png</file>
-  <file alias='icons/16x16/document-new.png'>../../share/icons/16x16/document-new.png</file>
-  <file alias='icons/16x16/document-new@2x.png'>../../share/icons/32x32/document-new.png</file>
-  <file alias='icons/16x16/document-open-folder.png'>../../share/icons/16x16/document-open-folder.png</file>
-  <file alias='icons/16x16/document-open-folder@2x.png'>../../share/icons/32x32/document-open-folder.png</file>
-  <file alias='icons/16x16/document-open.png'>../../share/icons/16x16/document-open.png</file>
-  <file alias='icons/16x16/document-open@2x.png'>../../share/icons/32x32/document-open.png</file>
-  <file alias='icons/16x16/document-preview-archive.png'>../../share/icons/16x16/document-preview-archive.png</file>
-  <file alias='icons/16x16/document-preview-archive@2x.png'>../../share/icons/32x32/document-preview-archive.png</file>
-  <file alias='icons/16x16/document-revert.png'>../../share/icons/16x16/document-revert.png</file>
-  <file alias='icons/16x16/document-revert@2x.png'>../../share/icons/32x32/document-revert.png</file>
-  <file alias='icons/16x16/document-save-as.png'>../../share/icons/16x16/document-save-as.png</file>
-  <file alias='icons/16x16/document-save-as@2x.png'>../../share/icons/32x32/document-save-as.png</file>
-  <file alias='icons/16x16/document-save.png'>../../share/icons/16x16/document-save.png</file>
-  <file alias='icons/16x16/document-save@2x.png'>../../share/icons/32x32/document-save.png</file>
-  <file alias='icons/16x16/documentinfo.png'>../../share/icons/16x16/documentinfo.png</file>
-  <file alias='icons/16x16/documentinfo@2x.png'>../../share/icons/32x32/documentinfo.png</file>
-  <file alias='icons/16x16/draw-triangle2.png'>../../share/icons/16x16/draw-triangle2.png</file>
-  <file alias='icons/16x16/draw-triangle2@2x.png'>../../share/icons/32x32/draw-triangle2.png</file>
-  <file alias='icons/16x16/draw-triangle4.png'>../../share/icons/16x16/draw-triangle4.png</file>
-  <file alias='icons/16x16/draw-triangle4@2x.png'>../../share/icons/32x32/draw-triangle4.png</file>
-  <file alias='icons/16x16/edit-copy.png'>../../share/icons/16x16/edit-copy.png</file>
-  <file alias='icons/16x16/edit-copy@2x.png'>../../share/icons/32x32/edit-copy.png</file>
-  <file alias='icons/16x16/edit-entry.png'>../../share/icons/16x16/edit-entry.png</file>
-  <file alias='icons/16x16/edit-entry@2x.png'>../../share/icons/32x32/edit-entry.png</file>
-  <file alias='icons/16x16/edit-select-all.png'>../../share/icons/16x16/edit-select-all.png</file>
-  <file alias='icons/16x16/edit-select-all@2x.png'>../../share/icons/32x32/edit-select-all.png</file>
-  <file alias='icons/16x16/edit-table-insert-row-above.png'>../../share/icons/16x16/edit-table-insert-row-above.png</file>
-  <file alias='icons/16x16/edit-table-insert-row-above@2x.png'>../../share/icons/32x32/edit-table-insert-row-above.png</file>
-  <file alias='icons/16x16/edit-table-insert-row-below.png'>../../share/icons/16x16/edit-table-insert-row-below.png</file>
-  <file alias='icons/16x16/edit-table-insert-row-below@2x.png'>../../share/icons/32x32/edit-table-insert-row-below.png</file>
-  <file alias='icons/16x16/edit-table-insert-row-under.png'>../../share/icons/16x16/edit-table-insert-row-under.png</file>
-  <file alias='icons/16x16/edit-table-insert-row-under@2x.png'>../../share/icons/32x32/edit-table-insert-row-under.png</file>
-  <file alias='icons/16x16/edit-undo.png'>../../share/icons/16x16/edit-undo.png</file>
-  <file alias='icons/16x16/edit-undo@2x.png'>../../share/icons/32x32/edit-undo.png</file>
-  <file alias='icons/16x16/folder-favorites.png'>../../share/icons/16x16/folder-favorites.png</file>
-  <file alias='icons/16x16/folder-favorites@2x.png'>../../share/icons/32x32/folder-favorites.png</file>
-  <file alias='icons/16x16/kbugbuster.png'>../../share/icons/16x16/kbugbuster.png</file>
-  <file alias='icons/16x16/kbugbuster@2x.png'>../../share/icons/32x32/kbugbuster.png</file>
-  <file alias='icons/16x16/knotify.png'>../../share/icons/16x16/knotify.png</file>
-  <file alias='icons/16x16/layer-visible-on.png'>../../share/icons/16x16/layer-visible-on.png</file>
-  <file alias='icons/16x16/layer-visible-on@2x.png'>../../share/icons/32x32/layer-visible-on.png</file>
-  <file alias='icons/16x16/list-add.png'>../../share/icons/16x16/list-add.png</file>
-  <file alias='icons/16x16/list-add@2x.png'>../../share/icons/32x32/list-add.png</file>
-  <file alias='icons/16x16/list-remove.png'>../../share/icons/16x16/list-remove.png</file>
-  <file alias='icons/16x16/list-remove@2x.png'>../../share/icons/32x32/list-remove.png</file>
-  <file alias='icons/16x16/mail-attachment.png'>../../share/icons/16x16/mail-attachment.png</file>
-  <file alias='icons/16x16/mail-attachment@2x.png'>../../share/icons/32x32/mail-attachment.png</file>
-  <file alias='icons/16x16/mail-tagged.png'>../../share/icons/16x16/mail-tagged.png</file>
-  <file alias='icons/16x16/mail-tagged@2x.png'>../../share/icons/32x32/mail-tagged.png</file>
-  <file alias='icons/16x16/media-playback-start.png'>../../share/icons/16x16/media-playback-start.png</file>
-  <file alias='icons/16x16/media-playback-start@2x.png'>../../share/icons/32x32/media-playback-start.png</file>
-  <file alias='icons/16x16/media-playback-stop.png'>../../share/icons/16x16/media-playback-stop.png</file>
-  <file alias='icons/16x16/media-playback-stop@2x.png'>../../share/icons/32x32/media-playback-stop.png</file>
-  <file alias='icons/16x16/media-seek-forward.png'>../../share/icons/16x16/media-seek-forward.png</file>
-  <file alias='icons/16x16/media-seek-forward@2x.png'>../../share/icons/32x32/media-seek-forward.png</file>
-  <file alias='icons/16x16/merge.png'>../../share/icons/16x16/merge.png</file>
-  <file alias='icons/16x16/merge@2x.png'>../../share/icons/32x32/merge.png</file>
-  <file alias='icons/16x16/mkvextract.png'>../../share/icons/16x16/mkvextract.png</file>
-  <file alias='icons/16x16/mkvextract@2x.png'>../../share/icons/32x32/mkvextract.png</file>
-  <file alias='icons/16x16/mkvinfo.png'>../../share/icons/16x16/mkvinfo.png</file>
-  <file alias='icons/16x16/mkvinfo@2x.png'>../../share/icons/32x32/mkvinfo.png</file>
-  <file alias='icons/16x16/mkvmerge.png'>../../share/icons/16x16/mkvmerge.png</file>
-  <file alias='icons/16x16/mkvmerge@2x.png'>../../share/icons/32x32/mkvmerge.png</file>
-  <file alias='icons/16x16/mkvpropedit.png'>../../share/icons/16x16/mkvpropedit.png</file>
-  <file alias='icons/16x16/mkvpropedit@2x.png'>../../share/icons/32x32/mkvpropedit.png</file>
-  <file alias='icons/16x16/mkvtoolnix-gui.png'>../../share/icons/16x16/mkvtoolnix-gui.png</file>
-  <file alias='icons/16x16/mkvtoolnix-gui@2x.png'>../../share/icons/32x32/mkvtoolnix-gui.png</file>
-  <file alias='icons/16x16/preferences-other.png'>../../share/icons/16x16/preferences-other.png</file>
-  <file alias='icons/16x16/preferences-other@2x.png'>../../share/icons/32x32/preferences-other.png</file>
-  <file alias='icons/16x16/sort_ascending.png'>../../share/icons/16x16/sort_ascending.png</file>
-  <file alias='icons/16x16/sort_descending.png'>../../share/icons/16x16/sort_descending.png</file>
-  <file alias='icons/16x16/split.png'>../../share/icons/16x16/split.png</file>
-  <file alias='icons/16x16/split@2x.png'>../../share/icons/32x32/split.png</file>
-  <file alias='icons/16x16/story-editor.png'>../../share/icons/16x16/story-editor.png</file>
-  <file alias='icons/16x16/story-editor@2x.png'>../../share/icons/32x32/story-editor.png</file>
-  <file alias='icons/16x16/subtitles.png'>../../share/icons/16x16/subtitles.png</file>
-  <file alias='icons/16x16/system-run.png'>../../share/icons/16x16/system-run.png</file>
-  <file alias='icons/16x16/system-run@2x.png'>../../share/icons/32x32/system-run.png</file>
-  <file alias='icons/16x16/system-software-update.png'>../../share/icons/16x16/system-software-update.png</file>
-  <file alias='icons/16x16/system-software-update@2x.png'>../../share/icons/32x32/system-software-update.png</file>
-  <file alias='icons/16x16/tab-duplicate.png'>../../share/icons/16x16/tab-duplicate.png</file>
-  <file alias='icons/16x16/tab-duplicate@2x.png'>../../share/icons/32x32/tab-duplicate.png</file>
-  <file alias='icons/16x16/task-delegate.png'>../../share/icons/16x16/task-delegate.png</file>
-  <file alias='icons/16x16/task-delegate@2x.png'>../../share/icons/32x32/task-delegate.png</file>
-  <file alias='icons/16x16/task-ongoing.png'>../../share/icons/16x16/task-ongoing.png</file>
-  <file alias='icons/16x16/task-ongoing@2x.png'>../../share/icons/32x32/task-ongoing.png</file>
-  <file alias='icons/16x16/tool-animator.png'>../../share/icons/16x16/tool-animator.png</file>
-  <file alias='icons/16x16/tool-animator@2x.png'>../../share/icons/32x32/tool-animator.png</file>
-  <file alias='icons/16x16/tools-wizard.png'>../../share/icons/16x16/tools-wizard.png</file>
-  <file alias='icons/16x16/tools-wizard@2x.png'>../../share/icons/32x32/tools-wizard.png</file>
-  <file alias='icons/16x16/utilities-terminal.png'>../../share/icons/16x16/utilities-terminal.png</file>
-  <file alias='icons/16x16/utilities-terminal@2x.png'>../../share/icons/32x32/utilities-terminal.png</file>
-  <file alias='icons/16x16/view-choose.png'>../../share/icons/16x16/view-choose.png</file>
-  <file alias='icons/16x16/view-choose@2x.png'>../../share/icons/32x32/view-choose.png</file>
-  <file alias='icons/16x16/view-task.png'>../../share/icons/16x16/view-task.png</file>
-  <file alias='icons/16x16/view-task@2x.png'>../../share/icons/32x32/view-task.png</file>
-  <file alias='icons/24x24/draw-triangle2.png'>../../share/icons/24x24/draw-triangle2.png</file>
-  <file alias='icons/24x24/draw-triangle2@2x.png'>../../share/icons/48x48/draw-triangle2.png</file>
-  <file alias='icons/24x24/draw-triangle4.png'>../../share/icons/24x24/draw-triangle4.png</file>
-  <file alias='icons/24x24/draw-triangle4@2x.png'>../../share/icons/48x48/draw-triangle4.png</file>
-  <file alias='icons/24x24/mkvextract.png'>../../share/icons/24x24/mkvextract.png</file>
-  <file alias='icons/24x24/mkvextract@2x.png'>../../share/icons/48x48/mkvextract.png</file>
-  <file alias='icons/24x24/mkvinfo.png'>../../share/icons/24x24/mkvinfo.png</file>
-  <file alias='icons/24x24/mkvinfo@2x.png'>../../share/icons/48x48/mkvinfo.png</file>
-  <file alias='icons/24x24/mkvmerge.png'>../../share/icons/24x24/mkvmerge.png</file>
-  <file alias='icons/24x24/mkvmerge@2x.png'>../../share/icons/48x48/mkvmerge.png</file>
-  <file alias='icons/24x24/mkvpropedit.png'>../../share/icons/24x24/mkvpropedit.png</file>
-  <file alias='icons/24x24/mkvpropedit@2x.png'>../../share/icons/48x48/mkvpropedit.png</file>
-  <file alias='icons/24x24/mkvtoolnix-gui.png'>../../share/icons/24x24/mkvtoolnix-gui.png</file>
-  <file alias='icons/24x24/mkvtoolnix-gui@2x.png'>../../share/icons/48x48/mkvtoolnix-gui.png</file>
-  <file alias='icons/256x256/application-octet-stream.png'>../../share/icons/256x256/application-octet-stream.png</file>
-  <file alias='icons/256x256/applications-internet.png'>../../share/icons/256x256/applications-internet.png</file>
-  <file alias='icons/256x256/clock.png'>../../share/icons/256x256/clock.png</file>
-  <file alias='icons/256x256/folder-favorites.png'>../../share/icons/256x256/folder-favorites.png</file>
-  <file alias='icons/256x256/mkvextract.png'>../../share/icons/256x256/mkvextract.png</file>
-  <file alias='icons/256x256/mkvinfo.png'>../../share/icons/256x256/mkvinfo.png</file>
-  <file alias='icons/256x256/mkvmerge.png'>../../share/icons/256x256/mkvmerge.png</file>
-  <file alias='icons/256x256/mkvpropedit.png'>../../share/icons/256x256/mkvpropedit.png</file>
-  <file alias='icons/256x256/mkvtoolnix-gui.png'>../../share/icons/256x256/mkvtoolnix-gui.png</file>
-  <file alias='icons/256x256/preferences-other.png'>../../share/icons/256x256/preferences-other.png</file>
-  <file alias='icons/32x32/application-exit.png'>../../share/icons/32x32/application-exit.png</file>
-  <file alias='icons/32x32/application-exit@2x.png'>../../share/icons/64x64/application-exit.png</file>
-  <file alias='icons/32x32/application-octet-stream.png'>../../share/icons/32x32/application-octet-stream.png</file>
-  <file alias='icons/32x32/application-octet-stream@2x.png'>../../share/icons/64x64/application-octet-stream.png</file>
-  <file alias='icons/32x32/application-pgp-signature.png'>../../share/icons/32x32/application-pgp-signature.png</file>
-  <file alias='icons/32x32/applications-internet.png'>../../share/icons/32x32/applications-internet.png</file>
-  <file alias='icons/32x32/applications-internet@2x.png'>../../share/icons/64x64/applications-internet.png</file>
-  <file alias='icons/32x32/archive-remove.png'>../../share/icons/32x32/archive-remove.png</file>
-  <file alias='icons/32x32/arrow-down.png'>../../share/icons/32x32/arrow-down.png</file>
-  <file alias='icons/32x32/arrow-left-double.png'>../../share/icons/32x32/arrow-left-double.png</file>
-  <file alias='icons/32x32/arrow-left.png'>../../share/icons/32x32/arrow-left.png</file>
-  <file alias='icons/32x32/arrow-right-double.png'>../../share/icons/32x32/arrow-right-double.png</file>
-  <file alias='icons/32x32/arrow-right.png'>../../share/icons/32x32/arrow-right.png</file>
-  <file alias='icons/32x32/arrow-up.png'>../../share/icons/32x32/arrow-up.png</file>
-  <file alias='icons/32x32/character-set.png'>../../share/icons/32x32/character-set.png</file>
-  <file alias='icons/32x32/checkbox-unchecked.png'>../../share/icons/32x32/checkbox-unchecked.png</file>
-  <file alias='icons/32x32/checkbox.png'>../../share/icons/32x32/checkbox.png</file>
-  <file alias='icons/32x32/clock.png'>../../share/icons/32x32/clock.png</file>
-  <file alias='icons/32x32/clock@2x.png'>../../share/icons/64x64/clock.png</file>
-  <file alias='icons/32x32/code-class.png'>../../share/icons/32x32/code-class.png</file>
-  <file alias='icons/32x32/dialog-cancel.png'>../../share/icons/32x32/dialog-cancel.png</file>
-  <file alias='icons/32x32/dialog-error-grayscale.png'>../../share/icons/32x32/dialog-error-grayscale.png</file>
-  <file alias='icons/32x32/dialog-error-grayscale@2x.png'>../../share/icons/64x64/dialog-error-grayscale.png</file>
-  <file alias='icons/32x32/dialog-error.png'>../../share/icons/32x32/dialog-error.png</file>
-  <file alias='icons/32x32/dialog-error@2x.png'>../../share/icons/64x64/dialog-error.png</file>
-  <file alias='icons/32x32/dialog-ok-apply.png'>../../share/icons/32x32/dialog-ok-apply.png</file>
-  <file alias='icons/32x32/dialog-ok-apply@2x.png'>../../share/icons/64x64/dialog-ok-apply.png</file>
-  <file alias='icons/32x32/dialog-warning-grayscale.png'>../../share/icons/32x32/dialog-warning-grayscale.png</file>
-  <file alias='icons/32x32/dialog-warning-grayscale@2x.png'>../../share/icons/64x64/dialog-warning-grayscale.png</file>
-  <file alias='icons/32x32/dialog-warning.png'>../../share/icons/32x32/dialog-warning.png</file>
-  <file alias='icons/32x32/dialog-warning@2x.png'>../../share/icons/64x64/dialog-warning.png</file>
-  <file alias='icons/32x32/distribute-horizontal-margin.png'>../../share/icons/32x32/distribute-horizontal-margin.png</file>
-  <file alias='icons/32x32/distribute-horizontal-x.png'>../../share/icons/32x32/distribute-horizontal-x.png</file>
-  <file alias='icons/32x32/distribute-vertical-page.png'>../../share/icons/32x32/distribute-vertical-page.png</file>
-  <file alias='icons/32x32/distribute-vertical-top.png'>../../share/icons/32x32/distribute-vertical-top.png</file>
-  <file alias='icons/32x32/document-close.png'>../../share/icons/32x32/document-close.png</file>
-  <file alias='icons/32x32/document-edit-sign-encrypt.png'>../../share/icons/32x32/document-edit-sign-encrypt.png</file>
-  <file alias='icons/32x32/document-edit.png'>../../share/icons/32x32/document-edit.png</file>
-  <file alias='icons/32x32/document-edit@2x.png'>../../share/icons/64x64/document-edit.png</file>
-  <file alias='icons/32x32/document-new.png'>../../share/icons/32x32/document-new.png</file>
-  <file alias='icons/32x32/document-open-folder.png'>../../share/icons/32x32/document-open-folder.png</file>
-  <file alias='icons/32x32/document-open.png'>../../share/icons/32x32/document-open.png</file>
-  <file alias='icons/32x32/document-preview-archive.png'>../../share/icons/32x32/document-preview-archive.png</file>
-  <file alias='icons/32x32/document-preview-archive@2x.png'>../../share/icons/64x64/document-preview-archive.png</file>
-  <file alias='icons/32x32/document-revert.png'>../../share/icons/32x32/document-revert.png</file>
-  <file alias='icons/32x32/document-save-as.png'>../../share/icons/32x32/document-save-as.png</file>
-  <file alias='icons/32x32/document-save.png'>../../share/icons/32x32/document-save.png</file>
-  <file alias='icons/32x32/documentinfo.png'>../../share/icons/32x32/documentinfo.png</file>
-  <file alias='icons/32x32/draw-triangle2.png'>../../share/icons/32x32/draw-triangle2.png</file>
-  <file alias='icons/32x32/draw-triangle4.png'>../../share/icons/32x32/draw-triangle4.png</file>
-  <file alias='icons/32x32/edit-copy.png'>../../share/icons/32x32/edit-copy.png</file>
-  <file alias='icons/32x32/edit-entry.png'>../../share/icons/32x32/edit-entry.png</file>
-  <file alias='icons/32x32/edit-select-all.png'>../../share/icons/32x32/edit-select-all.png</file>
-  <file alias='icons/32x32/edit-table-insert-row-above.png'>../../share/icons/32x32/edit-table-insert-row-above.png</file>
-  <file alias='icons/32x32/edit-table-insert-row-below.png'>../../share/icons/32x32/edit-table-insert-row-below.png</file>
-  <file alias='icons/32x32/edit-table-insert-row-under.png'>../../share/icons/32x32/edit-table-insert-row-under.png</file>
-  <file alias='icons/32x32/edit-undo.png'>../../share/icons/32x32/edit-undo.png</file>
-  <file alias='icons/32x32/folder-favorites.png'>../../share/icons/32x32/folder-favorites.png</file>
-  <file alias='icons/32x32/folder-favorites@2x.png'>../../share/icons/64x64/folder-favorites.png</file>
-  <file alias='icons/32x32/kbugbuster.png'>../../share/icons/32x32/kbugbuster.png</file>
-  <file alias='icons/32x32/kbugbuster@2x.png'>../../share/icons/64x64/kbugbuster.png</file>
-  <file alias='icons/32x32/layer-visible-on.png'>../../share/icons/32x32/layer-visible-on.png</file>
-  <file alias='icons/32x32/list-add.png'>../../share/icons/32x32/list-add.png</file>
-  <file alias='icons/32x32/list-remove.png'>../../share/icons/32x32/list-remove.png</file>
-  <file alias='icons/32x32/list-remove@2x.png'>../../share/icons/64x64/list-remove.png</file>
-  <file alias='icons/32x32/mail-attachment.png'>../../share/icons/32x32/mail-attachment.png</file>
-  <file alias='icons/32x32/mail-tagged.png'>../../share/icons/32x32/mail-tagged.png</file>
-  <file alias='icons/32x32/media-playback-start.png'>../../share/icons/32x32/media-playback-start.png</file>
-  <file alias='icons/32x32/media-playback-stop.png'>../../share/icons/32x32/media-playback-stop.png</file>
-  <file alias='icons/32x32/media-seek-forward.png'>../../share/icons/32x32/media-seek-forward.png</file>
-  <file alias='icons/32x32/merge.png'>../../share/icons/32x32/merge.png</file>
-  <file alias='icons/32x32/mkvextract.png'>../../share/icons/32x32/mkvextract.png</file>
-  <file alias='icons/32x32/mkvextract@2x.png'>../../share/icons/64x64/mkvextract.png</file>
-  <file alias='icons/32x32/mkvinfo.png'>../../share/icons/32x32/mkvinfo.png</file>
-  <file alias='icons/32x32/mkvinfo@2x.png'>../../share/icons/64x64/mkvinfo.png</file>
-  <file alias='icons/32x32/mkvmerge.png'>../../share/icons/32x32/mkvmerge.png</file>
-  <file alias='icons/32x32/mkvmerge@2x.png'>../../share/icons/64x64/mkvmerge.png</file>
-  <file alias='icons/32x32/mkvpropedit.png'>../../share/icons/32x32/mkvpropedit.png</file>
-  <file alias='icons/32x32/mkvpropedit@2x.png'>../../share/icons/64x64/mkvpropedit.png</file>
-  <file alias='icons/32x32/mkvtoolnix-gui.png'>../../share/icons/32x32/mkvtoolnix-gui.png</file>
-  <file alias='icons/32x32/mkvtoolnix-gui@2x.png'>../../share/icons/64x64/mkvtoolnix-gui.png</file>
-  <file alias='icons/32x32/preferences-other.png'>../../share/icons/32x32/preferences-other.png</file>
-  <file alias='icons/32x32/preferences-other@2x.png'>../../share/icons/64x64/preferences-other.png</file>
-  <file alias='icons/32x32/split.png'>../../share/icons/32x32/split.png</file>
-  <file alias='icons/32x32/story-editor.png'>../../share/icons/32x32/story-editor.png</file>
-  <file alias='icons/32x32/system-run.png'>../../share/icons/32x32/system-run.png</file>
-  <file alias='icons/32x32/system-run@2x.png'>../../share/icons/64x64/system-run.png</file>
-  <file alias='icons/32x32/system-software-update.png'>../../share/icons/32x32/system-software-update.png</file>
-  <file alias='icons/32x32/system-software-update@2x.png'>../../share/icons/64x64/system-software-update.png</file>
-  <file alias='icons/32x32/tab-duplicate.png'>../../share/icons/32x32/tab-duplicate.png</file>
-  <file alias='icons/32x32/task-delegate.png'>../../share/icons/32x32/task-delegate.png</file>
-  <file alias='icons/32x32/task-ongoing.png'>../../share/icons/32x32/task-ongoing.png</file>
-  <file alias='icons/32x32/tool-animator.png'>../../share/icons/32x32/tool-animator.png</file>
-  <file alias='icons/32x32/tool-animator@2x.png'>../../share/icons/64x64/tool-animator.png</file>
-  <file alias='icons/32x32/tools-wizard.png'>../../share/icons/32x32/tools-wizard.png</file>
-  <file alias='icons/32x32/tools-wizard@2x.png'>../../share/icons/64x64/tools-wizard.png</file>
-  <file alias='icons/32x32/utilities-terminal.png'>../../share/icons/32x32/utilities-terminal.png</file>
-  <file alias='icons/32x32/utilities-terminal@2x.png'>../../share/icons/64x64/utilities-terminal.png</file>
-  <file alias='icons/32x32/view-choose.png'>../../share/icons/32x32/view-choose.png</file>
-  <file alias='icons/32x32/view-task.png'>../../share/icons/32x32/view-task.png</file>
-  <file alias='icons/48x48/application-pgp-signature.png'>../../share/icons/48x48/application-pgp-signature.png</file>
-  <file alias='icons/48x48/applications-internet.png'>../../share/icons/48x48/applications-internet.png</file>
-  <file alias='icons/48x48/archive-remove.png'>../../share/icons/48x48/archive-remove.png</file>
-  <file alias='icons/48x48/arrow-down.png'>../../share/icons/48x48/arrow-down.png</file>
-  <file alias='icons/48x48/arrow-up.png'>../../share/icons/48x48/arrow-up.png</file>
-  <file alias='icons/48x48/character-set.png'>../../share/icons/48x48/character-set.png</file>
-  <file alias='icons/48x48/dialog-error-grayscale.png'>../../share/icons/48x48/dialog-error-grayscale.png</file>
-  <file alias='icons/48x48/dialog-error.png'>../../share/icons/48x48/dialog-error.png</file>
-  <file alias='icons/48x48/dialog-warning-grayscale.png'>../../share/icons/48x48/dialog-warning-grayscale.png</file>
-  <file alias='icons/48x48/dialog-warning.png'>../../share/icons/48x48/dialog-warning.png</file>
-  <file alias='icons/48x48/document-close.png'>../../share/icons/48x48/document-close.png</file>
-  <file alias='icons/48x48/document-edit-decrypt.png'>../../share/icons/48x48/document-edit-decrypt.png</file>
-  <file alias='icons/48x48/document-edit-sign-encrypt.png'>../../share/icons/48x48/document-edit-sign-encrypt.png</file>
-  <file alias='icons/48x48/document-edit-sign-encrypt@2x.png'>../../share/icons/96x96/document-edit-sign-encrypt.png</file>
-  <file alias='icons/48x48/document-edit-verify.png'>../../share/icons/48x48/document-edit-verify.png</file>
-  <file alias='icons/48x48/document-edit.png'>../../share/icons/48x48/document-edit.png</file>
-  <file alias='icons/48x48/document-edit@2x.png'>../../share/icons/96x96/document-edit.png</file>
-  <file alias='icons/48x48/document-export.png'>../../share/icons/48x48/document-export.png</file>
-  <file alias='icons/48x48/document-import.png'>../../share/icons/48x48/document-import.png</file>
-  <file alias='icons/48x48/document-open-folder.png'>../../share/icons/48x48/document-open-folder.png</file>
-  <file alias='icons/48x48/document-open-recent.png'>../../share/icons/48x48/document-open-recent.png</file>
-  <file alias='icons/48x48/document-preview-archive.png'>../../share/icons/48x48/document-preview-archive.png</file>
-  <file alias='icons/48x48/document-preview-archive@2x.png'>../../share/icons/96x96/document-preview-archive.png</file>
-  <file alias='icons/48x48/document-revert.png'>../../share/icons/48x48/document-revert.png</file>
-  <file alias='icons/48x48/draw-triangle2.png'>../../share/icons/48x48/draw-triangle2.png</file>
-  <file alias='icons/48x48/draw-triangle4.png'>../../share/icons/48x48/draw-triangle4.png</file>
-  <file alias='icons/48x48/edit-entry.png'>../../share/icons/48x48/edit-entry.png</file>
-  <file alias='icons/48x48/edit-select-all.png'>../../share/icons/48x48/edit-select-all.png</file>
-  <file alias='icons/48x48/edit-table-insert-row-above.png'>../../share/icons/48x48/edit-table-insert-row-above.png</file>
-  <file alias='icons/48x48/edit-table-insert-row-below.png'>../../share/icons/48x48/edit-table-insert-row-below.png</file>
-  <file alias='icons/48x48/edit-undo.png'>../../share/icons/48x48/edit-undo.png</file>
-  <file alias='icons/48x48/folder-favorites.png'>../../share/icons/48x48/folder-favorites.png</file>
-  <file alias='icons/48x48/kbugbuster.png'>../../share/icons/48x48/kbugbuster.png</file>
-  <file alias='icons/48x48/layer-visible-on.png'>../../share/icons/48x48/layer-visible-on.png</file>
-  <file alias='icons/48x48/media-playback-start.png'>../../share/icons/48x48/media-playback-start.png</file>
-  <file alias='icons/48x48/media-playback-stop.png'>../../share/icons/48x48/media-playback-stop.png</file>
-  <file alias='icons/48x48/media-seek-forward.png'>../../share/icons/48x48/media-seek-forward.png</file>
-  <file alias='icons/48x48/merge.png'>../../share/icons/48x48/merge.png</file>
-  <file alias='icons/48x48/merge@2x.png'>../../share/icons/96x96/merge.png</file>
-  <file alias='icons/48x48/mkvextract.png'>../../share/icons/48x48/mkvextract.png</file>
-  <file alias='icons/48x48/mkvextract@2x.png'>../../share/icons/96x96/mkvextract.png</file>
-  <file alias='icons/48x48/mkvinfo.png'>../../share/icons/48x48/mkvinfo.png</file>
-  <file alias='icons/48x48/mkvinfo@2x.png'>../../share/icons/96x96/mkvinfo.png</file>
-  <file alias='icons/48x48/mkvmerge.png'>../../share/icons/48x48/mkvmerge.png</file>
-  <file alias='icons/48x48/mkvmerge@2x.png'>../../share/icons/96x96/mkvmerge.png</file>
-  <file alias='icons/48x48/mkvpropedit.png'>../../share/icons/48x48/mkvpropedit.png</file>
-  <file alias='icons/48x48/mkvpropedit@2x.png'>../../share/icons/96x96/mkvpropedit.png</file>
-  <file alias='icons/48x48/mkvtoolnix-gui.png'>../../share/icons/48x48/mkvtoolnix-gui.png</file>
-  <file alias='icons/48x48/mkvtoolnix-gui@2x.png'>../../share/icons/96x96/mkvtoolnix-gui.png</file>
-  <file alias='icons/48x48/split.png'>../../share/icons/48x48/split.png</file>
-  <file alias='icons/48x48/split@2x.png'>../../share/icons/96x96/split.png</file>
-  <file alias='icons/48x48/story-editor.png'>../../share/icons/48x48/story-editor.png</file>
-  <file alias='icons/48x48/story-editor@2x.png'>../../share/icons/96x96/story-editor.png</file>
-  <file alias='icons/48x48/system-run.png'>../../share/icons/48x48/system-run.png</file>
-  <file alias='icons/48x48/system-run@2x.png'>../../share/icons/96x96/system-run.png</file>
-  <file alias='icons/48x48/system-software-update.png'>../../share/icons/48x48/system-software-update.png</file>
-  <file alias='icons/48x48/tab-duplicate.png'>../../share/icons/48x48/tab-duplicate.png</file>
-  <file alias='icons/48x48/task-delegate.png'>../../share/icons/48x48/task-delegate.png</file>
-  <file alias='icons/48x48/tools-wizard.png'>../../share/icons/48x48/tools-wizard.png</file>
-  <file alias='icons/48x48/utilities-terminal.png'>../../share/icons/48x48/utilities-terminal.png</file>
-  <file alias='icons/48x48/view-choose.png'>../../share/icons/48x48/view-choose.png</file>
-  <file alias='icons/48x48/view-task.png'>../../share/icons/48x48/view-task.png</file>
-  <file alias='icons/48x48/view-task@2x.png'>../../share/icons/96x96/view-task.png</file>
-  <file alias='icons/64x64/application-exit.png'>../../share/icons/64x64/application-exit.png</file>
-  <file alias='icons/64x64/application-exit@2x.png'>../../share/icons/128x128/application-exit.png</file>
-  <file alias='icons/64x64/application-octet-stream.png'>../../share/icons/64x64/application-octet-stream.png</file>
-  <file alias='icons/64x64/application-octet-stream@2x.png'>../../share/icons/128x128/application-octet-stream.png</file>
-  <file alias='icons/64x64/applications-internet.png'>../../share/icons/64x64/applications-internet.png</file>
-  <file alias='icons/64x64/applications-internet@2x.png'>../../share/icons/128x128/applications-internet.png</file>
-  <file alias='icons/64x64/clock.png'>../../share/icons/64x64/clock.png</file>
-  <file alias='icons/64x64/clock@2x.png'>../../share/icons/128x128/clock.png</file>
-  <file alias='icons/64x64/dialog-error-grayscale.png'>../../share/icons/64x64/dialog-error-grayscale.png</file>
-  <file alias='icons/64x64/dialog-error-grayscale@2x.png'>../../share/icons/128x128/dialog-error-grayscale.png</file>
-  <file alias='icons/64x64/dialog-error.png'>../../share/icons/64x64/dialog-error.png</file>
-  <file alias='icons/64x64/dialog-error@2x.png'>../../share/icons/128x128/dialog-error.png</file>
-  <file alias='icons/64x64/dialog-ok-apply.png'>../../share/icons/64x64/dialog-ok-apply.png</file>
-  <file alias='icons/64x64/dialog-ok-apply@2x.png'>../../share/icons/128x128/dialog-ok-apply.png</file>
-  <file alias='icons/64x64/dialog-warning-grayscale.png'>../../share/icons/64x64/dialog-warning-grayscale.png</file>
-  <file alias='icons/64x64/dialog-warning-grayscale@2x.png'>../../share/icons/128x128/dialog-warning-grayscale.png</file>
-  <file alias='icons/64x64/dialog-warning.png'>../../share/icons/64x64/dialog-warning.png</file>
-  <file alias='icons/64x64/dialog-warning@2x.png'>../../share/icons/128x128/dialog-warning.png</file>
-  <file alias='icons/64x64/document-edit.png'>../../share/icons/64x64/document-edit.png</file>
-  <file alias='icons/64x64/document-edit@2x.png'>../../share/icons/128x128/document-edit.png</file>
-  <file alias='icons/64x64/document-preview-archive.png'>../../share/icons/64x64/document-preview-archive.png</file>
-  <file alias='icons/64x64/document-preview-archive@2x.png'>../../share/icons/128x128/document-preview-archive.png</file>
-  <file alias='icons/64x64/folder-favorites.png'>../../share/icons/64x64/folder-favorites.png</file>
-  <file alias='icons/64x64/folder-favorites@2x.png'>../../share/icons/128x128/folder-favorites.png</file>
-  <file alias='icons/64x64/kbugbuster.png'>../../share/icons/64x64/kbugbuster.png</file>
-  <file alias='icons/64x64/kbugbuster@2x.png'>../../share/icons/128x128/kbugbuster.png</file>
-  <file alias='icons/64x64/list-remove.png'>../../share/icons/64x64/list-remove.png</file>
-  <file alias='icons/64x64/list-remove@2x.png'>../../share/icons/128x128/list-remove.png</file>
-  <file alias='icons/64x64/mkvextract.png'>../../share/icons/64x64/mkvextract.png</file>
-  <file alias='icons/64x64/mkvextract@2x.png'>../../share/icons/128x128/mkvextract.png</file>
-  <file alias='icons/64x64/mkvinfo.png'>../../share/icons/64x64/mkvinfo.png</file>
-  <file alias='icons/64x64/mkvinfo@2x.png'>../../share/icons/128x128/mkvinfo.png</file>
-  <file alias='icons/64x64/mkvmerge.png'>../../share/icons/64x64/mkvmerge.png</file>
-  <file alias='icons/64x64/mkvmerge@2x.png'>../../share/icons/128x128/mkvmerge.png</file>
-  <file alias='icons/64x64/mkvpropedit.png'>../../share/icons/64x64/mkvpropedit.png</file>
-  <file alias='icons/64x64/mkvpropedit@2x.png'>../../share/icons/128x128/mkvpropedit.png</file>
-  <file alias='icons/64x64/mkvtoolnix-gui.png'>../../share/icons/64x64/mkvtoolnix-gui.png</file>
-  <file alias='icons/64x64/mkvtoolnix-gui@2x.png'>../../share/icons/128x128/mkvtoolnix-gui.png</file>
-  <file alias='icons/64x64/preferences-other.png'>../../share/icons/64x64/preferences-other.png</file>
-  <file alias='icons/64x64/preferences-other@2x.png'>../../share/icons/128x128/preferences-other.png</file>
-  <file alias='icons/64x64/system-run.png'>../../share/icons/64x64/system-run.png</file>
-  <file alias='icons/64x64/system-run@2x.png'>../../share/icons/128x128/system-run.png</file>
-  <file alias='icons/64x64/system-software-update.png'>../../share/icons/64x64/system-software-update.png</file>
-  <file alias='icons/64x64/system-software-update@2x.png'>../../share/icons/128x128/system-software-update.png</file>
-  <file alias='icons/64x64/tool-animator.png'>../../share/icons/64x64/tool-animator.png</file>
-  <file alias='icons/64x64/tool-animator@2x.png'>../../share/icons/128x128/tool-animator.png</file>
-  <file alias='icons/64x64/tools-wizard.png'>../../share/icons/64x64/tools-wizard.png</file>
-  <file alias='icons/64x64/tools-wizard@2x.png'>../../share/icons/128x128/tools-wizard.png</file>
-  <file alias='icons/64x64/utilities-terminal.png'>../../share/icons/64x64/utilities-terminal.png</file>
-  <file alias='icons/64x64/utilities-terminal@2x.png'>../../share/icons/128x128/utilities-terminal.png</file>
-  <file alias='icons/96x96/document-edit-sign-encrypt.png'>../../share/icons/96x96/document-edit-sign-encrypt.png</file>
-  <file alias='icons/96x96/document-edit.png'>../../share/icons/96x96/document-edit.png</file>
-  <file alias='icons/96x96/document-preview-archive.png'>../../share/icons/96x96/document-preview-archive.png</file>
-  <file alias='icons/96x96/merge.png'>../../share/icons/96x96/merge.png</file>
-  <file alias='icons/96x96/mkvextract.png'>../../share/icons/96x96/mkvextract.png</file>
-  <file alias='icons/96x96/mkvinfo.png'>../../share/icons/96x96/mkvinfo.png</file>
-  <file alias='icons/96x96/mkvmerge.png'>../../share/icons/96x96/mkvmerge.png</file>
-  <file alias='icons/96x96/mkvpropedit.png'>../../share/icons/96x96/mkvpropedit.png</file>
-  <file alias='icons/96x96/mkvtoolnix-gui.png'>../../share/icons/96x96/mkvtoolnix-gui.png</file>
-  <file alias='icons/96x96/split.png'>../../share/icons/96x96/split.png</file>
-  <file alias='icons/96x96/story-editor.png'>../../share/icons/96x96/story-editor.png</file>
-  <file alias='icons/96x96/system-run.png'>../../share/icons/96x96/system-run.png</file>
-  <file alias='icons/96x96/view-task.png'>../../share/icons/96x96/view-task.png</file>
+  <file alias='icons/mkvtoolnix-gui/index.theme'>../../share/icons/index.theme</file>
+  <file alias='icons/mkvtoolnix-gui/128x128/mkvextract.png'>../../share/icons/128x128/mkvextract.png</file>
+  <file alias='icons/mkvtoolnix-gui/128x128@2/mkvextract@2x.png'>../../share/icons/256x256/mkvextract.png</file>
+  <file alias='icons/mkvtoolnix-gui/128x128/mkvinfo.png'>../../share/icons/128x128/mkvinfo.png</file>
+  <file alias='icons/mkvtoolnix-gui/128x128@2/mkvinfo@2x.png'>../../share/icons/256x256/mkvinfo.png</file>
+  <file alias='icons/mkvtoolnix-gui/128x128/mkvmerge.png'>../../share/icons/128x128/mkvmerge.png</file>
+  <file alias='icons/mkvtoolnix-gui/128x128@2/mkvmerge@2x.png'>../../share/icons/256x256/mkvmerge.png</file>
+  <file alias='icons/mkvtoolnix-gui/128x128/mkvpropedit.png'>../../share/icons/128x128/mkvpropedit.png</file>
+  <file alias='icons/mkvtoolnix-gui/128x128@2/mkvpropedit@2x.png'>../../share/icons/256x256/mkvpropedit.png</file>
+  <file alias='icons/mkvtoolnix-gui/128x128/mkvtoolnix-gui.png'>../../share/icons/128x128/mkvtoolnix-gui.png</file>
+  <file alias='icons/mkvtoolnix-gui/128x128@2/mkvtoolnix-gui@2x.png'>../../share/icons/256x256/mkvtoolnix-gui.png</file>
+  <file alias='icons/mkvtoolnix-gui/16x16/mkvextract.png'>../../share/icons/16x16/mkvextract.png</file>
+  <file alias='icons/mkvtoolnix-gui/16x16@2/mkvextract@2x.png'>../../share/icons/32x32/mkvextract.png</file>
+  <file alias='icons/mkvtoolnix-gui/16x16/mkvinfo.png'>../../share/icons/16x16/mkvinfo.png</file>
+  <file alias='icons/mkvtoolnix-gui/16x16@2/mkvinfo@2x.png'>../../share/icons/32x32/mkvinfo.png</file>
+  <file alias='icons/mkvtoolnix-gui/16x16/mkvmerge.png'>../../share/icons/16x16/mkvmerge.png</file>
+  <file alias='icons/mkvtoolnix-gui/16x16@2/mkvmerge@2x.png'>../../share/icons/32x32/mkvmerge.png</file>
+  <file alias='icons/mkvtoolnix-gui/16x16/mkvpropedit.png'>../../share/icons/16x16/mkvpropedit.png</file>
+  <file alias='icons/mkvtoolnix-gui/16x16@2/mkvpropedit@2x.png'>../../share/icons/32x32/mkvpropedit.png</file>
+  <file alias='icons/mkvtoolnix-gui/16x16/mkvtoolnix-gui.png'>../../share/icons/16x16/mkvtoolnix-gui.png</file>
+  <file alias='icons/mkvtoolnix-gui/16x16@2/mkvtoolnix-gui@2x.png'>../../share/icons/32x32/mkvtoolnix-gui.png</file>
+  <file alias='icons/mkvtoolnix-gui/24x24/mkvextract.png'>../../share/icons/24x24/mkvextract.png</file>
+  <file alias='icons/mkvtoolnix-gui/24x24@2/mkvextract@2x.png'>../../share/icons/48x48/mkvextract.png</file>
+  <file alias='icons/mkvtoolnix-gui/24x24/mkvinfo.png'>../../share/icons/24x24/mkvinfo.png</file>
+  <file alias='icons/mkvtoolnix-gui/24x24@2/mkvinfo@2x.png'>../../share/icons/48x48/mkvinfo.png</file>
+  <file alias='icons/mkvtoolnix-gui/24x24/mkvmerge.png'>../../share/icons/24x24/mkvmerge.png</file>
+  <file alias='icons/mkvtoolnix-gui/24x24@2/mkvmerge@2x.png'>../../share/icons/48x48/mkvmerge.png</file>
+  <file alias='icons/mkvtoolnix-gui/24x24/mkvpropedit.png'>../../share/icons/24x24/mkvpropedit.png</file>
+  <file alias='icons/mkvtoolnix-gui/24x24@2/mkvpropedit@2x.png'>../../share/icons/48x48/mkvpropedit.png</file>
+  <file alias='icons/mkvtoolnix-gui/24x24/mkvtoolnix-gui.png'>../../share/icons/24x24/mkvtoolnix-gui.png</file>
+  <file alias='icons/mkvtoolnix-gui/24x24@2/mkvtoolnix-gui@2x.png'>../../share/icons/48x48/mkvtoolnix-gui.png</file>
+  <file alias='icons/mkvtoolnix-gui/256x256/mkvextract.png'>../../share/icons/256x256/mkvextract.png</file>
+  <file alias='icons/mkvtoolnix-gui/256x256/mkvinfo.png'>../../share/icons/256x256/mkvinfo.png</file>
+  <file alias='icons/mkvtoolnix-gui/256x256/mkvmerge.png'>../../share/icons/256x256/mkvmerge.png</file>
+  <file alias='icons/mkvtoolnix-gui/256x256/mkvpropedit.png'>../../share/icons/256x256/mkvpropedit.png</file>
+  <file alias='icons/mkvtoolnix-gui/256x256/mkvtoolnix-gui.png'>../../share/icons/256x256/mkvtoolnix-gui.png</file>
+  <file alias='icons/mkvtoolnix-gui/32x32/mkvextract.png'>../../share/icons/32x32/mkvextract.png</file>
+  <file alias='icons/mkvtoolnix-gui/32x32@2/mkvextract@2x.png'>../../share/icons/64x64/mkvextract.png</file>
+  <file alias='icons/mkvtoolnix-gui/32x32/mkvinfo.png'>../../share/icons/32x32/mkvinfo.png</file>
+  <file alias='icons/mkvtoolnix-gui/32x32@2/mkvinfo@2x.png'>../../share/icons/64x64/mkvinfo.png</file>
+  <file alias='icons/mkvtoolnix-gui/32x32/mkvmerge.png'>../../share/icons/32x32/mkvmerge.png</file>
+  <file alias='icons/mkvtoolnix-gui/32x32@2/mkvmerge@2x.png'>../../share/icons/64x64/mkvmerge.png</file>
+  <file alias='icons/mkvtoolnix-gui/32x32/mkvpropedit.png'>../../share/icons/32x32/mkvpropedit.png</file>
+  <file alias='icons/mkvtoolnix-gui/32x32@2/mkvpropedit@2x.png'>../../share/icons/64x64/mkvpropedit.png</file>
+  <file alias='icons/mkvtoolnix-gui/32x32/mkvtoolnix-gui.png'>../../share/icons/32x32/mkvtoolnix-gui.png</file>
+  <file alias='icons/mkvtoolnix-gui/32x32@2/mkvtoolnix-gui@2x.png'>../../share/icons/64x64/mkvtoolnix-gui.png</file>
+  <file alias='icons/mkvtoolnix-gui/48x48/mkvextract.png'>../../share/icons/48x48/mkvextract.png</file>
+  <file alias='icons/mkvtoolnix-gui/48x48@2/mkvextract@2x.png'>../../share/icons/96x96/mkvextract.png</file>
+  <file alias='icons/mkvtoolnix-gui/48x48/mkvinfo.png'>../../share/icons/48x48/mkvinfo.png</file>
+  <file alias='icons/mkvtoolnix-gui/48x48@2/mkvinfo@2x.png'>../../share/icons/96x96/mkvinfo.png</file>
+  <file alias='icons/mkvtoolnix-gui/48x48/mkvmerge.png'>../../share/icons/48x48/mkvmerge.png</file>
+  <file alias='icons/mkvtoolnix-gui/48x48@2/mkvmerge@2x.png'>../../share/icons/96x96/mkvmerge.png</file>
+  <file alias='icons/mkvtoolnix-gui/48x48/mkvpropedit.png'>../../share/icons/48x48/mkvpropedit.png</file>
+  <file alias='icons/mkvtoolnix-gui/48x48@2/mkvpropedit@2x.png'>../../share/icons/96x96/mkvpropedit.png</file>
+  <file alias='icons/mkvtoolnix-gui/48x48/mkvtoolnix-gui.png'>../../share/icons/48x48/mkvtoolnix-gui.png</file>
+  <file alias='icons/mkvtoolnix-gui/48x48@2/mkvtoolnix-gui@2x.png'>../../share/icons/96x96/mkvtoolnix-gui.png</file>
+  <file alias='icons/mkvtoolnix-gui/64x64/mkvextract.png'>../../share/icons/64x64/mkvextract.png</file>
+  <file alias='icons/mkvtoolnix-gui/64x64@2/mkvextract@2x.png'>../../share/icons/128x128/mkvextract.png</file>
+  <file alias='icons/mkvtoolnix-gui/64x64/mkvinfo.png'>../../share/icons/64x64/mkvinfo.png</file>
+  <file alias='icons/mkvtoolnix-gui/64x64@2/mkvinfo@2x.png'>../../share/icons/128x128/mkvinfo.png</file>
+  <file alias='icons/mkvtoolnix-gui/64x64/mkvmerge.png'>../../share/icons/64x64/mkvmerge.png</file>
+  <file alias='icons/mkvtoolnix-gui/64x64@2/mkvmerge@2x.png'>../../share/icons/128x128/mkvmerge.png</file>
+  <file alias='icons/mkvtoolnix-gui/64x64/mkvpropedit.png'>../../share/icons/64x64/mkvpropedit.png</file>
+  <file alias='icons/mkvtoolnix-gui/64x64@2/mkvpropedit@2x.png'>../../share/icons/128x128/mkvpropedit.png</file>
+  <file alias='icons/mkvtoolnix-gui/64x64/mkvtoolnix-gui.png'>../../share/icons/64x64/mkvtoolnix-gui.png</file>
+  <file alias='icons/mkvtoolnix-gui/64x64@2/mkvtoolnix-gui@2x.png'>../../share/icons/128x128/mkvtoolnix-gui.png</file>
+  <file alias='icons/mkvtoolnix-gui/96x96/mkvextract.png'>../../share/icons/96x96/mkvextract.png</file>
+  <file alias='icons/mkvtoolnix-gui/96x96/mkvinfo.png'>../../share/icons/96x96/mkvinfo.png</file>
+  <file alias='icons/mkvtoolnix-gui/96x96/mkvmerge.png'>../../share/icons/96x96/mkvmerge.png</file>
+  <file alias='icons/mkvtoolnix-gui/96x96/mkvpropedit.png'>../../share/icons/96x96/mkvpropedit.png</file>
+  <file alias='icons/mkvtoolnix-gui/96x96/mkvtoolnix-gui.png'>../../share/icons/96x96/mkvtoolnix-gui.png</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/application-exit.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/application-exit.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/application-octet-stream.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/application-octet-stream.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/application-pgp-signature.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/application-pgp-signature.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/applications-internet.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/applications-internet.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/arrow-down.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/arrow-down.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/arrow-left-double.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/arrow-left-double.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/arrow-left.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/arrow-left.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/arrow-right-double.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/arrow-right-double.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/arrow-right.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/arrow-right.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/arrow-up.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/arrow-up.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/audio-headphones.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/audio-headphones.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/character-set.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/character-set.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/clock.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/clock.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/dialog-cancel.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/dialog-cancel.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/dialog-error-grayscale.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/dialog-error-grayscale.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/dialog-error.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/dialog-error.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/dialog-ok-apply.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/dialog-ok-apply.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/dialog-warning-grayscale.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/dialog-warning-grayscale.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/dialog-warning.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/dialog-warning.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/document-close.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/document-close.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/document-edit.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/document-edit.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/document-new.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/document-new.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/document-open-recent.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/document-open-recent.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/document-preview-archive.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/document-preview-archive.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/document-revert.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/document-revert.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/document-save-as.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/document-save-as.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/document-save.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/document-save.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/draw-text.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/draw-text.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/edit-copy.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/edit-copy.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/edit-entry.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/edit-entry.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/edit-undo.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/edit-undo.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/folder-favorites.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/folder-favorites.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/hidef/application-octet-stream.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/hidef/application-octet-stream.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/hidef/applications-internet.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/hidef/applications-internet.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/hidef/folder-favorites.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/hidef/folder-favorites.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/hidef/preferences-other.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/hidef/preferences-other.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/kbugbuster.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/kbugbuster.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/layer-visible-on.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/layer-visible-on.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/list-add.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/list-add.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/list-remove.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/list-remove.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/mail-attachment.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/mail-attachment.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/mail-tagged.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/mail-tagged.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/media-playback-start.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/media-playback-start.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/media-playback-stop.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/media-playback-stop.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/media-seek-forward.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/media-seek-forward.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/preferences-other.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/preferences-other.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/application-exit.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/application-exit.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/application-octet-stream.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/application-octet-stream.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/applications-internet.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/applications-internet.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/archive-remove.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/archive-remove.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/arrow-down.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/arrow-down.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/arrow-left-double.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/arrow-left-double.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/arrow-left.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/arrow-left.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/arrow-right-double.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/arrow-right-double.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/arrow-right.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/arrow-right.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/arrow-up.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/arrow-up.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/audio-headphones.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/audio-headphones.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/character-set.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/character-set.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/checkbox.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/checkbox.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/clock.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/clock.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/code-class.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/code-class.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/dialog-cancel.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/dialog-cancel.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/dialog-error-grayscale.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/dialog-error-grayscale.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/dialog-error.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/dialog-error.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/dialog-ok-apply.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/dialog-ok-apply.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/dialog-warning-grayscale.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/dialog-warning-grayscale.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/dialog-warning.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/dialog-warning.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/distribute-horizontal-margin.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/distribute-horizontal-margin.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/distribute-horizontal-x.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/distribute-horizontal-x.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/distribute-vertical-page.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/distribute-vertical-page.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/distribute-vertical-top.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/distribute-vertical-top.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/document-edit-decrypt.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/document-edit-decrypt.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/document-edit-sign-encrypt.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/document-edit-sign-encrypt.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/document-edit-verify.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/document-edit-verify.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/document-edit.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/document-edit.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/document-export.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/document-export.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/document-import.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/document-import.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/document-new.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/document-new.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/document-open-folder.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/document-open-folder.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/document-open-recent.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/document-open-recent.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/document-open.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/document-open.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/document-revert.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/document-revert.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/document-save-as.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/document-save-as.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/document-save.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/document-save.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/documentinfo.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/documentinfo.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/draw-text.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/draw-text.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/draw-triangle2.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/draw-triangle2.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/draw-triangle4.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/draw-triangle4.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/edit-copy.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/edit-copy.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/edit-select-all.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/edit-select-all.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/edit-table-insert-row-above.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/edit-table-insert-row-above.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/edit-table-insert-row-below.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/edit-table-insert-row-below.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/edit-undo.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/edit-undo.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/folder-favorites.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/folder-favorites.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/list-add.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/list-add.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/list-remove.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/list-remove.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/mail-attachment.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/mail-attachment.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/mail-tagged.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/mail-tagged.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/preferences-other.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/preferences-other.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/story-editor.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/story-editor.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/system-run.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/system-run.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/tab-duplicate.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/tab-duplicate.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/task-delegate.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/task-delegate.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/task-ongoing.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/task-ongoing.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/tool-animator.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/tool-animator.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/utilities-terminal.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/utilities-terminal.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/view-choose.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/view-choose.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/16x16/view-task.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/16x16/view-task.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/application-exit.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/application-exit.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/application-octet-stream.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/application-octet-stream.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/applications-internet.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/applications-internet.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/archive-remove.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/archive-remove.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/arrow-left-double.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/arrow-left-double.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/arrow-right-double.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/arrow-right-double.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/character-set.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/character-set.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/checkbox.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/checkbox.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/clock.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/clock.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/code-class.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/code-class.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/dialog-cancel.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/dialog-cancel.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/dialog-error-grayscale.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/dialog-error-grayscale.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/dialog-error.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/dialog-error.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/dialog-ok-apply.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/dialog-ok-apply.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/dialog-warning-grayscale.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/dialog-warning-grayscale.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/dialog-warning.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/dialog-warning.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/distribute-horizontal-margin.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/distribute-horizontal-margin.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/distribute-horizontal-x.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/distribute-horizontal-x.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/distribute-vertical-page.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/distribute-vertical-page.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/distribute-vertical-top.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/distribute-vertical-top.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/document-edit-decrypt.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/document-edit-decrypt.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/document-edit-sign-encrypt.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/document-edit-sign-encrypt.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/document-edit-verify.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/document-edit-verify.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/document-edit.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/document-edit.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/document-export.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/document-export.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/document-import.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/document-import.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/document-new.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/document-new.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/document-open-folder.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/document-open-folder.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/document-open.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/document-open.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/document-preview-archive.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/document-preview-archive.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/document-revert.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/document-revert.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/document-save-as.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/document-save-as.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/document-save.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/document-save.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/draw-text.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/draw-text.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/draw-triangle2.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/draw-triangle2.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/draw-triangle4.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/draw-triangle4.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/edit-copy.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/edit-copy.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/edit-select-all.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/edit-select-all.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/edit-table-insert-row-above.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/edit-table-insert-row-above.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/edit-table-insert-row-under.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/edit-table-insert-row-under.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/edit-undo.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/edit-undo.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/folder-favorites.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/folder-favorites.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/list-add.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/list-add.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/list-remove.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/list-remove.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/mail-attachment.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/mail-attachment.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/mail-tagged.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/mail-tagged.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/preferences-other.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/preferences-other.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/story-editor.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/story-editor.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/tab-duplicate.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/tab-duplicate.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/task-delegate.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/task-delegate.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/task-ongoing.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/task-ongoing.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/tool-animator.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/tool-animator.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/utilities-terminal.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/utilities-terminal.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/view-choose.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/view-choose.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/22x22/view-task.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/22x22/view-task.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/application-octet-stream.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/application-octet-stream.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/archive-remove.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/archive-remove.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/audio-headphones.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/audio-headphones.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/checkbox.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/checkbox.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/clock.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/clock.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/code-class.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/code-class.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/distribute-horizontal-margin.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/distribute-horizontal-margin.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/distribute-horizontal-x.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/distribute-horizontal-x.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/distribute-vertical-page.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/distribute-vertical-page.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/distribute-vertical-top.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/distribute-vertical-top.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/document-edit-decrypt.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/document-edit-decrypt.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/document-edit-sign-encrypt.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/document-edit-sign-encrypt.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/document-edit-verify.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/document-edit-verify.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/document-edit.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/document-edit.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/document-export.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/document-export.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/document-import.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/document-import.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/document-open-folder.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/document-open-folder.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/document-open.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/document-open.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/draw-text.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/draw-text.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/draw-triangle2.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/draw-triangle2.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/draw-triangle4.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/draw-triangle4.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/edit-select-all.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/edit-select-all.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/edit-table-insert-row-above.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/edit-table-insert-row-above.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/edit-table-insert-row-below.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/edit-table-insert-row-below.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/folder-favorites.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/folder-favorites.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/mail-tagged.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/mail-tagged.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/merge.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/merge.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/split.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/split.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/story-editor.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/story-editor.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/task-delegate.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/task-delegate.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/task-ongoing.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/task-ongoing.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/tool-animator.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/tool-animator.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/32x32/view-task.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/32x32/view-task.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/application-octet-stream.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/application-octet-stream.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/archive-remove.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/archive-remove.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/code-class.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/code-class.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/dialog-error-grayscale.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/dialog-error-grayscale.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/dialog-error.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/dialog-error.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/dialog-warning-grayscale.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/dialog-warning-grayscale.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/dialog-warning.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/dialog-warning.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/document-edit-decrypt.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/document-edit-decrypt.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/document-edit-sign-encrypt.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/document-edit-sign-encrypt.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/document-edit-verify.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/document-edit-verify.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/document-edit.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/document-edit.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/document-export.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/document-export.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/document-import.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/document-import.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/document-new.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/document-new.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/document-open-folder.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/document-open-folder.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/document-open-recent.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/document-open-recent.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/document-open.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/document-open.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/document-save-as.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/document-save-as.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/document-save.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/document-save.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/draw-text.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/draw-text.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/draw-triangle2.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/draw-triangle2.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/draw-triangle4.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/draw-triangle4.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/edit-copy.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/edit-copy.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/edit-select-all.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/edit-select-all.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/edit-table-insert-row-above.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/edit-table-insert-row-above.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/edit-table-insert-row-below.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/edit-table-insert-row-below.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/folder-favorites.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/folder-favorites.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/mail-tagged.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/mail-tagged.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/merge.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/merge.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/split.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/split.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/story-editor.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/story-editor.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/task-delegate.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/task-delegate.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/task-ongoing.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/task-ongoing.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/tool-animator.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/tool-animator.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/48x48/view-choose.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/48x48/view-choose.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/64x64/application-octet-stream.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/64x64/application-octet-stream.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/small/64x64/folder-favorites.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/small/64x64/folder-favorites.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/system-run.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/system-run.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/system-software-update.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/system-software-update.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/tab-duplicate.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/tab-duplicate.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/tool-animator.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/tool-animator.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/tools-wizard.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/tools-wizard.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/utilities-terminal.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/utilities-terminal.svg</file>
+  <file alias='icons/mkvtoolnix-gui/oxygen/view-choose.svg' compress='9' compress-algo='zstd'>../../share/icons/oxygen/view-choose.svg</file>
  </qresource>
 </RCC>

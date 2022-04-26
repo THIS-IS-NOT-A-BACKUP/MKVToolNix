@@ -125,7 +125,7 @@ def setup_globals
   $unwrapped_po            = %{ca es eu it nl uk pl sr_RS@latin tr}
   $po_multiple_sources     = %{sv}
 
-  $benchmark_sources       = FileList["src/benchmark/*.cpp"].to_a
+  $benchmark_sources       = c?(:GOOGLE_BENCHMARK) ? FileList["src/benchmark/*.cpp"].to_a : []
   $benchmark_programs      = $benchmark_sources.map { |src| src.gsub(%r{\.cpp$}, '') + c(:EXEEXT) }
 
   $libmtxcommon_as_dll     = $building_for[:windows] && %r{shared}i.match(c(:host))
@@ -401,6 +401,14 @@ end
 
 rule '.xml' => '.xml.erb' do |t|
   process_erb src: t.prerequisites[0], dest: t.name
+end
+
+rule '.svg' => '.svgz' do |t|
+  runq_code "gunzip", :target => t.source do
+    Zlib::GzipReader.open(t.source) do |file|
+      IO.write(t.name, file.read)
+    end
+  end
 end
 
 # Resources depend on the manifest.xml file for Windows builds.
@@ -999,6 +1007,7 @@ task :clean do
     doc/man/*/*.xsl
     lib/libebml/ebml/ebml_export.h
     packaging/windows/msix/assets/*.png
+    share/icons/**/*.svg
     src/*/qt_resources.cpp
     src/**/manifest.xml
     src/info/ui/*.h
