@@ -161,37 +161,37 @@ kax_track_t::handle_packetizer_pixel_cropping() {
 
 void
 kax_track_t::handle_packetizer_colour() {
-  if (v_colour_matrix != -1)
-    ptzr_ptr->set_video_colour_matrix(v_colour_matrix, OPTION_SOURCE_CONTAINER);
-  if (v_bits_per_channel != -1)
-    ptzr_ptr->set_video_bits_per_channel(v_bits_per_channel, OPTION_SOURCE_CONTAINER);
-  if (v_chroma_subsample.hori != -1 || v_chroma_subsample.vert != -1)
+  if (v_colour_matrix)
+    ptzr_ptr->set_video_colour_matrix(*v_colour_matrix, OPTION_SOURCE_CONTAINER);
+  if (v_bits_per_channel)
+    ptzr_ptr->set_video_bits_per_channel(*v_bits_per_channel, OPTION_SOURCE_CONTAINER);
+  if ((v_chroma_subsample.hori != -1) || (v_chroma_subsample.vert != -1))
     ptzr_ptr->set_video_chroma_subsample(v_chroma_subsample, OPTION_SOURCE_CONTAINER);
-  if (v_cb_subsample.hori != -1 || v_cb_subsample.vert != -1)
+  if ((v_cb_subsample.hori != -1) || (v_cb_subsample.vert != -1))
     ptzr_ptr->set_video_cb_subsample(v_cb_subsample, OPTION_SOURCE_CONTAINER);
-  if (v_chroma_siting.hori != -1 || v_chroma_siting.vert != -1)
+  if ((v_chroma_siting.hori != -1) || (v_chroma_siting.vert != -1))
     ptzr_ptr->set_video_chroma_siting(v_chroma_siting, OPTION_SOURCE_CONTAINER);
-  if (v_colour_range != -1)
-    ptzr_ptr->set_video_colour_range(v_colour_range, OPTION_SOURCE_CONTAINER);
-  if (v_transfer_character != -1)
-    ptzr_ptr->set_video_colour_transfer_character(v_transfer_character, OPTION_SOURCE_CONTAINER);
-  if (v_colour_primaries != -1)
-    ptzr_ptr->set_video_colour_primaries(v_colour_primaries, OPTION_SOURCE_CONTAINER);
-  if (v_max_cll != -1)
-    ptzr_ptr->set_video_max_cll(v_max_cll, OPTION_SOURCE_CONTAINER);
-  if (v_max_fall != -1)
-    ptzr_ptr->set_video_max_fall(v_max_fall, OPTION_SOURCE_CONTAINER);
+  if (v_colour_range)
+    ptzr_ptr->set_video_colour_range(*v_colour_range, OPTION_SOURCE_CONTAINER);
+  if (v_transfer_character)
+    ptzr_ptr->set_video_colour_transfer_character(*v_transfer_character, OPTION_SOURCE_CONTAINER);
+  if (v_colour_primaries)
+    ptzr_ptr->set_video_colour_primaries(*v_colour_primaries, OPTION_SOURCE_CONTAINER);
+  if (v_max_cll)
+    ptzr_ptr->set_video_max_cll(*v_max_cll, OPTION_SOURCE_CONTAINER);
+  if (v_max_fall)
+    ptzr_ptr->set_video_max_fall(*v_max_fall, OPTION_SOURCE_CONTAINER);
   if (   (v_chroma_coordinates.red_x   != -1) || (v_chroma_coordinates.red_y   != -1)
       || (v_chroma_coordinates.green_x != -1) || (v_chroma_coordinates.green_y != -1)
       || (v_chroma_coordinates.blue_x  != -1) || (v_chroma_coordinates.blue_y  != -1)) {
     ptzr_ptr->set_video_chroma_coordinates(v_chroma_coordinates, OPTION_SOURCE_CONTAINER);
   }
-  if (v_white_colour_coordinates.x != -1 || v_white_colour_coordinates.y != -1)
+  if ((v_white_colour_coordinates.x != -1) && (v_white_colour_coordinates.y != -1))
     ptzr_ptr->set_video_white_colour_coordinates(v_white_colour_coordinates, OPTION_SOURCE_CONTAINER);
-  if (v_max_luminance != -1)
-    ptzr_ptr->set_video_max_luminance(v_max_luminance, OPTION_SOURCE_CONTAINER);
-  if (v_min_luminance != -1)
-    ptzr_ptr->set_video_min_luminance(v_min_luminance, OPTION_SOURCE_CONTAINER);
+  if (v_max_luminance)
+    ptzr_ptr->set_video_max_luminance(*v_max_luminance, OPTION_SOURCE_CONTAINER);
+  if (v_min_luminance)
+    ptzr_ptr->set_video_min_luminance(*v_min_luminance, OPTION_SOURCE_CONTAINER);
 
   if (v_projection_type)
     ptzr_ptr->set_video_projection_type(*v_projection_type, OPTION_SOURCE_CONTAINER);
@@ -210,8 +210,8 @@ kax_track_t::handle_packetizer_colour() {
 
 void
 kax_track_t::handle_packetizer_field_order() {
-  if (-1 != v_field_order)
-    ptzr_ptr->set_video_field_order(v_field_order, OPTION_SOURCE_CONTAINER);
+  if (v_field_order)
+    ptzr_ptr->set_video_field_order(*v_field_order, OPTION_SOURCE_CONTAINER);
 }
 
 void
@@ -1177,19 +1177,19 @@ kax_reader_c::read_headers_track_video(kax_track_t *track,
   auto colour           = FindChild<KaxVideoColour>(*ktvideo);
 
   if (colour) {
-    track->v_colour_matrix         = FindChildValue<KaxVideoColourMatrix>(colour, -1);
-    track->v_bits_per_channel      = FindChildValue<KaxVideoBitsPerChannel>(colour, -1);
-    track->v_chroma_subsample.hori = FindChildValue<KaxVideoChromaSubsampHorz>(colour, -1);
-    track->v_chroma_subsample.vert = FindChildValue<KaxVideoChromaSubsampVert>(colour, -1);
-    track->v_cb_subsample.hori     = FindChildValue<KaxVideoCbSubsampHorz>(colour, -1);
-    track->v_cb_subsample.vert     = FindChildValue<KaxVideoCbSubsampVert>(colour, -1);
-    track->v_chroma_siting.hori    = FindChildValue<KaxVideoChromaSitHorz>(colour, -1);
-    track->v_chroma_siting.vert    = FindChildValue<KaxVideoChromaSitVert>(colour, -1);
-    track->v_colour_range          = FindChildValue<KaxVideoColourRange>(colour, -1);
-    track->v_transfer_character    = FindChildValue<KaxVideoColourTransferCharacter>(colour, -1);
-    track->v_colour_primaries      = FindChildValue<KaxVideoColourPrimaries>(colour, -1);
-    track->v_max_cll               = FindChildValue<KaxVideoColourMaxCLL>(colour, -1);
-    track->v_max_fall              = FindChildValue<KaxVideoColourMaxFALL>(colour, -1);
+    track->v_colour_matrix         = FindOptionalChildValue<KaxVideoColourMatrix>(colour);
+    track->v_bits_per_channel      = FindOptionalChildValue<KaxVideoBitsPerChannel>(colour);
+    track->v_chroma_subsample.hori = FindChildValue<KaxVideoChromaSubsampHorz>(colour, -1.0);
+    track->v_chroma_subsample.vert = FindChildValue<KaxVideoChromaSubsampVert>(colour, -1.0);
+    track->v_cb_subsample.hori     = FindChildValue<KaxVideoCbSubsampHorz>(colour,     -1.0);
+    track->v_cb_subsample.vert     = FindChildValue<KaxVideoCbSubsampVert>(colour,     -1.0);
+    track->v_chroma_siting.hori    = FindChildValue<KaxVideoChromaSitHorz>(colour,     -1.0);
+    track->v_chroma_siting.vert    = FindChildValue<KaxVideoChromaSitVert>(colour,     -1.0);
+    track->v_colour_range          = FindOptionalChildValue<KaxVideoColourRange>(colour);
+    track->v_transfer_character    = FindOptionalChildValue<KaxVideoColourTransferCharacter>(colour);
+    track->v_colour_primaries      = FindOptionalChildValue<KaxVideoColourPrimaries>(colour);
+    track->v_max_cll               = FindOptionalChildValue<KaxVideoColourMaxCLL>(colour);
+    track->v_max_fall              = FindOptionalChildValue<KaxVideoColourMaxFALL>(colour);
 
     auto colour_meta               = FindChild<KaxVideoColourMasterMeta>(*colour);
 
@@ -1202,8 +1202,8 @@ kax_reader_c::read_headers_track_video(kax_track_t *track,
       track->v_chroma_coordinates.blue_y  = FindChildValue<KaxVideoBChromaY>(colour_meta, -1.0);
       track->v_white_colour_coordinates.x = FindChildValue<KaxVideoWhitePointChromaX>(colour_meta, -1.0);
       track->v_white_colour_coordinates.y = FindChildValue<KaxVideoWhitePointChromaY>(colour_meta, -1.0);
-      track->v_max_luminance              = FindChildValue<KaxVideoLuminanceMax>(colour_meta, -1.0);
-      track->v_min_luminance              = FindChildValue<KaxVideoLuminanceMin>(colour_meta, -1.0);
+      track->v_max_luminance              = FindOptionalChildValue<KaxVideoLuminanceMax>(colour_meta);
+      track->v_min_luminance              = FindOptionalChildValue<KaxVideoLuminanceMin>(colour_meta);
     }
   }
 
@@ -1220,7 +1220,7 @@ kax_reader_c::read_headers_track_video(kax_track_t *track,
       track->v_projection_private = memory_c::clone(kprojection_private->GetBuffer(), kprojection_private->GetSize());
   }
 
-  track->v_field_order  = FindChildValue<KaxVideoFieldOrder>(ktvideo, -1);
+  track->v_field_order  = FindOptionalChildValue<KaxVideoFieldOrder>(ktvideo);
   track->v_stereo_mode  = FindChildValue<KaxVideoStereoMode, stereo_mode_c::mode>(ktvideo, stereo_mode_c::unspecified);
 
   // For older files.
@@ -2786,6 +2786,40 @@ kax_reader_c::identify() {
         info.add(mtx::id::text_subtitles, true);
         info.add(mtx::id::encoding, "UTF-8");
       }
+
+    } else if ('v' == track->type) {
+      auto maybe_set = [&info](std::string const &key, double v1, double v2) {
+        if ((v1 != -1) || (v2 != -1))
+          info.set(key, fmt::format("{0},{1}", mtx::string::normalize_fmt_double_output(v1), mtx::string::normalize_fmt_double_output(v2)));
+      };
+
+      info.add(mtx::id::colour_bits_per_channel,         track->v_bits_per_channel);
+      info.add(mtx::id::colour_matrix_coefficients,      track->v_colour_matrix);
+      info.add(mtx::id::colour_primaries,                track->v_colour_primaries);
+      info.add(mtx::id::colour_range,                    track->v_colour_range);
+      info.add(mtx::id::colour_transfer_characteristics, track->v_transfer_character);
+      info.add(mtx::id::max_content_light,               track->v_max_cll);
+      info.add(mtx::id::max_frame_light,                 track->v_max_fall);
+      info.add(mtx::id::max_luminance,                   track->v_max_luminance);
+      info.add(mtx::id::min_luminance,                   track->v_min_luminance);
+      info.add(mtx::id::projection_pose_pitch,           track->v_projection_pose_pitch);
+      info.add(mtx::id::projection_pose_roll,            track->v_projection_pose_roll);
+      info.add(mtx::id::projection_pose_yaw,             track->v_projection_pose_yaw);
+      info.add(mtx::id::projection_private,              track->v_projection_private);
+      info.add(mtx::id::projection_type,                 track->v_projection_type);
+
+      maybe_set(mtx::id::cb_subsample,             track->v_cb_subsample.hori,          track->v_cb_subsample.vert);
+      maybe_set(mtx::id::chroma_siting,            track->v_chroma_siting.hori,         track->v_chroma_siting.vert);
+      maybe_set(mtx::id::chroma_subsample,         track->v_chroma_subsample.hori,      track->v_chroma_subsample.vert);
+      maybe_set(mtx::id::white_colour_coordinates, track->v_white_colour_coordinates.x, track->v_white_colour_coordinates.y);
+
+      if (   (track->v_chroma_coordinates.red_x   != -1) || (track->v_chroma_coordinates.red_y   != -1)
+          || (track->v_chroma_coordinates.green_x != -1) || (track->v_chroma_coordinates.green_y != -1)
+          || (track->v_chroma_coordinates.blue_x  != -1) || (track->v_chroma_coordinates.blue_y  != -1))
+        info.set(mtx::id::chromaticity_coordinates, fmt::format("{0},{1},{2},{3},{4},{5}",
+                                                                mtx::string::normalize_fmt_double_output(track->v_chroma_coordinates.red_x),   mtx::string::normalize_fmt_double_output(track->v_chroma_coordinates.red_y),
+                                                                mtx::string::normalize_fmt_double_output(track->v_chroma_coordinates.green_x), mtx::string::normalize_fmt_double_output(track->v_chroma_coordinates.green_y),
+                                                                mtx::string::normalize_fmt_double_output(track->v_chroma_coordinates.blue_x),  mtx::string::normalize_fmt_double_output(track->v_chroma_coordinates.blue_y)));
     }
 
     if (track->content_decoder.has_encodings())
