@@ -1,10 +1,21 @@
 # Version ?
 
+## New features and enhancements
+
+* MKVToolNix GUI: the number of recently used entries (e.g. destination
+  directories) remembered by the GUI can now be configured in the
+  preferences. Implements #3362.
+
 ## Bug fixes
 
 * MKVToolNix GUI: preferences: the default actions added to the "execute
   programs" section on new installations now default to use WebM file names
   instead of Ogg, matching the format of the included audio files.
+* build system: fixed compilation with fmt v9. Fixes #3366.
+
+## Build system changes
+
+* The bundled `fmt` library was updated to v9.0.0.
 
 
 # Version 68.0.0 "The Curtain" 2022-05-22
