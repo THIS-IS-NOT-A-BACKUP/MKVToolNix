@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: Moritz Bunkus <moritz@bunkus.org>\n"
-"POT-Creation-Date: 2022-07-07 18:34+0200\n"
+"POT-Creation-Date: 2022-07-09 10:50+0200\n"
 "PO-Revision-Date: 2016-01-14 08:27+0000\n"
 "Last-Translator: rctgamer3 <rctgamer3+transifex@hotmail.com>, 2021\n"
 "Language-Team: \n"
@@ -274,12 +274,12 @@ msgstr "  --clusters-in-meta-seek  Schrijft meta zoek data voor clusters.\n"
 #: src/merge/mkvmerge.cpp:315
 #, no-c-format
 msgid ""
-"  --colour-bits-per-channel <TID:n>\n"
-"                           Sets the number of coded bits for a colour \n"
+"  --color-bits-per-channel <TID:n>\n"
+"                           Sets the number of coded bits for a color \n"
 "                           channel. A value of 0 indicates that the number is\n"
 "                           unspecified.\n"
 msgstr ""
-"  --colour-bits-per-channel <TID:n>\n"
+"  --color-bits-per-channel <TID:n>\n"
 "                           Stelt het aantal gecodeerde bits in voor een kleur \n"
 "                           kanaal. Een waarde van 0 geeft aan dat het nummer niet is opgegeven\n"
 "                           uniet is opgegeven.\n"
@@ -287,12 +287,12 @@ msgstr ""
 #: src/merge/mkvmerge.cpp:311
 #, no-c-format
 msgid ""
-"  --colour-matrix-coefficients <TID:n>\n"
+"  --color-matrix-coefficients <TID:n>\n"
 "                           Sets the matrix coefficients of the video used\n"
 "                           to derive luma and chroma values from red, green\n"
 "                           and blue color primaries.\n"
 msgstr ""
-"  --colour-matrix-coefficients <TID:n>\n"
+"  --color-matrix-coefficients <TID:n>\n"
 "                           Stelt de matrixcoëfficiënten van de gebruikte video in om\n"
 "                           helderheid en kleurintensiteit waarden van rood, groen te\n"
 "                           verkrijgen en en blauwe kleuren kleurruimtes.\n"
@@ -300,24 +300,24 @@ msgstr ""
 #: src/merge/mkvmerge.cpp:333
 #, no-c-format
 msgid ""
-"  --colour-primaries <TID:n>\n"
-"                           The colour primaries of the video.\n"
+"  --color-primaries <TID:n>\n"
+"                           The color primaries of the video.\n"
 msgstr ""
-"  --colour-primaries <TID:n>\n"
+"  --color-primaries <TID:n>\n"
 "                           De kleuren ruimten van de video.\n"
 
 #: src/merge/mkvmerge.cpp:330
 #, no-c-format
-msgid "  --colour-range <TID:n>   Clipping of the color ranges.\n"
-msgstr "  --colour-range <TID:n>   Knippen van de kleurbereiken.\n"
+msgid "  --color-range <TID:n>   Clipping of the color ranges.\n"
+msgstr "  --color-range <TID:n>   Knippen van de kleurbereiken.\n"
 
 #: src/merge/mkvmerge.cpp:331
 #, no-c-format
 msgid ""
-"  --colour-transfer-characteristics <TID:n>\n"
+"  --color-transfer-characteristics <TID:n>\n"
 "                           The transfer characteristics of the video.\n"
 msgstr ""
-"  --colour-transfer-characteristics <TID:n>\n"
+"  --color-transfer-characteristics <TID:n>\n"
 "                           De overdrachtseigenschappen van de video.\n"
 
 #: src/merge/mkvmerge.cpp:392
@@ -969,11 +969,11 @@ msgstr ""
 #: src/merge/mkvmerge.cpp:344
 #, no-c-format
 msgid ""
-"  --white-colour-coordinates <TID:x,y>\n"
-"                           White colour chromaticity coordinates as defined\n"
+"  --white-color-coordinates <TID:x,y>\n"
+"                           White color chromaticity coordinates as defined\n"
 "                           by CIE 1931.\n"
 msgstr ""
-"  --white-colour-coordinates <TID:x,y>\n"
+"  --white-color-coordinates <TID:x,y>\n"
 "                           Witte kleur kleurbereik coördinaten zoals gedefinieerd\n"
 "                           door CIE 1931.\n"
 
@@ -1625,13 +1625,13 @@ msgstr "%s – seconden"
 msgid "&Abort job"
 msgstr "Taak &afbreken"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:519
+#: src/mkvtoolnix-gui/jobs/tool.cpp:522
 #: src/mkvtoolnix-gui/main_window/main_window.cpp:467
 #, no-c-format
 msgid "&Abort jobs"
 msgstr "Taken &afbreken"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:413
+#: src/mkvtoolnix-gui/jobs/tool.cpp:416
 #, no-c-format
 msgid "&Acknowledge warnings and errors"
 msgstr "&Aanvaard waarschuwingen en fouten"
@@ -2095,7 +2095,7 @@ msgstr "&Open een Matroska of WebM bestand"
 msgid "&Open as new tabs in the header editor"
 msgstr "&Open als nieuwe tab in de beginblok bewerker"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:408
+#: src/mkvtoolnix-gui/jobs/tool.cpp:411
 #: src/mkvtoolnix-gui/watch_jobs/tab.cpp:147
 #, no-c-format
 msgid "&Open folder"
@@ -2123,7 +2123,7 @@ msgstr "&Gesorteerd"
 msgid "&Output"
 msgstr "&Uitvoer"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:622
+#: src/mkvtoolnix-gui/jobs/tool.cpp:625
 #, no-c-format
 msgid "&Overwrite file"
 msgstr "&Overschrijf bestand"
@@ -2199,7 +2199,7 @@ msgid_plural "&Remove files"
 msgstr[0] "Ve&rwijder bestand"
 msgstr[1] "Ve&rwijder bestand"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:217
+#: src/mkvtoolnix-gui/jobs/tool.cpp:220
 #, no-c-format
 msgid "&Remove job"
 msgid_plural "&Remove jobs"
@@ -2303,7 +2303,7 @@ msgstr "&Sorteren hoofdstukken, gebaseerd op start en tijd codes"
 msgid "&Start && end:"
 msgstr "&Start && einde:"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:214
+#: src/mkvtoolnix-gui/jobs/tool.cpp:217
 #, no-c-format
 msgid "&Start job automatically"
 msgid_plural "&Start jobs automatically"
@@ -2381,7 +2381,7 @@ msgstr "&Video"
 msgid "&Video tracks:"
 msgstr "&Video sporen"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:407
+#: src/mkvtoolnix-gui/jobs/tool.cpp:410
 #, no-c-format
 msgid "&View output"
 msgstr "&Toon uitvoer"
@@ -3052,7 +3052,7 @@ msgstr "Een menselijk-leesbare reeks specificeert de codec."
 msgid "A human-readable track name."
 msgstr "En menselijk-leesbaar spoor naam."
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:619
+#: src/mkvtoolnix-gui/jobs/tool.cpp:622
 #, no-c-format
 msgid "A job creating the file '%1' is already in the job queue."
 msgstr "En taak welke taak '%1' aanmaakt is reeds in de taak wachtrij."
@@ -3224,7 +3224,7 @@ msgstr "Breek alle lopende taken af en stop d&irect"
 msgid "Abort running job"
 msgstr "Breek huidige taak af"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:517
+#: src/mkvtoolnix-gui/jobs/tool.cpp:520
 #: src/mkvtoolnix-gui/main_window/main_window.cpp:465
 #, no-c-format
 msgid "Abort running jobs"
@@ -3245,12 +3245,12 @@ msgstr "Breekt het programma af, nadat de eerste waarschuwing is afgegeven."
 msgid "Acknowledge &all warnings and errors"
 msgstr "Aanvaard &alle waarschuwingen en fouten"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:412
+#: src/mkvtoolnix-gui/jobs/tool.cpp:415
 #, no-c-format
 msgid "Acknowledge &errors"
 msgstr "Aanvaard fout&en"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:411
+#: src/mkvtoolnix-gui/jobs/tool.cpp:414
 #, no-c-format
 msgid "Acknowledge &warnings"
 msgstr "Aanvaard &waarschuwingen"
@@ -3903,7 +3903,7 @@ msgid "Attached"
 msgstr "Vastgemaakt"
 
 #: src/mkvtoolnix-gui/forms/header_editor/attached_file_page.h:171
-#: src/mkvtoolnix-gui/merge/track.cpp:588
+#: src/mkvtoolnix-gui/merge/track.cpp:649
 #, no-c-format
 msgid "Attachment"
 msgstr "Bijlage"
@@ -3948,7 +3948,7 @@ msgid "Attachments from &source files:"
 msgstr "Bijlagen van bron bestanden"
 
 #: src/mkvtoolnix-gui/header_editor/track_type_page.cpp:51
-#: src/mkvtoolnix-gui/merge/track.cpp:584
+#: src/mkvtoolnix-gui/merge/track.cpp:645
 #, no-c-format
 msgid "Audio"
 msgstr "Audio"
@@ -4070,7 +4070,7 @@ msgstr "bits per kanaal"
 
 #: src/mkvtoolnix-gui/forms/merge/tab.h:2213
 #, fuzzy, no-c-format
-msgid "Bits per colour channel:"
+msgid "Bits per color channel:"
 msgstr "Video: bits per kleurkanaal"
 
 #: src/common/property_element.cpp:213
@@ -4167,12 +4167,12 @@ msgstr "Blauw Y-chromaticiteitscoördinaat zoals gedefinieerd door CIE 1931."
 
 #: src/common/kax_element_names.cpp:117
 #, no-c-format
-msgid "Blue colour coordinate x"
+msgid "Blue color coordinate x"
 msgstr "Blauwe kleurcoördinaat x"
 
 #: src/common/kax_element_names.cpp:118
 #, no-c-format
-msgid "Blue colour coordinate y"
+msgid "Blue color coordinate y"
 msgstr "Blauwe kleurcoördinaat y"
 
 #: src/input/r_vobsub.cpp:549
@@ -4206,7 +4206,7 @@ msgid "Button track %1"
 msgstr "Knop spoor: %1"
 
 #: src/mkvtoolnix-gui/header_editor/track_type_page.cpp:54
-#: src/mkvtoolnix-gui/merge/track.cpp:587
+#: src/mkvtoolnix-gui/merge/track.cpp:648
 #, no-c-format
 msgid "Buttons"
 msgstr "Knoppen"
@@ -4241,7 +4241,7 @@ msgstr "Instellingen a&ctief"
 msgid "C&onstrict or expand timestamps"
 msgstr "Vernauwen of verbreden tijd &codes"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:584
+#: src/mkvtoolnix-gui/jobs/tool.cpp:587
 #, no-c-format
 msgid "C&ontinue"
 msgstr ""
@@ -4320,9 +4320,9 @@ msgstr ""
 #: src/mkvtoolnix-gui/chapter_editor/tool.cpp:255
 #: src/mkvtoolnix-gui/chapter_editor/tool.cpp:278
 #: src/mkvtoolnix-gui/header_editor/tab.cpp:956
-#: src/mkvtoolnix-gui/jobs/tool.cpp:520
-#: src/mkvtoolnix-gui/jobs/tool.cpp:585
-#: src/mkvtoolnix-gui/jobs/tool.cpp:623
+#: src/mkvtoolnix-gui/jobs/tool.cpp:523
+#: src/mkvtoolnix-gui/jobs/tool.cpp:588
+#: src/mkvtoolnix-gui/jobs/tool.cpp:626
 #: src/mkvtoolnix-gui/main_window/main_window.cpp:468
 #: src/mkvtoolnix-gui/merge/tab.cpp:509
 #: src/mkvtoolnix-gui/merge/tool.cpp:341
@@ -4643,7 +4643,7 @@ msgstr "Hoofdstuk vertaal editie UID"
 #: src/common/kax_element_names.cpp:279
 #: src/mkvtoolnix-gui/forms/merge/select_playlist_dialog.h:307
 #: src/mkvtoolnix-gui/forms/merge/tab.h:2269
-#: src/mkvtoolnix-gui/merge/track.cpp:589
+#: src/mkvtoolnix-gui/merge/track.cpp:650
 #: src/propedit/options.cpp:214
 #, no-c-format
 msgid "Chapters"
@@ -4842,54 +4842,54 @@ msgstr "Codec/MIME type"
 #: src/mkvtoolnix-gui/forms/merge/tab.h:2211
 #: src/mkvtoolnix-gui/header_editor/tab.cpp:619
 #, no-c-format
-msgid "Colour information"
+msgid "Color information"
 msgstr "Kleur informatie"
 
 #: src/mkvtoolnix-gui/forms/merge/tab.h:2175
 #: src/mkvtoolnix-gui/forms/merge/tab.h:2222
 #: src/mkvtoolnix-gui/header_editor/tab.cpp:624
 #, no-c-format
-msgid "Colour mastering meta information"
+msgid "Color mastering meta information"
 msgstr "Informatie over beheersen van kleuren"
 
 #: src/common/kax_element_names.cpp:125
 #, no-c-format
-msgid "Colour matrix coefficients"
+msgid "Color matrix coefficients"
 msgstr "Kleurmatrixcoëfficiënten"
 
 #: src/mkvtoolnix-gui/forms/merge/tab.h:2219
 #, fuzzy, no-c-format
-msgid "Colour matrix coefficients:"
+msgid "Color matrix coefficients:"
 msgstr "Kleurmatrixcoëfficiënten"
 
 #: src/common/kax_element_names.cpp:135
 #, no-c-format
-msgid "Colour primaries"
+msgid "Color primaries"
 msgstr "Basiskleuren"
 
 #: src/mkvtoolnix-gui/forms/merge/tab.h:2214
 #, fuzzy, no-c-format
-msgid "Colour primaries:"
+msgid "Color primaries:"
 msgstr "Basiskleuren"
 
 #: src/common/kax_element_names.cpp:133
 #, no-c-format
-msgid "Colour range"
+msgid "Color range"
 msgstr "Kleur bereik"
 
 #: src/mkvtoolnix-gui/forms/merge/tab.h:2220
 #, fuzzy, no-c-format
-msgid "Colour range:"
+msgid "Color range:"
 msgstr "Kleur bereik"
 
 #: src/common/kax_element_names.cpp:161
 #, no-c-format
-msgid "Colour space"
+msgid "Color space"
 msgstr "Kleur ruimte"
 
 #: src/common/kax_element_names.cpp:134
 #, no-c-format
-msgid "Colour transfer"
+msgid "Color transfer"
 msgstr "Kleur overdracht"
 
 #: src/mkvtoolnix-gui/jobs/job.cpp:271
@@ -5457,17 +5457,17 @@ msgstr "Datum"
 msgid "Date & time"
 msgstr "  DT: datum & tijd\n"
 
-#: src/mkvtoolnix-gui/jobs/model.cpp:55
+#: src/mkvtoolnix-gui/jobs/model.cpp:113
 #, no-c-format
 msgid "Date added"
 msgstr "Datum toegevoegd"
 
-#: src/mkvtoolnix-gui/jobs/model.cpp:57
+#: src/mkvtoolnix-gui/jobs/model.cpp:115
 #, no-c-format
 msgid "Date finished"
 msgstr "Datum voltooid"
 
-#: src/mkvtoolnix-gui/jobs/model.cpp:56
+#: src/mkvtoolnix-gui/jobs/model.cpp:114
 #, no-c-format
 msgid "Date started"
 msgstr "Datum gestart"
@@ -5633,7 +5633,7 @@ msgstr "Beschrijft de projectie die voor dit videospoor wordt gebruikt (0 - 3)."
 
 #: src/mkvtoolnix-gui/forms/merge/additional_command_line_options_dialog.h:222
 #: src/mkvtoolnix-gui/forms/merge/additional_command_line_options_dialog.h:226
-#: src/mkvtoolnix-gui/jobs/model.cpp:52
+#: src/mkvtoolnix-gui/jobs/model.cpp:110
 #: src/mkvtoolnix-gui/merge/attached_file_model.cpp:93
 #: src/mkvtoolnix-gui/merge/attachment_model.cpp:65
 #, no-c-format
@@ -5843,7 +5843,7 @@ msgstr "Niet splitsen"
 msgid "Do not write meta seek elements at all."
 msgstr "Schrijf helemaal geen meta zoek elementen."
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:518
+#: src/mkvtoolnix-gui/jobs/tool.cpp:521
 #: src/mkvtoolnix-gui/main_window/main_window.cpp:466
 #, no-c-format
 msgid "Do you really want to abort all currently running jobs?"
@@ -5859,7 +5859,7 @@ msgstr "Wil je echt deze taak afbreken?"
 msgid "Do you really want to add '%1' as another attachment?"
 msgstr "Wil je echt deze '%1' als een andere bijlage toevoegen?"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:583
+#: src/mkvtoolnix-gui/jobs/tool.cpp:586
 #, fuzzy, no-c-format
 msgid "Do you want to continue and risk overwriting the file?"
 msgstr "Wil je het bestand overschrijven?"
@@ -5869,7 +5869,7 @@ msgstr "Wil je het bestand overschrijven?"
 msgid "Do you want to continue?"
 msgstr "Wil je doorgaan?"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:621
+#: src/mkvtoolnix-gui/jobs/tool.cpp:624
 #, no-c-format
 msgid "Do you want to overwrite the file?"
 msgstr "Wil je het bestand overschrijven?"
@@ -5973,7 +5973,7 @@ msgstr "Duur"
 msgid "Duration:"
 msgstr "Duur:"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:409
+#: src/mkvtoolnix-gui/jobs/tool.cpp:412
 #, no-c-format
 msgid "E&dit in corresponding tool and remove from queue"
 msgstr "Bewerk in overeenkomstig hulpmi&ddel en verwijder uit wachtrij"
@@ -6292,7 +6292,7 @@ msgstr "Fout in regel {0}: verwachtte een SRT tijd code maar vond iets anders. B
 msgid "Error in line {0}: expected subtitle number and found some text.\n"
 msgstr "Fout in regel {0}: verwachtte een ondertitel nummer maar vond een tekst.\n"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:549
+#: src/mkvtoolnix-gui/jobs/tool.cpp:552
 #: src/mkvtoolnix-gui/merge/tab.cpp:180
 #, no-c-format
 msgid "Error loading settings file"
@@ -6998,7 +6998,7 @@ msgstr "Globale opties"
 msgid "Global output control"
 msgstr "Globale uitvoer controle"
 
-#: src/mkvtoolnix-gui/merge/track.cpp:591
+#: src/mkvtoolnix-gui/merge/track.cpp:652
 #, no-c-format
 msgid "Global tags"
 msgstr "Globale markeringen"
@@ -7027,12 +7027,12 @@ msgstr "Groen Y-chromaticiteitscoördinaat zoals gedefinieerd door CIE 1931."
 
 #: src/common/kax_element_names.cpp:115
 #, no-c-format
-msgid "Green colour coordinate x"
+msgid "Green color coordinate x"
 msgstr "Groene kleurcoördinaat x"
 
 #: src/common/kax_element_names.cpp:116
 #, no-c-format
-msgid "Green colour coordinate y"
+msgid "Green color coordinate y"
 msgstr "Groene kleurcoördinaat y"
 
 #: src/common/file_types.cpp:89
@@ -7549,7 +7549,7 @@ msgstr "Als bekend is dat er sporen aanwezig zijn maar deze niet worden gevonden
 msgid "If two or more timestamps are used then you have to separate them with commas."
 msgstr "Als er twee of meer tijdcodes worden gebruikt dan moet je die scheiden met komma's"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:620
+#: src/mkvtoolnix-gui/jobs/tool.cpp:623
 #, no-c-format
 msgid "If you add another job with the same destination file then file created before will be overwritten."
 msgstr "Als je een taak toevoegt met hetzelfde doelbestand, dan zal het eerdere bestand worden overschreven."
@@ -9659,8 +9659,8 @@ msgstr "Uitvoer bericht van deze karakterset"
 msgid "Output sampling frequency"
 msgstr "Uitvoer voorbeeld frequentie"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:580
-#: src/mkvtoolnix-gui/jobs/tool.cpp:617
+#: src/mkvtoolnix-gui/jobs/tool.cpp:583
+#: src/mkvtoolnix-gui/jobs/tool.cpp:620
 #, no-c-format
 msgid "Overwrite existing file"
 msgstr "Overschrijf bestaand bestand"
@@ -9998,7 +9998,7 @@ msgstr "Uitvoeren programma mislukt"
 msgid "Programs will only be able to seek to clusters, so creating larger clusters may lead to imprecise or slow seeking."
 msgstr "Programma's zullen alleen in staat zijn om te zoeken naar clusters, dus het creëren van grotere clusters kan leiden tot onnauwkeurige of langzaam zoeken."
 
-#: src/mkvtoolnix-gui/jobs/model.cpp:54
+#: src/mkvtoolnix-gui/jobs/model.cpp:112
 #, no-c-format
 msgid "Progress"
 msgstr "Voortgang"
@@ -10319,12 +10319,12 @@ msgstr "Rode Y kleur kwaliteit coördinaat gedefinieerd conform CIE 1931."
 
 #: src/common/kax_element_names.cpp:113
 #, no-c-format
-msgid "Red colour coordinate x"
+msgid "Red color coordinate x"
 msgstr "Rode kleurcoördinaat x"
 
 #: src/common/kax_element_names.cpp:114
 #, no-c-format
-msgid "Red colour coordinate y"
+msgid "Red color coordinate y"
 msgstr "Rode kleurcoördinaat y"
 
 #: src/common/cli_parser.cpp:193
@@ -10561,7 +10561,7 @@ msgstr "Rechts klikken voor acties voor alle seditties en hoofdstukken."
 msgid "Right-click for actions for header elements and attachments"
 msgstr "Rechts klikken voor acties voor alle beginblok elementen en bijlagen"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:420
+#: src/mkvtoolnix-gui/jobs/tool.cpp:423
 #, no-c-format
 msgid "Right-click for actions for jobs"
 msgstr "Rechts klikken voor taak acties"
@@ -10586,13 +10586,13 @@ msgstr "Duur:"
 msgid "Running"
 msgstr "Gestart"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:491
+#: src/mkvtoolnix-gui/jobs/tool.cpp:494
 #, no-c-format
 msgid "Running jobs cannot be edited."
 msgstr "Lopende taken kunnen niet bewerkt worden."
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:283
-#: src/mkvtoolnix-gui/jobs/tool.cpp:314
+#: src/mkvtoolnix-gui/jobs/tool.cpp:286
+#: src/mkvtoolnix-gui/jobs/tool.cpp:317
 #, no-c-format
 msgid "Running jobs cannot be removed."
 msgstr "Lopende taken kunnen niet verwijderd worden."
@@ -11098,7 +11098,7 @@ msgstr "Stelt de matrixcoëfficiënten in van de video die wordt gebruikt om lum
 
 #: src/common/property_element.cpp:171
 #, no-c-format
-msgid "Sets the number of coded bits for a colour channel."
+msgid "Sets the number of coded bits for a color channel."
 msgstr "Stelt het aantal gecodeerde bits in voor een kleurkanaal."
 
 #: src/mkvtoolnix-gui/merge/output.cpp:196
@@ -11478,14 +11478,14 @@ msgstr "Start bestanden anders dan uitvoerbare bestanden via de commando regel (
 msgid "Start file types other than executable files via xdg-open."
 msgstr "Start bestanden anders dan uitvoerbare bestanden via xdg-open."
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:216
+#: src/mkvtoolnix-gui/jobs/tool.cpp:219
 #, no-c-format
 msgid "Start job &immediately"
 msgid_plural "Start jobs &immediately"
 msgstr[0] "D&irect taken starten"
 msgstr[1] "D&irect taak starten"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:215
+#: src/mkvtoolnix-gui/jobs/tool.cpp:218
 #, no-c-format
 msgid "Start job &manually"
 msgid_plural "Start jobs &manually"
@@ -11503,7 +11503,7 @@ msgid "Statistics for track number {0}: number of blocks: {1}; size in bytes: {2
 msgstr "Statistieken voor spoornummer {0}: aantal blokken: {1}; grootte in bytes: {2}; tijdsinconden{3}; verwachtte bit snelheid in bits/seconde(n): {4}\n"
 
 #: src/mkvtoolnix-gui/forms/util/language_dialog.h:396
-#: src/mkvtoolnix-gui/jobs/model.cpp:50
+#: src/mkvtoolnix-gui/jobs/model.cpp:108
 #, no-c-format
 msgid "Status"
 msgstr "Status"
@@ -11585,7 +11585,7 @@ msgid "Subtitle track {0} is missing some duration elements. Please check the re
 msgstr "Ondertitel spoor {0} mist sommige duur elementen. Controleer a.u.b. het SSA/ASS resultaat bestand voor de ingangen welke dezelfde start en eindtijd hebben.\n"
 
 #: src/mkvtoolnix-gui/header_editor/track_type_page.cpp:53
-#: src/mkvtoolnix-gui/merge/track.cpp:586
+#: src/mkvtoolnix-gui/merge/track.cpp:647
 #, no-c-format
 msgid "Subtitles"
 msgstr "Ondertitels"
@@ -11660,7 +11660,7 @@ msgid "Tag selectors"
 msgstr "Markeer selecties"
 
 #: src/common/kax_element_names.cpp:309
-#: src/mkvtoolnix-gui/merge/track.cpp:590
+#: src/mkvtoolnix-gui/merge/track.cpp:651
 #: src/propedit/options.cpp:205
 #, no-c-format
 msgid "Tags"
@@ -12074,12 +12074,12 @@ msgstr "De codecs privé data komen niet overeen. Hebben beide dezelfde lengte (
 
 #: src/common/property_element.cpp:180
 #, no-c-format
-msgid "The colour primaries of the video."
+msgid "The color primaries of the video."
 msgstr "De basiskleuren van de video."
 
 #: src/common/property_element.cpp:179
 #, no-c-format
-msgid "The colour transfer characteristics of the video."
+msgid "The color transfer characteristics of the video."
 msgstr "De kleuroverdrachtskarakteristieken van de video."
 
 #: src/mkvtoolnix-gui/main_window/prefs_run_program_widget.cpp:99
@@ -12341,7 +12341,7 @@ msgstr "Het bestand '%1' bevat markeringen."
 msgid "The file '%1' could not be found in the installation folder."
 msgstr "Het bestand '%1' kon niet worden gevonden in de installatiemap."
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:582
+#: src/mkvtoolnix-gui/jobs/tool.cpp:585
 #, no-c-format
 msgid "The file '%1' exists already and might be overwritten depending on the configuration & the content of the source files."
 msgstr ""
@@ -12351,7 +12351,7 @@ msgstr ""
 msgid "The file '%1' is an unsupported container format (%2)."
 msgstr "Het bestand is een niet ondersteund inhoud formaat (%1)."
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:549
+#: src/mkvtoolnix-gui/jobs/tool.cpp:552
 #, no-c-format
 msgid "The file '%1' is neither a job queue file nor a settings file."
 msgstr "Het bestand '%1' is geen opdrachtwachtrijbestand noch een instellingenbestand."
@@ -14213,7 +14213,7 @@ msgstr "Twee bestanden samengevoegd met dezelfde instellingen en met deze schake
 #: src/common/kax_element_names.cpp:168
 #: src/mkvtoolnix-gui/forms/merge/select_playlist_dialog.h:321
 #: src/mkvtoolnix-gui/header_editor/page_model.cpp:162
-#: src/mkvtoolnix-gui/jobs/model.cpp:53
+#: src/mkvtoolnix-gui/jobs/model.cpp:111
 #: src/mkvtoolnix-gui/merge/track_model.cpp:78
 #, no-c-format
 msgid "Type"
@@ -14577,7 +14577,7 @@ msgid "VfW compatible video"
 msgstr "VfW compatible video"
 
 #: src/mkvtoolnix-gui/header_editor/track_type_page.cpp:52
-#: src/mkvtoolnix-gui/merge/track.cpp:585
+#: src/mkvtoolnix-gui/merge/track.cpp:646
 #, no-c-format
 msgid "Video"
 msgstr "Video"
@@ -14589,12 +14589,12 @@ msgstr "Video beeldverhouding type"
 
 #: src/common/kax_element_names.cpp:124
 #, no-c-format
-msgid "Video colour information"
+msgid "Video color information"
 msgstr "Video kleur informatie"
 
 #: src/common/kax_element_names.cpp:112
 #, no-c-format
-msgid "Video colour mastering metadata"
+msgid "Video color mastering metadata"
 msgstr "Videokleur controle metadata"
 
 #: src/common/property_element.cpp:162
@@ -14692,7 +14692,7 @@ msgstr "Video spoor %1"
 
 #: src/common/property_element.cpp:171
 #, no-c-format
-msgid "Video: bits per colour channel"
+msgid "Video: bits per color channel"
 msgstr "Video: bits per kleurkanaal"
 
 #: src/common/property_element.cpp:190
@@ -14727,17 +14727,17 @@ msgstr "Video: kleurintensiteit (chroma) rood Y"
 
 #: src/common/property_element.cpp:170
 #, no-c-format
-msgid "Video: colour matrix coefficients"
+msgid "Video: color matrix coefficients"
 msgstr "Video: kleurmatrixcoëfficiënten"
 
 #: src/common/property_element.cpp:180
 #, no-c-format
-msgid "Video: colour primaries"
+msgid "Video: color primaries"
 msgstr "Video: kleuren voor keuzes"
 
 #: src/common/property_element.cpp:178
 #, no-c-format
-msgid "Video: colour range"
+msgid "Video: color range"
 msgstr "Video: kleurbereik"
 
 #: src/common/property_element.cpp:174
@@ -14924,7 +14924,7 @@ msgstr "Waarschuwing:"
 msgid "Warnings"
 msgstr "Waarschuwingen"
 
-#: src/mkvtoolnix-gui/jobs/model.cpp:61
+#: src/mkvtoolnix-gui/jobs/model.cpp:119
 #, no-c-format
 msgid "Warnings/Errors"
 msgstr "Waarschuwingen/fouten"
@@ -15061,27 +15061,27 @@ msgstr "Telkens wanneer de gebruiker een afspeellijst toevoegt, kan het programm
 
 #: src/common/property_element.cpp:192
 #, no-c-format
-msgid "White colour chromaticity coordinate X as defined by CIE 1931."
+msgid "White color chromaticity coordinate X as defined by CIE 1931."
 msgstr "Coördinaat X witte kleur kwaliteit gedefinieerd conform CIE 1931."
 
 #: src/common/property_element.cpp:193
 #, no-c-format
-msgid "White colour chromaticity coordinate Y as defined by CIE 1931."
+msgid "White color chromaticity coordinate Y as defined by CIE 1931."
 msgstr "Coördinaat Y witte kleur kwaliteit gedefinieerd conform CIE 1931."
 
 #: src/common/kax_element_names.cpp:119
 #, no-c-format
-msgid "White colour coordinate x"
+msgid "White color coordinate x"
 msgstr "Witte kleurcoördinaat x"
 
 #: src/common/kax_element_names.cpp:120
 #, no-c-format
-msgid "White colour coordinate y"
+msgid "White color coordinate y"
 msgstr "Witte kleurcoördinaat y"
 
 #: src/mkvtoolnix-gui/forms/merge/tab.h:2225
 #, fuzzy, no-c-format
-msgid "White colour coordinates:"
+msgid "White color coordinates:"
 msgstr "Witte kleurcoördinaat x"
 
 #: src/common/property_element.cpp:154
@@ -16641,7 +16641,7 @@ msgstr "– Zet naar niets –"
 #~ msgid "CodecPrivate, length %1%%2%"
 #~ msgstr "CodecPrivé, lengte %1%%2%"
 
-#~ msgid "Colour matrix: %1%"
+#~ msgid "Color matrix: %1%"
 #~ msgstr "Ruimte kleur: %1%"
 
 #~ msgid "Compiled with libebml %1 + libmatroska %2."

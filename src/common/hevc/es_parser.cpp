@@ -43,6 +43,7 @@ bool
 es_parser_c::headers_parsed()
   const {
   return m_configuration_record_ready
+      && m_first_access_unit_parsed
       && !m_sps_info_list.empty()
       && (m_sps_info_list.front().get_width()  > 0)
       && (m_sps_info_list.front().get_height() > 0);
@@ -77,7 +78,15 @@ es_parser_c::clear() {
 }
 
 void
+es_parser_c::determine_if_first_access_unit_parsed() {
+  if (!m_first_access_unit_parsed && m_first_access_unit_parsing_slices)
+    m_first_access_unit_parsed = true;
+}
+
+void
 es_parser_c::flush_incomplete_frame() {
+  determine_if_first_access_unit_parsed();
+
   if (m_pending_frame_data.empty() || !m_configuration_record_ready)
     return;
 
@@ -391,6 +400,7 @@ es_parser_c::handle_nalu_internal(memory_cptr const &nalu,
         flush_unhandled_nalus();
       }
       handle_slice_nalu(nalu, nalu_pos);
+      m_first_access_unit_parsing_slices = true;
       break;
 
     case NALU_TYPE_END_OF_SEQ:
@@ -503,7 +513,7 @@ es_parser_c::parse_slice(memory_cptr const &nalu,
         r.get_bits(1);    // pic_output_flag
 
       if (sps.separate_colour_plane_flag == 1)
-        r.get_bits(1);    // colour_plane_id
+        r.get_bits(1);    // color_plane_id
 
       if ( (si.nalu_type != NALU_TYPE_IDR_W_RADL) && (si.nalu_type != NALU_TYPE_IDR_N_LP) ) {
         si.pic_order_cnt_lsb = r.get_bits(sps.log2_max_pic_order_cnt_lsb); // slice_pic_order_cnt_lsb

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mkvtoonix-eu\n"
 "Report-Msgid-Bugs-To: Moritz Bunkus <moritz@bunkus.org>\n"
-"POT-Creation-Date: 2022-07-07 18:34+0200\n"
+"POT-Creation-Date: 2022-07-09 10:50+0200\n"
 "PO-Revision-Date: 2016-01-14 08:27+0000\n"
 "Last-Translator: Xabier Aramendi <azpidatziak@gmail.com>, 2016-2018,2020\n"
 "Language-Team: Basque (http://www.transifex.com/moritz-bunkus/mkvtoolnix/"
@@ -275,12 +275,12 @@ msgstr "  --clusters-in-meta-seek  Kluster meta bilaketa datuak idazten ditu.\n"
 #: src/merge/mkvmerge.cpp:315
 #, no-c-format
 msgid ""
-"  --colour-bits-per-channel <TID:n>\n"
-"                           Sets the number of coded bits for a colour \n"
+"  --color-bits-per-channel <TID:n>\n"
+"                           Sets the number of coded bits for a color \n"
 "                           channel. A value of 0 indicates that the number is\n"
 "                           unspecified.\n"
 msgstr ""
-"  --colour-bits-per-channel <TID:n>\n"
+"  --color-bits-per-channel <TID:n>\n"
 "                           Margo kanal batentzat kodeatutako bit zenbatekoa\n"
 "                           ezartzen du. 0 balioak adierazten du zenbatekoa\n"
 "                           zehaztugabea dela.\n"
@@ -288,12 +288,12 @@ msgstr ""
 #: src/merge/mkvmerge.cpp:311
 #, fuzzy, no-c-format
 msgid ""
-"  --colour-matrix-coefficients <TID:n>\n"
+"  --color-matrix-coefficients <TID:n>\n"
 "                           Sets the matrix coefficients of the video used\n"
 "                           to derive luma and chroma values from red, green\n"
 "                           and blue color primaries.\n"
 msgstr ""
-"  --colour-matrix <TID:n>  Gorri, orlegi eta urdin lehen margoetatik\n"
+"  --color-matrix <TID:n>  Gorri, orlegi eta urdin lehen margoetatik\n"
 "                                               argitasun eta margotasun eratorpena egiteko\n"
 "                                               erabilitako bideoaren matrize ezaugarriak\n"
 "                                               ezartzen ditu.\n"
@@ -301,24 +301,24 @@ msgstr ""
 #: src/merge/mkvmerge.cpp:333
 #, no-c-format
 msgid ""
-"  --colour-primaries <TID:n>\n"
-"                           The colour primaries of the video.\n"
+"  --color-primaries <TID:n>\n"
+"                           The color primaries of the video.\n"
 msgstr ""
-"  --colour-primaries <TID:n>\n"
+"  --color-primaries <TID:n>\n"
 "                           Bideoaren lehen margoak.\n"
 
 #: src/merge/mkvmerge.cpp:330
 #, no-c-format
-msgid "  --colour-range <TID:n>   Clipping of the color ranges.\n"
-msgstr "  --colour-range <TID:n>   Margo mailen ebaketa.\n"
+msgid "  --color-range <TID:n>   Clipping of the color ranges.\n"
+msgstr "  --color-range <TID:n>   Margo mailen ebaketa.\n"
 
 #: src/merge/mkvmerge.cpp:331
 #, no-c-format
 msgid ""
-"  --colour-transfer-characteristics <TID:n>\n"
+"  --color-transfer-characteristics <TID:n>\n"
 "                           The transfer characteristics of the video.\n"
 msgstr ""
-"  --colour-transfer-characteristics <TID:n>\n"
+"  --color-transfer-characteristics <TID:n>\n"
 "                           Bideoaren eskualdaketa ezaugarriak.\n"
 
 #: src/merge/mkvmerge.cpp:392
@@ -711,7 +711,7 @@ msgid ""
 "  --projection-pose-pitch <TID:float>\n"
 "                           A pitch rotation to the projection.\n"
 msgstr ""
-"  --colour-primaries <TID:n>\n"
+"  --color-primaries <TID:n>\n"
 "                           Bideoaren lehen margoak.\n"
 
 #: src/merge/mkvmerge.cpp:362
@@ -720,7 +720,7 @@ msgid ""
 "  --projection-pose-roll <TID:float>\n"
 "                           A roll rotation to the projection.\n"
 msgstr ""
-"  --colour-primaries <TID:n>\n"
+"  --color-primaries <TID:n>\n"
 "                           Bideoaren lehen margoak.\n"
 
 #: src/merge/mkvmerge.cpp:358
@@ -729,7 +729,7 @@ msgid ""
 "  --projection-pose-yaw <TID:float>\n"
 "                           A yaw rotation to the projection.\n"
 msgstr ""
-"  --colour-primaries <TID:n>\n"
+"  --color-primaries <TID:n>\n"
 "                           Bideoaren lehen margoak.\n"
 
 #: src/merge/mkvmerge.cpp:355
@@ -749,7 +749,7 @@ msgid ""
 "  --projection-type <TID:method>\n"
 "                           Projection method used (0–3).\n"
 msgstr ""
-"  --colour-primaries <TID:n>\n"
+"  --color-primaries <TID:n>\n"
 "                           Bideoaren lehen margoak.\n"
 
 #: src/merge/mkvmerge.cpp:276
@@ -969,11 +969,11 @@ msgstr ""
 #: src/merge/mkvmerge.cpp:344
 #, no-c-format
 msgid ""
-"  --white-colour-coordinates <TID:x,y>\n"
-"                           White colour chromaticity coordinates as defined\n"
+"  --white-color-coordinates <TID:x,y>\n"
+"                           White color chromaticity coordinates as defined\n"
 "                           by CIE 1931.\n"
 msgstr ""
-"  --white-colour-coordinates <TID:x,y>\n"
+"  --white-color-coordinates <TID:x,y>\n"
 "                           Margo zuriaren margotasun antolakuntza\n"
 "                           CIE 1931-n zehaztuta bezala.\n"
 
@@ -1629,13 +1629,13 @@ msgstr "%s – segundu"
 msgid "&Abort job"
 msgstr "&Utzi lana"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:519
+#: src/mkvtoolnix-gui/jobs/tool.cpp:522
 #: src/mkvtoolnix-gui/main_window/main_window.cpp:467
 #, no-c-format
 msgid "&Abort jobs"
 msgstr "&Utzi lanak"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:413
+#: src/mkvtoolnix-gui/jobs/tool.cpp:416
 #, no-c-format
 msgid "&Acknowledge warnings and errors"
 msgstr "E&zagutu kontuz-oharrak eta akatsak"
@@ -2099,7 +2099,7 @@ msgstr "&Ireki Matroska edo WebM agiria"
 msgid "&Open as new tabs in the header editor"
 msgstr "Ireki &hegats berri bezala idazburu editatzailean"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:408
+#: src/mkvtoolnix-gui/jobs/tool.cpp:411
 #: src/mkvtoolnix-gui/watch_jobs/tab.cpp:147
 #, no-c-format
 msgid "&Open folder"
@@ -2127,7 +2127,7 @@ msgstr "&Hurrenkeran"
 msgid "&Output"
 msgstr "I&rteera"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:622
+#: src/mkvtoolnix-gui/jobs/tool.cpp:625
 #, no-c-format
 msgid "&Overwrite file"
 msgstr "&Gainidatzi agiria"
@@ -2203,7 +2203,7 @@ msgid_plural "&Remove files"
 msgstr[0] "&Kendu agiria"
 msgstr[1] "&Kendu agiriak"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:217
+#: src/mkvtoolnix-gui/jobs/tool.cpp:220
 #, no-c-format
 msgid "&Remove job"
 msgid_plural "&Remove jobs"
@@ -2307,7 +2307,7 @@ msgstr "&Antolatu atalak beren hasiera eta amaiera denbor-irarketen arabera."
 msgid "&Start && end:"
 msgstr "&Hasiera eta amaiera:"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:214
+#: src/mkvtoolnix-gui/jobs/tool.cpp:217
 #, no-c-format
 msgid "&Start job automatically"
 msgid_plural "&Start jobs automatically"
@@ -2385,7 +2385,7 @@ msgstr "&Bideoa"
 msgid "&Video tracks:"
 msgstr "&Bideo bideak:"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:407
+#: src/mkvtoolnix-gui/jobs/tool.cpp:410
 #, no-c-format
 msgid "&View output"
 msgstr "&Ikusi irteera"
@@ -3056,7 +3056,7 @@ msgstr "Gizaki-irakurgarria den kate batek adierazten du kodeka."
 msgid "A human-readable track name."
 msgstr "Bide izen gizakiak-irakurgarri bat."
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:619
+#: src/mkvtoolnix-gui/jobs/tool.cpp:622
 #, no-c-format
 msgid "A job creating the file '%1' is already in the job queue."
 msgstr "'%1' agiria sortzen ari den lana jadanik lan lerroan dago."
@@ -3228,7 +3228,7 @@ msgstr "Utzi &ekinean dauden lan guztiak eta gelditu berehala"
 msgid "Abort running job"
 msgstr "Utzi ekinean dauden lanak"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:517
+#: src/mkvtoolnix-gui/jobs/tool.cpp:520
 #: src/mkvtoolnix-gui/main_window/main_window.cpp:465
 #, no-c-format
 msgid "Abort running jobs"
@@ -3249,12 +3249,12 @@ msgstr "Programa uzten du lehen kontuz-oharra jaulkitzean."
 msgid "Acknowledge &all warnings and errors"
 msgstr "Ezagutu kontuz-o&har eta akats guztiak"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:412
+#: src/mkvtoolnix-gui/jobs/tool.cpp:415
 #, no-c-format
 msgid "Acknowledge &errors"
 msgstr "Ezagutu &akatsak"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:411
+#: src/mkvtoolnix-gui/jobs/tool.cpp:414
 #, no-c-format
 msgid "Acknowledge &warnings"
 msgstr "Ezagutu &kontuz-oharrak"
@@ -3907,7 +3907,7 @@ msgid "Attached"
 msgstr "Erantsita"
 
 #: src/mkvtoolnix-gui/forms/header_editor/attached_file_page.h:171
-#: src/mkvtoolnix-gui/merge/track.cpp:588
+#: src/mkvtoolnix-gui/merge/track.cpp:649
 #, no-c-format
 msgid "Attachment"
 msgstr "Eranskina"
@@ -3952,7 +3952,7 @@ msgid "Attachments from &source files:"
 msgstr "It&urburu agirietatiko eranskinak:"
 
 #: src/mkvtoolnix-gui/header_editor/track_type_page.cpp:51
-#: src/mkvtoolnix-gui/merge/track.cpp:584
+#: src/mkvtoolnix-gui/merge/track.cpp:645
 #, no-c-format
 msgid "Audio"
 msgstr "Audioa"
@@ -4074,7 +4074,7 @@ msgstr "Bit bideko"
 
 #: src/mkvtoolnix-gui/forms/merge/tab.h:2213
 #, fuzzy, no-c-format
-msgid "Bits per colour channel:"
+msgid "Bits per color channel:"
 msgstr "Bideoa: bit margo bide bakoitzeko"
 
 #: src/common/property_element.cpp:213
@@ -4171,12 +4171,12 @@ msgstr "Margo urdinaren margotasunaren Y ardatza CIE 1931-k zehaztu bezala."
 
 #: src/common/kax_element_names.cpp:117
 #, no-c-format
-msgid "Blue colour coordinate x"
+msgid "Blue color coordinate x"
 msgstr "Margo urdinaren x ardatza"
 
 #: src/common/kax_element_names.cpp:118
 #, no-c-format
-msgid "Blue colour coordinate y"
+msgid "Blue color coordinate y"
 msgstr "Margo urdinaren y ardatza"
 
 #: src/input/r_vobsub.cpp:549
@@ -4210,7 +4210,7 @@ msgid "Button track %1"
 msgstr "Beheko bidea %1"
 
 #: src/mkvtoolnix-gui/header_editor/track_type_page.cpp:54
-#: src/mkvtoolnix-gui/merge/track.cpp:587
+#: src/mkvtoolnix-gui/merge/track.cpp:648
 #, no-c-format
 msgid "Buttons"
 msgstr "Botoiak"
@@ -4245,7 +4245,7 @@ msgstr "Itx&urapena gaituta"
 msgid "C&onstrict or expand timestamps"
 msgstr "&Estutu edo hedatu denbora-kodeak"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:584
+#: src/mkvtoolnix-gui/jobs/tool.cpp:587
 #, no-c-format
 msgid "C&ontinue"
 msgstr "&Jarraitu"
@@ -4324,9 +4324,9 @@ msgstr ""
 #: src/mkvtoolnix-gui/chapter_editor/tool.cpp:255
 #: src/mkvtoolnix-gui/chapter_editor/tool.cpp:278
 #: src/mkvtoolnix-gui/header_editor/tab.cpp:956
-#: src/mkvtoolnix-gui/jobs/tool.cpp:520
-#: src/mkvtoolnix-gui/jobs/tool.cpp:585
-#: src/mkvtoolnix-gui/jobs/tool.cpp:623
+#: src/mkvtoolnix-gui/jobs/tool.cpp:523
+#: src/mkvtoolnix-gui/jobs/tool.cpp:588
+#: src/mkvtoolnix-gui/jobs/tool.cpp:626
 #: src/mkvtoolnix-gui/main_window/main_window.cpp:468
 #: src/mkvtoolnix-gui/merge/tab.cpp:509
 #: src/mkvtoolnix-gui/merge/tool.cpp:341
@@ -4647,7 +4647,7 @@ msgstr "Atalaren itzulpen edizio UID-a"
 #: src/common/kax_element_names.cpp:279
 #: src/mkvtoolnix-gui/forms/merge/select_playlist_dialog.h:307
 #: src/mkvtoolnix-gui/forms/merge/tab.h:2269
-#: src/mkvtoolnix-gui/merge/track.cpp:589
+#: src/mkvtoolnix-gui/merge/track.cpp:650
 #: src/propedit/options.cpp:214
 #, no-c-format
 msgid "Chapters"
@@ -4846,54 +4846,54 @@ msgstr "Kodek/MIME mtoa"
 #: src/mkvtoolnix-gui/forms/merge/tab.h:2211
 #: src/mkvtoolnix-gui/header_editor/tab.cpp:619
 #, no-c-format
-msgid "Colour information"
+msgid "Color information"
 msgstr "Margo argibideak"
 
 #: src/mkvtoolnix-gui/forms/merge/tab.h:2175
 #: src/mkvtoolnix-gui/forms/merge/tab.h:2222
 #: src/mkvtoolnix-gui/header_editor/tab.cpp:624
 #, no-c-format
-msgid "Colour mastering meta information"
+msgid "Color mastering meta information"
 msgstr "Margo masteritzatze meta argibideak"
 
 #: src/common/kax_element_names.cpp:125
 #, no-c-format
-msgid "Colour matrix coefficients"
+msgid "Color matrix coefficients"
 msgstr "Margo matrize ezaugarriak"
 
 #: src/mkvtoolnix-gui/forms/merge/tab.h:2219
 #, fuzzy, no-c-format
-msgid "Colour matrix coefficients:"
+msgid "Color matrix coefficients:"
 msgstr "Margo matrize ezaugarriak"
 
 #: src/common/kax_element_names.cpp:135
 #, no-c-format
-msgid "Colour primaries"
+msgid "Color primaries"
 msgstr "Margo lehenak"
 
 #: src/mkvtoolnix-gui/forms/merge/tab.h:2214
 #, fuzzy, no-c-format
-msgid "Colour primaries:"
+msgid "Color primaries:"
 msgstr "Margo lehenak"
 
 #: src/common/kax_element_names.cpp:133
 #, no-c-format
-msgid "Colour range"
+msgid "Color range"
 msgstr "Margo maila"
 
 #: src/mkvtoolnix-gui/forms/merge/tab.h:2220
 #, fuzzy, no-c-format
-msgid "Colour range:"
+msgid "Color range:"
 msgstr "Margo maila"
 
 #: src/common/kax_element_names.cpp:161
 #, no-c-format
-msgid "Colour space"
+msgid "Color space"
 msgstr "Margo tartea"
 
 #: src/common/kax_element_names.cpp:134
 #, no-c-format
-msgid "Colour transfer"
+msgid "Color transfer"
 msgstr "Margo eskualdeketa"
 
 #: src/mkvtoolnix-gui/jobs/job.cpp:271
@@ -5461,17 +5461,17 @@ msgstr "Eguna"
 msgid "Date & time"
 msgstr "  DT: eguna eta ordua\n"
 
-#: src/mkvtoolnix-gui/jobs/model.cpp:55
+#: src/mkvtoolnix-gui/jobs/model.cpp:113
 #, no-c-format
 msgid "Date added"
 msgstr "Gehitze eguna"
 
-#: src/mkvtoolnix-gui/jobs/model.cpp:57
+#: src/mkvtoolnix-gui/jobs/model.cpp:115
 #, no-c-format
 msgid "Date finished"
 msgstr "Amaitze eguna"
 
-#: src/mkvtoolnix-gui/jobs/model.cpp:56
+#: src/mkvtoolnix-gui/jobs/model.cpp:114
 #, no-c-format
 msgid "Date started"
 msgstr "Hasiera eguna"
@@ -5637,7 +5637,7 @@ msgstr "Bideo bideak erabilitako proiekzioa azaltzen du (0 – 3)."
 
 #: src/mkvtoolnix-gui/forms/merge/additional_command_line_options_dialog.h:222
 #: src/mkvtoolnix-gui/forms/merge/additional_command_line_options_dialog.h:226
-#: src/mkvtoolnix-gui/jobs/model.cpp:52
+#: src/mkvtoolnix-gui/jobs/model.cpp:110
 #: src/mkvtoolnix-gui/merge/attached_file_model.cpp:93
 #: src/mkvtoolnix-gui/merge/attachment_model.cpp:65
 #, no-c-format
@@ -5847,7 +5847,7 @@ msgstr "Ez banandu"
 msgid "Do not write meta seek elements at all."
 msgstr "Ez idatzi meta bilaketa gairik inon."
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:518
+#: src/mkvtoolnix-gui/jobs/tool.cpp:521
 #: src/mkvtoolnix-gui/main_window/main_window.cpp:466
 #, no-c-format
 msgid "Do you really want to abort all currently running jobs?"
@@ -5863,7 +5863,7 @@ msgstr "Egitan nahi duzu lan hau uztea?"
 msgid "Do you really want to add '%1' as another attachment?"
 msgstr "Egitan nahi duzu '%1' beste eranskin bat bezala gehitzea?"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:583
+#: src/mkvtoolnix-gui/jobs/tool.cpp:586
 #, no-c-format
 msgid "Do you want to continue and risk overwriting the file?"
 msgstr "Jarraitu nahi duzu eta agiria gainidaztearen arriskua hartu?"
@@ -5873,7 +5873,7 @@ msgstr "Jarraitu nahi duzu eta agiria gainidaztearen arriskua hartu?"
 msgid "Do you want to continue?"
 msgstr "Jarraitzea nahi duzu?"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:621
+#: src/mkvtoolnix-gui/jobs/tool.cpp:624
 #, no-c-format
 msgid "Do you want to overwrite the file?"
 msgstr "Agiria gainidaztea nahi duzu?"
@@ -5977,7 +5977,7 @@ msgstr "Iraupena"
 msgid "Duration:"
 msgstr "Iraupena:"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:409
+#: src/mkvtoolnix-gui/jobs/tool.cpp:412
 #, no-c-format
 msgid "E&dit in corresponding tool and remove from queue"
 msgstr "&Editatu dagokion tresnan eta kendu lerrotik"
@@ -6296,7 +6296,7 @@ msgstr "Akatsa {0} lerroan: SRT denbora-kode lerro bat itxaroten zen baina beste
 msgid "Error in line {0}: expected subtitle number and found some text.\n"
 msgstr "Akatsa {0} lerroan: azpidatzi zenbaki bat itxaroten zen eta idazki zati bat aurkitu da.\n"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:549
+#: src/mkvtoolnix-gui/jobs/tool.cpp:552
 #: src/mkvtoolnix-gui/merge/tab.cpp:180
 #, no-c-format
 msgid "Error loading settings file"
@@ -7002,7 +7002,7 @@ msgstr "Aukera orokorrak"
 msgid "Global output control"
 msgstr "Irteera aginte orokorra"
 
-#: src/mkvtoolnix-gui/merge/track.cpp:591
+#: src/mkvtoolnix-gui/merge/track.cpp:652
 #, no-c-format
 msgid "Global tags"
 msgstr "Etiketa orokorrak"
@@ -7031,12 +7031,12 @@ msgstr "Margo orlegiaren margotasunaren Y ardatza CIE 1931-k zehaztu bezala."
 
 #: src/common/kax_element_names.cpp:115
 #, no-c-format
-msgid "Green colour coordinate x"
+msgid "Green color coordinate x"
 msgstr "Margo orlegiaren x ardatza"
 
 #: src/common/kax_element_names.cpp:116
 #, no-c-format
-msgid "Green colour coordinate y"
+msgid "Green color coordinate y"
 msgstr "Margo orlegiaren y ardatza"
 
 #: src/common/file_types.cpp:89
@@ -7553,7 +7553,7 @@ msgstr "Bideak egon behar direla jakiten bada baina ez badira aurkitzen, probare
 msgid "If two or more timestamps are used then you have to separate them with commas."
 msgstr "Denbora-kode bi edo gehiago erabiltzen badira hauek kakotxaz banandu behar dituzu."
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:620
+#: src/mkvtoolnix-gui/jobs/tool.cpp:623
 #, no-c-format
 msgid "If you add another job with the same destination file then file created before will be overwritten."
 msgstr "Beste lan bat gehitzen baduzu helmuga agiri berdinarekin aurretik sortutako agiria gainidatzi egingo da."
@@ -9663,8 +9663,8 @@ msgstr "Irteera mezuak hizkikode honetan"
 msgid "Output sampling frequency"
 msgstr "Irteera laginketa maiztasuna"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:580
-#: src/mkvtoolnix-gui/jobs/tool.cpp:617
+#: src/mkvtoolnix-gui/jobs/tool.cpp:583
+#: src/mkvtoolnix-gui/jobs/tool.cpp:620
 #, no-c-format
 msgid "Overwrite existing file"
 msgstr "Gainidatzi dagoen agiria"
@@ -10002,7 +10002,7 @@ msgstr "Programaren exekuzioa hutsegitea"
 msgid "Programs will only be able to seek to clusters, so creating larger clusters may lead to imprecise or slow seeking."
 msgstr "Programak klusterretan bakarrik bilatzeko gai izango dira, hortaz kluster handiak sortzeak bilaketa zehazgabea edo astiroa eragin dezake."
 
-#: src/mkvtoolnix-gui/jobs/model.cpp:54
+#: src/mkvtoolnix-gui/jobs/model.cpp:112
 #, no-c-format
 msgid "Progress"
 msgstr "Garapena"
@@ -10323,12 +10323,12 @@ msgstr "Margo gorriaren margotasunaren Y ardatza CIE 1931-k zehaztu bezala."
 
 #: src/common/kax_element_names.cpp:113
 #, no-c-format
-msgid "Red colour coordinate x"
+msgid "Red color coordinate x"
 msgstr "Margo gorriaren x ardatza"
 
 #: src/common/kax_element_names.cpp:114
 #, no-c-format
-msgid "Red colour coordinate y"
+msgid "Red color coordinate y"
 msgstr "Margo gorriaren y ardatza"
 
 #: src/common/cli_parser.cpp:193
@@ -10565,7 +10565,7 @@ msgstr "Eskuin-klikatu edizio eta atal ekintzetarako"
 msgid "Right-click for actions for header elements and attachments"
 msgstr "Eskuin-klikatu idazburu gai eta eranskinen  ekintzetarako"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:420
+#: src/mkvtoolnix-gui/jobs/tool.cpp:423
 #, no-c-format
 msgid "Right-click for actions for jobs"
 msgstr "Eskuin-klikatu lanetako ekintzetarako"
@@ -10590,13 +10590,13 @@ msgstr "Iraupena:"
 msgid "Running"
 msgstr "Ekinean"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:491
+#: src/mkvtoolnix-gui/jobs/tool.cpp:494
 #, no-c-format
 msgid "Running jobs cannot be edited."
 msgstr "Ekinean dauden lanak ezin dira editatu."
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:283
-#: src/mkvtoolnix-gui/jobs/tool.cpp:314
+#: src/mkvtoolnix-gui/jobs/tool.cpp:286
+#: src/mkvtoolnix-gui/jobs/tool.cpp:317
 #, no-c-format
 msgid "Running jobs cannot be removed."
 msgstr "Ekinean dauden lanak ezin dira kendu."
@@ -11099,14 +11099,14 @@ msgstr "Bide honek erabiltzeko galeragabeko konpresio algoritmoa ezartzen du."
 #, fuzzy, no-c-format
 msgid "Sets the matrix coefficients of the video used to derive luma and chroma values from red, green and blue color primaries."
 msgstr ""
-"  --colour-matrix <TID:n>  Gorri, orlegi eta urdin lehen margoetatik\n"
+"  --color-matrix <TID:n>  Gorri, orlegi eta urdin lehen margoetatik\n"
 "                                               argitasun eta margotasun eratorpena egiteko\n"
 "                                               erabilitako bideoaren matrize ezaugarriak\n"
 "                                               ezartzen ditu.\n"
 
 #: src/common/property_element.cpp:171
 #, no-c-format
-msgid "Sets the number of coded bits for a colour channel."
+msgid "Sets the number of coded bits for a color channel."
 msgstr "Margo bide batentzat kodeatutako bit zenbatekoa ezartzen du."
 
 #: src/mkvtoolnix-gui/merge/output.cpp:196
@@ -11486,14 +11486,14 @@ msgstr "Abiarazi exekutagarriak ez diren beste agiri motak cmd.exe bidez."
 msgid "Start file types other than executable files via xdg-open."
 msgstr "Abiarazi exekutagarriak ez diren beste agiri motak xdg-open bidez."
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:216
+#: src/mkvtoolnix-gui/jobs/tool.cpp:219
 #, no-c-format
 msgid "Start job &immediately"
 msgid_plural "Start jobs &immediately"
 msgstr[0] "Hasi lana &berehala"
 msgstr[1] "Hasi lanak &berehala"
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:215
+#: src/mkvtoolnix-gui/jobs/tool.cpp:218
 #, no-c-format
 msgid "Start job &manually"
 msgid_plural "Start jobs &manually"
@@ -11511,7 +11511,7 @@ msgid "Statistics for track number {0}: number of blocks: {1}; size in bytes: {2
 msgstr "Estatistikak {0} bide zenbakiarentzat: bloke zenbatekoa: {1}; neurria bytetan: {2}; iraupena segundutan: {3}; gutxi-gorabeharako bitneurria bit/segundutan: {4}\n"
 
 #: src/mkvtoolnix-gui/forms/util/language_dialog.h:396
-#: src/mkvtoolnix-gui/jobs/model.cpp:50
+#: src/mkvtoolnix-gui/jobs/model.cpp:108
 #, no-c-format
 msgid "Status"
 msgstr "Egoera"
@@ -11593,7 +11593,7 @@ msgid "Subtitle track {0} is missing some duration elements. Please check the re
 msgstr "{0} azpidatzi bideak ez ditu iraupen osagai batzuk. Mesedez egiaztatu emaitz SSA/ASS agiriak hasiera eta amaiera sarrera berdinak dituela.\n"
 
 #: src/mkvtoolnix-gui/header_editor/track_type_page.cpp:53
-#: src/mkvtoolnix-gui/merge/track.cpp:586
+#: src/mkvtoolnix-gui/merge/track.cpp:647
 #, no-c-format
 msgid "Subtitles"
 msgstr "Azpidatziak"
@@ -11668,7 +11668,7 @@ msgid "Tag selectors"
 msgstr "Etiketa hautatzaileak"
 
 #: src/common/kax_element_names.cpp:309
-#: src/mkvtoolnix-gui/merge/track.cpp:590
+#: src/mkvtoolnix-gui/merge/track.cpp:651
 #: src/propedit/options.cpp:205
 #, no-c-format
 msgid "Tags"
@@ -12090,12 +12090,12 @@ msgstr "Kodekaren datu pribatuak ez datoz bat. Biek luzera berdina dute ({0}), b
 
 #: src/common/property_element.cpp:180
 #, no-c-format
-msgid "The colour primaries of the video."
+msgid "The color primaries of the video."
 msgstr "Bideoaren margo lehenak."
 
 #: src/common/property_element.cpp:179
 #, no-c-format
-msgid "The colour transfer characteristics of the video."
+msgid "The color transfer characteristics of the video."
 msgstr "Bideoaren margo eskualdaketa ezaugarriak."
 
 #: src/mkvtoolnix-gui/main_window/prefs_run_program_widget.cpp:99
@@ -12357,7 +12357,7 @@ msgstr "'%1' agiriak etiketak ditu."
 msgid "The file '%1' could not be found in the installation folder."
 msgstr "'%1' agiria ezin da ezarpen agiritegian aurkitu."
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:582
+#: src/mkvtoolnix-gui/jobs/tool.cpp:585
 #, no-c-format
 msgid "The file '%1' exists already and might be overwritten depending on the configuration & the content of the source files."
 msgstr ""
@@ -12367,7 +12367,7 @@ msgstr ""
 msgid "The file '%1' is an unsupported container format (%2)."
 msgstr "Agiria sostengatu gabeko edukiontzi heuskarria da (%1)."
 
-#: src/mkvtoolnix-gui/jobs/tool.cpp:549
+#: src/mkvtoolnix-gui/jobs/tool.cpp:552
 #, no-c-format
 msgid "The file '%1' is neither a job queue file nor a settings file."
 msgstr "%1 agiria ez da ez lan lerroko agiri bat ez ezarpen agiri bat."
@@ -14229,7 +14229,7 @@ msgstr "Bi agiri ezarpen berdinekin multiplexatuta eta aldagailu hau gaituta ber
 #: src/common/kax_element_names.cpp:168
 #: src/mkvtoolnix-gui/forms/merge/select_playlist_dialog.h:321
 #: src/mkvtoolnix-gui/header_editor/page_model.cpp:162
-#: src/mkvtoolnix-gui/jobs/model.cpp:53
+#: src/mkvtoolnix-gui/jobs/model.cpp:111
 #: src/mkvtoolnix-gui/merge/track_model.cpp:78
 #, no-c-format
 msgid "Type"
@@ -14593,7 +14593,7 @@ msgid "VfW compatible video"
 msgstr "VfW bideo bateragarria"
 
 #: src/mkvtoolnix-gui/header_editor/track_type_page.cpp:52
-#: src/mkvtoolnix-gui/merge/track.cpp:585
+#: src/mkvtoolnix-gui/merge/track.cpp:646
 #, no-c-format
 msgid "Video"
 msgstr "Bideoa"
@@ -14605,12 +14605,12 @@ msgstr "Bideo ikuspegi maila mota"
 
 #: src/common/kax_element_names.cpp:124
 #, no-c-format
-msgid "Video colour information"
+msgid "Video color information"
 msgstr "Bideoaren margo argibideak"
 
 #: src/common/kax_element_names.cpp:112
 #, no-c-format
-msgid "Video colour mastering metadata"
+msgid "Video color mastering metadata"
 msgstr "Bideo margo masterizatze metadatuak"
 
 #: src/common/property_element.cpp:162
@@ -14708,7 +14708,7 @@ msgstr "Bideo bidea %1"
 
 #: src/common/property_element.cpp:171
 #, no-c-format
-msgid "Video: bits per colour channel"
+msgid "Video: bits per color channel"
 msgstr "Bideoa: bit margo bide bakoitzeko"
 
 #: src/common/property_element.cpp:190
@@ -14743,17 +14743,17 @@ msgstr "Bideoa: margotasun gorria Y"
 
 #: src/common/property_element.cpp:170
 #, no-c-format
-msgid "Video: colour matrix coefficients"
+msgid "Video: color matrix coefficients"
 msgstr "Bideoa: margo matrize ezaugarriak"
 
 #: src/common/property_element.cpp:180
 #, no-c-format
-msgid "Video: colour primaries"
+msgid "Video: color primaries"
 msgstr "Bideoa: margo lehenak"
 
 #: src/common/property_element.cpp:178
 #, no-c-format
-msgid "Video: colour range"
+msgid "Video: color range"
 msgstr "Bideoa: margo maila"
 
 #: src/common/property_element.cpp:174
@@ -14940,7 +14940,7 @@ msgstr "Kontuz:"
 msgid "Warnings"
 msgstr "Kontuz-oharrak"
 
-#: src/mkvtoolnix-gui/jobs/model.cpp:61
+#: src/mkvtoolnix-gui/jobs/model.cpp:119
 #, no-c-format
 msgid "Warnings/Errors"
 msgstr "Kontuz-oharrak/Akatsak"
@@ -15077,27 +15077,27 @@ msgstr "Erabiltzaileak irakur zerrenda bat gehitzen duenean programak berezgaita
 
 #: src/common/property_element.cpp:192
 #, no-c-format
-msgid "White colour chromaticity coordinate X as defined by CIE 1931."
+msgid "White color chromaticity coordinate X as defined by CIE 1931."
 msgstr "Margo zuriaren margotasunaren X ardatza CIE 1931-k zehaztu bezala."
 
 #: src/common/property_element.cpp:193
 #, no-c-format
-msgid "White colour chromaticity coordinate Y as defined by CIE 1931."
+msgid "White color chromaticity coordinate Y as defined by CIE 1931."
 msgstr "Margo zuriaren margotasunaren Y ardatza CIE 1931-k zehaztu bezala."
 
 #: src/common/kax_element_names.cpp:119
 #, no-c-format
-msgid "White colour coordinate x"
+msgid "White color coordinate x"
 msgstr "Margo zuriaren x ardatza"
 
 #: src/common/kax_element_names.cpp:120
 #, no-c-format
-msgid "White colour coordinate y"
+msgid "White color coordinate y"
 msgstr "Margo zuriaren y ardatza"
 
 #: src/mkvtoolnix-gui/forms/merge/tab.h:2225
 #, fuzzy, no-c-format
-msgid "White colour coordinates:"
+msgid "White color coordinates:"
 msgstr "Margo zuriaren x ardatza"
 
 #: src/common/property_element.cpp:154
@@ -17393,7 +17393,7 @@ msgstr "– Ezarri ezer ez bezala –"
 #~ msgid "Collapse all entries so that none of their sub-entries will be shown"
 #~ msgstr "Bildu sarrera guztiak beren azpi-sarrerak ez erakusteko bezala"
 
-#~ msgid "Colour matrix: %1%"
+#~ msgid "Color matrix: %1%"
 #~ msgstr "Margo matrizea: %1%"
 
 #~ msgid "Command line copied to clipboard."
