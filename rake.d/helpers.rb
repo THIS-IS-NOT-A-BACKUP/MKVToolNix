@@ -37,6 +37,10 @@ def last_exit_code
   $?.respond_to?(:exitstatus) ? $?.exitstatus : $?.to_i
 end
 
+def shell_to_run
+  [ENV["RUBYSHELL"], ENV["SHELL"], "sh"].select { |v| !v.blank? }.first
+end
+
 def run cmdline, opts = {}
   code = run_wrapper cmdline, opts
   exit code if (code != 0) && !opts[:allow_failure].to_bool
@@ -45,7 +49,6 @@ end
 def run_wrapper cmdline, opts = {}
   cmdline = cmdline.gsub(/\n/, ' ').gsub(/^\s+/, '').gsub(/\s+$/, '').gsub(/\s+/, ' ')
   code    = nil
-  shell   = ENV["RUBYSHELL"].blank? ? "c:/msys/bin/sh" : ENV["RUBYSHELL"]
 
   puts cmdline unless opts[:dont_echo].to_bool
 
@@ -60,7 +63,7 @@ def run_wrapper cmdline, opts = {}
     Tempfile.open("mkvtoolnix-rake-run") do |t|
       t.puts cmdline
       t.flush
-      system shell, t.path
+      system shell_to_run, t.path
       code = last_exit_code
       t.unlink
     end
