@@ -9,6 +9,10 @@
   only want to relocate the preferences INI file, you can store the desired
   file name for the INI file in `MKVTOOLNIX_GUI_CONFIG_FILE`. Implements
   #3382.
+* MKVToolNix GUI: when adding directories via drag & drop/copy & paste the GUI
+  will now offer the user the option to create one multiplex settings tab per
+  directory & adding all files from that directory to the corresponding, newly
+  created tab. Implements #3371.
 
 ## Bug fixes
 
@@ -23,6 +27,11 @@
   the property, and not to 0 anymore if it doesn't.
 * mkvmerge: AV1 OBU parser: fixed identifying files that only contain single
   frame. Fixes #3380.
+
+## Build system changes
+
+* Several merge requests where accepted that improve compilation on MSYS2 on
+  Windows. Note that this build type isn't supported.
 
 
 # Version 69.0.0 "Day And Age" 2022-07-09
