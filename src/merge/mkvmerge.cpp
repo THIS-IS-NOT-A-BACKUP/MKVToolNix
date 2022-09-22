@@ -271,6 +271,12 @@ set_usage() {
                   "                           None at all, only for I frames, for all.\n");
   usage_text += Y("  --language <TID:lang>    Sets the language for the track (IETF BCP 47/\n"
                   "                           RFC 5646 language tag).\n");
+  usage_text += Y("  --timestamps <TID:file>  Read the timestamps to be used from a file.\n");
+  usage_text += Y("  --default-duration <TID:Xs|ms|us|ns|fps>\n"
+                  "                           Force the default duration of a track to X.\n"
+                  "                           X can be a floating point number or a fraction.\n");
+  usage_text +=   "\n";
+  usage_text += Y(" Options that only apply to audio tracks:\n");
   usage_text += Y("  --aac-is-sbr <TID[:0|1]> The track with the ID is HE-AAC/AAC+/SBR-AAC\n"
                   "                           or not. The value ':1' can be omitted.\n");
   usage_text += Y("  --reduce-to-core <TID>   Keeps only the core of audio tracks that support\n"
@@ -279,15 +285,11 @@ set_usage() {
   usage_text += Y("  --remove-dialog-normalization-gain <TID>\n"
                   "                           Removes or minimizes the dialog normalization gain\n"
                   "                           by modifying audio frame headers.\n");
-  usage_text += Y("  --timestamps <TID:file>  Read the timestamps to be used from a file.\n");
-  usage_text += Y("  --default-duration <TID:Xs|ms|us|ns|fps>\n"
-                  "                           Force the default duration of a track to X.\n"
-                  "                           X can be a floating point number or a fraction.\n");
+  usage_text +=   "\n";
+  usage_text += Y(" Options that only apply to video tracks:\n");
   usage_text += Y("  --fix-bitstream-timing-information <TID[:bool]>\n"
                   "                           Adjust the frame/field rate stored in the video\n"
                   "                           bitstream to match the track's default duration.\n");
-  usage_text +=   "\n";
-  usage_text += Y(" Options that only apply to video tracks:\n");
   usage_text += Y("  -f, --fourcc <FOURCC>    Forces the FourCC to the specified value.\n"
                   "                           Works only for video tracks.\n");
   usage_text += Y("  --aspect-ratio <TID:f|a/b>\n"
@@ -307,7 +309,7 @@ set_usage() {
   usage_text += Y("  --stereo-mode <TID:n|keyword>\n"
                   "                           Sets the stereo mode parameter. It can\n"
                   "                           either be a number 0 - 14 or a keyword\n"
-                  "                           (see documentation for the full list).\n");
+                  "                           (use '--list-stereo-modes' to see the full list).\n");
   usage_text += Y("  --color-matrix-coefficients <TID:n>\n"
                   "                           Sets the matrix coefficients of the video used\n"
                   "                           to derive luma and chroma values from red, green\n"
@@ -386,6 +388,8 @@ set_usage() {
   usage_text += Y("  -l, --list-types         Lists supported source file types.\n");
   usage_text += Y("  --list-languages         Lists all ISO 639 languages and their\n"
                   "                           ISO 639-2 codes.\n");
+  usage_text += Y("  --list-stereo-modes      Lists all supported values for the '--stereo-mode'\n"
+                  "                           parameter and their meaning.\n");
   usage_text += Y("  --capabilities           Lists optional features mkvmerge was compiled with.\n");
   usage_text += Y("  --priority <priority>    Set the priority mkvmerge runs with.\n");
   usage_text += Y("  --ui-language <code>     Force the translations for 'code' to be used.\n");
@@ -2190,6 +2194,10 @@ parse_args(std::vector<std::string> args) {
 
     } else if (this_arg == "--list-languages") {
       mtx::iso639::list_languages();
+      mxexit();
+
+    } else if (this_arg == "--list-stereo-modes") {
+      stereo_mode_c::list();
       mxexit();
 
     } else if (mtx::included_in(this_arg, "-i", "--identify", "-J"))
