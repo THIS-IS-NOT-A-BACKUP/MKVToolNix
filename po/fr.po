@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mkvtoolnixgui\n"
 "Report-Msgid-Bugs-To: Moritz Bunkus <moritz@bunkus.org>\n"
-"POT-Creation-Date: 2022-10-01 20:57+0200\n"
+"POT-Creation-Date: 2022-10-03 10:03+0200\n"
 "PO-Revision-Date: 2016-01-14 08:27+0000\n"
 "Last-Translator: tmtisfree <tmtisfree@free.fr>, 2016-2022\n"
 "Language-Team: French (http://www.transifex.com/moritz-bunkus/mkvtoolnix/language/fr/)\n"
@@ -47,7 +47,7 @@ msgid ""
 "                           or not. The value ':1' can be omitted.\n"
 msgstr ""
 "  --aac-is-sbr <TID[:0|1]> La piste avec l'ID est de type HE-AAC/AAC+/SBR-AAC\n"
-"                           ou pas. La valeur « :1 » peut être omise.\n"
+"                           ou pas. La valeur « :1 » peut être omise.\n"
 
 #: src/merge/mkvmerge.cpp:409
 #, no-c-format
@@ -80,7 +80,7 @@ msgid ""
 msgstr ""
 "  --append-to <QFID1:QTID1:ZFID1:ZTID1,QFID2:QTID2:ZFID2:ZTID2,…>\n"
 "                           Liste d'ID de fichiers et de pistes séparés par une\n"
-"                           virgule qui déterminent quelle piste d'un fichier est\n"
+"                           virgule qui détermine quelle piste d'un fichier est\n"
 "                           concaténée à quelle autre du fichier précédent.\n"
 
 #: src/merge/mkvmerge.cpp:299
@@ -155,17 +155,17 @@ msgstr ""
 "qui doit être enregistré.\n"
 
 #: src/merge/mkvmerge.cpp:288
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "  --audio-emphasis <TID:n|keyword>\n"
 "                           Sets the audio emphasis track header value. It can\n"
 "                           be either a number or a keyword (see\n"
 "                           '--list-audio-emphasis' for the full list).\n"
 msgstr ""
-"  --stereo-mode <TID:n|keyword>\n"
-"                           Définit le paramètre de mode stéréo :\n"
-"                           un nombre entre 0 et 14 ou un mot-clé\n"
-"                           (liste complète dans la documentation).\n"
+"  --audio-emphasis <TID:n|keyword>\n"
+"                           Définit la valeur d'entête de l'accentuation audio de la piste. Ce peut\n"
+"                           être soit un nombre soit un mot clé (voir\n"
+"                           '--list-audio-emphasis' pour la liste complète).\n"
 
 #: src/merge/mkvmerge.cpp:266
 #, no-c-format
@@ -358,9 +358,9 @@ msgid ""
 "                           Sets the compression method used for the\n"
 "                           specified track ('none' or 'zlib').\n"
 msgstr ""
-"  --compression <TID:mode>\n"
+"  --compression <TID:method>\n"
 "                           Définit le mode de compression utilisé pour la\n"
-"                           piste spécifiée (« aucun » ou « zlib »).\n"
+"                           piste spécifiée (« aucun » ou « zlib »).\n"
 
 #: src/merge/mkvmerge.cpp:309
 #, no-c-format
@@ -390,13 +390,13 @@ msgid ""
 "                           None at all, only for I frames, for all.\n"
 msgstr ""
 "  --cues <TID:none|iframes|all>\n"
-"                           Crée les entrées (index) CUE pour cette piste :\n"
+"                           Crée les entrées (index) CUE pour cette piste :\n"
 "                           aucune, pour les trames I seules, pour toutes.\n"
 
 #: src/merge/mkvmerge.cpp:415
 #, no-c-format
 msgid "  --debug <topic>          Turns on debugging output for 'topic'.\n"
-msgstr "  --debug <topic>          Active un rapport de débogage sur « sujet ».\n"
+msgstr "  --debug <topic>          Active un rapport de débogage sur « sujet ».\n"
 
 #: src/merge/mkvmerge.cpp:275
 #, no-c-format
@@ -491,7 +491,7 @@ msgstr ""
 #: src/merge/mkvmerge.cpp:416
 #, no-c-format
 msgid "  --engage <feature>       Turns on experimental feature 'feature'.\n"
-msgstr "  --engage <feature>       Active la fonction expérimentale « fonction ».\n"
+msgstr "  --engage <feature>       Active la fonction expérimentale « fonction ».\n"
 
 #: src/merge/mkvmerge.cpp:311
 #, no-c-format
@@ -603,6 +603,8 @@ msgid ""
 "  --list-audio-emphasis    Lists all supported values for the\n"
 "                           '--audio-emphasis' option and their meaning.\n"
 msgstr ""
+"  --list-audio-emphasis    Liste toutes les valeurs prises en charge pour\n"
+"                           l'option '--audio-emphasis' et leur signification.\n"
 
 #: src/merge/mkvmerge.cpp:395
 #, no-c-format
@@ -619,6 +621,8 @@ msgid ""
 "  --list-stereo-modes      Lists all supported values for the '--stereo-mode'\n"
 "                           option and their meaning.\n"
 msgstr ""
+"  --list-stereo-modes      Liste toutes les valeurs prises en charge pour\n"
+"                           l'option '--stereo-mode' et leur signification.\n"
 
 #: src/merge/mkvmerge.cpp:341
 #, no-c-format
@@ -837,7 +841,7 @@ msgid ""
 "                           or before chapter numbers A, B etc.\n"
 msgstr ""
 "  --split chapters:all|A[,B…]\n"
-"                           Crée un fichier avant chaque chapitre (avec « all »)\n"
+"                           Crée un fichier avant chaque chapitre (avec « all »)\n"
 "                           ou avant les chapitres A, B, etc.\n"
 
 #: src/merge/mkvmerge.cpp:164
@@ -893,7 +897,7 @@ msgid "  --split-max-files <n>    Create at most n files.\n"
 msgstr "  --split-max-files <n>    Crée au plus n fichiers.\n"
 
 #: src/merge/mkvmerge.cpp:313
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "  --stereo-mode <TID:n|keyword>\n"
 "                           Sets the stereo mode parameter. It can\n"
@@ -901,9 +905,9 @@ msgid ""
 "                           (use '--list-stereo-modes' to see the full list).\n"
 msgstr ""
 "  --stereo-mode <TID:n|keyword>\n"
-"                           Définit le paramètre de mode stéréo :\n"
-"                           un nombre entre 0 et 14 ou un mot-clé\n"
-"                           (liste complète dans la documentation).\n"
+"                           Définit le paramètre du mode stéréo. Ce peut être\n"
+"                           soit un nombre 0 - 14 soit un mot clé\n"
+"                           (utiliser '--list-stereo-modes' pour voir la liste complète).\n"
 
 #: src/merge/mkvmerge.cpp:372
 #, no-c-format
@@ -984,7 +988,7 @@ msgstr ""
 #: src/merge/mkvmerge.cpp:401
 #, no-c-format
 msgid "  --ui-language <code>     Force the translations for 'code' to be used.\n"
-msgstr "  --ui-language <code>     Utilise la traduction en langue « code ».\n"
+msgstr "  --ui-language <code>     Utilise la traduction en langue « code ».\n"
 
 #: src/merge/mkvmerge.cpp:254
 #, no-c-format
@@ -1075,7 +1079,7 @@ msgid ""
 msgstr ""
 "  -a, --audio-tracks <n,m,…>\n"
 "                           Copie les pistes audio n, m, etc.\n"
-"                           Par défaut : copie toutes les pistes audio.\n"
+"                           Par défaut : copie toutes les pistes audio.\n"
 
 #: src/merge/mkvmerge.cpp:220
 #, no-c-format
@@ -1086,7 +1090,7 @@ msgid ""
 msgstr ""
 "  -b, --button-tracks <n,m,…>\n"
 "                           Copie les pistes de boutons n, m, etc.\n"
-"                           Par défaut : copie toutes les pistes de boutons.\n"
+"                           Par défaut : copie toutes les pistes de boutons.\n"
 
 #: src/merge/mkvmerge.cpp:212
 #, no-c-format
@@ -1097,7 +1101,7 @@ msgid ""
 msgstr ""
 "  -d, --video-tracks <n,m,…>\n"
 "                           Copie les pistes vidéo n, m, etc.\n"
-"                           Par défaut : copie toutes les pistes vidéo.\n"
+"                           Par défaut : copie toutes les pistes vidéo.\n"
 
 #: src/merge/mkvmerge.cpp:297
 #, no-c-format
@@ -1140,7 +1144,7 @@ msgstr ""
 #: src/merge/mkvmerge.cpp:92
 #, no-c-format
 msgid "  -o, --output out         Write to the file 'out'.\n"
-msgstr "  -o, --output cible       Écrit vers le fichier « cible ».\n"
+msgstr "  -o, --output cible       Écrit vers le fichier « cible ».\n"
 
 #: src/merge/mkvmerge.cpp:405
 #, no-c-format
@@ -1160,7 +1164,7 @@ msgid ""
 msgstr ""
 "  -s, --subtitle-tracks <n,m,…>\n"
 "                           Copie les pistes de sous-titres n, m, etc.\n"
-"                           Par défaut : copie toutes les pistes de sous-titres.\n"
+"                           Par défaut : copie toutes les pistes de sous-titres.\n"
 
 #: src/merge/mkvmerge.cpp:229
 #, no-c-format
@@ -1201,7 +1205,7 @@ msgstr "  <file1> + <file2>        Concatène file2 à file1.\n"
 #: src/merge/mkvmerge.cpp:183
 #, no-c-format
 msgid "  <file1> +<file2>         Same as \"<file1> + <file2>\".\n"
-msgstr "  <file1> +<file2>         Identique à « <file1> + <file2> ».\n"
+msgstr "  <file1> +<file2>         Identique à « <file1> + <file2> ».\n"
 
 #: src/merge/mkvmerge.cpp:185
 #, no-c-format
@@ -1215,7 +1219,7 @@ msgstr ""
 #: src/merge/mkvmerge.cpp:187
 #, no-c-format
 msgid "  =<file>                  Same as \"= <file>\".\n"
-msgstr "  =<file>                  Identique à « = <file> ».\n"
+msgstr "  =<file>                  Identique à « = <file> ».\n"
 
 #: src/merge/mkvmerge.cpp:417
 #, no-c-format
@@ -1229,7 +1233,7 @@ msgstr ""
 #: src/propedit/propedit_cli_parser.cpp:174
 #, no-c-format
 msgid "  B:  boolean (0 or 1)\n"
-msgstr "  B :  booléen (0 ou 1)\n"
+msgstr "  B :  booléen (0 ou 1)\n"
 
 #: src/propedit/propedit_cli_parser.cpp:179
 #, no-c-format
@@ -1239,32 +1243,32 @@ msgstr "  DT : date et temps\n"
 #: src/propedit/propedit_cli_parser.cpp:178
 #, no-c-format
 msgid "  FP: floating point number\n"
-msgstr "  FP : nombre décimal\n"
+msgstr "  FP : nombre décimal\n"
 
 #: src/propedit/propedit_cli_parser.cpp:175
 #, no-c-format
 msgid "  S:  string\n"
-msgstr "  S :  chaîne\n"
+msgstr "  S :  chaîne\n"
 
 #: src/propedit/propedit_cli_parser.cpp:172
 #, no-c-format
 msgid "  SI: signed integer\n"
-msgstr "  SI : nombre entier signé\n"
+msgstr "  SI : nombre entier signé\n"
 
 #: src/propedit/propedit_cli_parser.cpp:173
 #, no-c-format
 msgid "  UI: unsigned integer\n"
-msgstr "  UI : nombre entier non signé\n"
+msgstr "  UI : nombre entier non signé\n"
 
 #: src/propedit/propedit_cli_parser.cpp:176
 #, no-c-format
 msgid "  US: Unicode string\n"
-msgstr "  US : chaîne Unicode\n"
+msgstr "  US : chaîne Unicode\n"
 
 #: src/propedit/propedit_cli_parser.cpp:177
 #, no-c-format
 msgid "  X:  binary in hex\n"
-msgstr "  X :  binaire en hexadécimal\n"
+msgstr "  X :  binaire en hexadécimal\n"
 
 #: src/merge/mkvmerge.cpp:184
 #, no-c-format
@@ -1342,22 +1346,22 @@ msgstr " Prise en charge des pièces jointes (options globales étendues) :\n"
 #: src/merge/mkvmerge.cpp:97
 #, no-c-format
 msgid " Chapter handling:\n"
-msgstr " Gestion des chapitres :\n"
+msgstr " Gestion des chapitres :\n"
 
 #: src/merge/mkvmerge.cpp:150
 #, no-c-format
 msgid " File splitting, linking, appending and concatenating (more global options):\n"
-msgstr " Scission, liage et concaténation des fichiers (options globales étendues) :\n"
+msgstr " Scission, liage et concaténation des fichiers (options globales étendues) :\n"
 
 #: src/merge/mkvmerge.cpp:125
 #, no-c-format
 msgid " General output control (advanced global options):\n"
-msgstr "Contrôle général en sortie (options globales avancées) :\n"
+msgstr " Contrôle général en sortie (options globales avancées) :\n"
 
 #: src/merge/mkvmerge.cpp:89
 #, no-c-format
 msgid " Global options:\n"
-msgstr " Options globales :\n"
+msgstr " Options globales :\n"
 
 #: src/merge/mkvmerge.cpp:207
 #, no-c-format
@@ -1367,27 +1371,27 @@ msgstr " Options pour chaque fichier source :\n"
 #: src/merge/mkvmerge.cpp:376
 #, no-c-format
 msgid " Options that only apply to VobSub subtitle tracks:\n"
-msgstr " Options ne s'appliquant qu'aux pistes de sous-titres VobSub :\n"
+msgstr " Options ne s'appliquant qu'aux pistes de sous-titres VobSub :\n"
 
 #: src/merge/mkvmerge.cpp:279
-#, fuzzy, no-c-format
+#, no-c-format
 msgid " Options that only apply to audio tracks:\n"
-msgstr " Options ne s'appliquant qu'aux pistes vidéo :\n"
+msgstr " Options s'appliquant seulement sur des pistes audio :\n"
 
 #: src/merge/mkvmerge.cpp:371
 #, no-c-format
 msgid " Options that only apply to text subtitle tracks:\n"
-msgstr " Options ne s'appliquant qu'aux pistes de sous-titres texte :\n"
+msgstr " Options ne s'appliquant qu'aux pistes de sous-titres texte :\n"
 
 #: src/merge/mkvmerge.cpp:293
 #, no-c-format
 msgid " Options that only apply to video tracks:\n"
-msgstr " Options ne s'appliquant qu'aux pistes vidéo :\n"
+msgstr " Options ne s'appliquant qu'aux pistes vidéo :\n"
 
 #: src/merge/mkvmerge.cpp:381
 #, no-c-format
 msgid " Other options:\n"
-msgstr " Autres options :\n"
+msgstr " Other options:\n"
 
 #: src/merge/mkvmerge.cpp:120
 #, no-c-format
@@ -1471,7 +1475,7 @@ msgstr "Indicateur « Piste par défaut » :"
 #: src/mkvtoolnix-gui/merge/input.cpp:650
 #, no-c-format
 msgid "\"Determine automatically\" is a good choice for almost all situations."
-msgstr "« Déterminer automatiquement » est un bon choix dans la plupart des situations."
+msgstr "« Déterminer automatiquement » est un bon choix dans la plupart des situations."
 
 #: src/common/kax_element_names.cpp:193
 #, no-c-format
@@ -1706,7 +1710,7 @@ msgstr "&Ajouter une pièce jointe"
 #: src/mkvtoolnix-gui/merge/attachments.cpp:445
 #, no-c-format
 msgid "&Add attachments"
-msgstr "&Ajouter des pièces jointes"
+msgstr "&Ajouter des pièces jointes…"
 
 #: src/mkvtoolnix-gui/merge/input.cpp:1699
 #: src/mkvtoolnix-gui/merge/input.cpp:1700
@@ -1858,7 +1862,7 @@ msgstr "&Créer le fichier sans piste audio"
 #: src/mkvtoolnix-gui/forms/chapter_editor/tab.h:518
 #, no-c-format
 msgid "&Default"
-msgstr "&Défaut"
+msgstr "Par &défaut"
 
 #: src/mkvtoolnix-gui/forms/header_editor/attached_file_page.h:173
 #: src/mkvtoolnix-gui/forms/merge/tab.h:2307
@@ -1887,7 +1891,7 @@ msgstr[2] "&Désactiver les pièces jointes sélectionnées"
 #: src/mkvtoolnix-gui/merge/ask_scan_for_playlists_dialog.cpp:34
 #, no-c-format
 msgid "&Don't scan, just add the file"
-msgstr "&Ne pas examiner, juste ajouter le fichier"
+msgstr "&Ne pas analyser, juste ajouter le fichier"
 
 #: src/mkvtoolnix-gui/merge/select_disc_library_information_dialog.cpp:24
 #, no-c-format
@@ -1935,7 +1939,7 @@ msgstr "&Activé"
 #: src/mkvtoolnix-gui/forms/merge/command_line_dialog.h:119
 #, no-c-format
 msgid "&Escape arguments for:"
-msgstr "Argum&ents d'échappement pour :"
+msgstr "Argum&ents d'échappement pour :"
 
 #: src/mkvtoolnix-gui/chapter_editor/tab.cpp:227
 #: src/mkvtoolnix-gui/header_editor/tab.cpp:381
@@ -1971,7 +1975,7 @@ msgstr "&Première entrée à renuméroter :"
 #: src/mkvtoolnix-gui/forms/main_window/preferences_dialog.h:2154
 #, no-c-format
 msgid "&Font && size:"
-msgstr "&Police et taille :"
+msgstr "&Police et taille :"
 
 #: src/mkvtoolnix-gui/forms/util/language_dialog.h:385
 #, no-c-format
@@ -1996,7 +2000,7 @@ msgstr "&Éditeur d'entêtes"
 #: src/mkvtoolnix-gui/main_window/main_window.cpp:446
 #, no-c-format
 msgid "&Help"
-msgstr "&?"
+msgstr "&Aide"
 
 #: src/mkvtoolnix-gui/forms/info/job_settings_widget.h:166
 #, no-c-format
@@ -2059,12 +2063,12 @@ msgstr "&Langues"
 #: src/mkvtoolnix-gui/forms/merge/tab.h:2308
 #, no-c-format
 msgid "&MIME type:"
-msgstr "&Type MIME :"
+msgstr "&Type MIME :"
 
 #: src/mkvtoolnix-gui/forms/main_window/preferences_dialog.h:2273
 #, no-c-format
 msgid "&Minimum playlist duration:"
-msgstr "Durée &minimale de la liste de lecture :"
+msgstr "Durée &minimale de la liste de lecture :"
 
 #: src/mkvtoolnix-gui/forms/info/job_settings_widget.h:158
 #, no-c-format
@@ -2087,7 +2091,7 @@ msgstr "&Multiplier les horodatages de début et de fin par le facteur suivant :
 #: src/mkvtoolnix-gui/forms/merge/tab.h:2306
 #, no-c-format
 msgid "&Name:"
-msgstr "&Nom :"
+msgstr "&Nom :"
 
 #: src/mkvtoolnix-gui/forms/chapter_editor/tool.h:193
 #: src/mkvtoolnix-gui/forms/main_window/main_window.h:604
@@ -2366,7 +2370,7 @@ msgstr "&Trier les chapitres selon leurs horodatages de début et fin"
 #: src/mkvtoolnix-gui/forms/chapter_editor/tab.h:526
 #, no-c-format
 msgid "&Start && end:"
-msgstr "&Début et fin :"
+msgstr "&Début et fin :"
 
 #: src/mkvtoolnix-gui/jobs/tool.cpp:217
 #, no-c-format
@@ -2385,7 +2389,7 @@ msgstr "&Débuter l'horodatage de la première entrée créée :"
 #: src/mkvtoolnix-gui/forms/main_window/preferences_dialog.h:2243
 #, no-c-format
 msgid "&Subtitle tracks:"
-msgstr "Pistes de &sous-titres :"
+msgstr "Pistes de &sous-titres :"
 
 #: src/mkvtoolnix-gui/forms/main_window/preferences_dialog.h:2266
 #: src/mkvtoolnix-gui/merge/input.cpp:1717
@@ -2413,7 +2417,7 @@ msgstr "&Type :"
 #: src/mkvtoolnix-gui/forms/header_editor/attached_file_page.h:176
 #, no-c-format
 msgid "&UID:"
-msgstr "&UID :"
+msgstr "&UID :"
 
 #: src/mkvtoolnix-gui/merge/select_disc_library_information_dialog.cpp:23
 #, no-c-format
@@ -2445,7 +2449,7 @@ msgstr "&Vidéo"
 #: src/mkvtoolnix-gui/forms/main_window/preferences_dialog.h:2242
 #, no-c-format
 msgid "&Video tracks:"
-msgstr "Pistes &vidéo :"
+msgstr "Pistes &vidéo :"
 
 #: src/mkvtoolnix-gui/jobs/tool.cpp:410
 #, no-c-format
@@ -3035,9 +3039,9 @@ msgid "<Do not change>"
 msgstr "<Ne pas modifier>"
 
 #: src/common/xml/ebml_chapters_converter.cpp:194
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "<EditionDisplay> is missing the <EditionString> child."
-msgstr "<ChapterDisplay> n'a pas l'enfant <ChapterString>."
+msgstr "<EditionDisplay> n'a pas l'enfant <EditionString>."
 
 #: src/mkvtoolnix-gui/merge/tab.cpp:145
 #, no-c-format
@@ -3929,7 +3933,7 @@ msgstr "Concaténer des fichiers multimédia"
 msgid "Append to an e&xisting source file"
 msgstr "Concaténer à un fichier source e&xistant"
 
-#: src/merge/output_control.cpp:1904
+#: src/merge/output_control.cpp:1906
 #, no-c-format
 msgid "Appending track {0} from file no. {1} ('{2}') to track {3} from file no. {4} ('{5}').\n"
 msgstr "Concaténation de la piste {0} du fichier  n° {1} (« {2} ») à la piste {3} du fichier n° {4} (« {5} »).\n"
@@ -4046,14 +4050,14 @@ msgid "Audio channels"
 msgstr "Canaux audio"
 
 #: src/common/property_element.cpp:215
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Audio emphasis"
-msgstr "Canaux audio"
+msgstr "Accentuation audio"
 
 #: src/merge/mkvmerge.cpp:1065
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Audio emphasis mode option: not given in the form <TID>:<mode> where the mode is either a number or keyword from this list: {0} (argument was '{1}').\n"
-msgstr "Paramètre de mode stéréo : non fourni dans le format <TID>:<n|keyword> où n est un nombre compris entre 0 et {0} ou un de ces mots-clés : {1} (argument « {2} »).\n"
+msgstr "Option du mode d'accentuation audio : pas donné sous la forme <TID>:<mode> où le mode est soit un nombre soit un mot clé de cette liste : {0} (l'argument était « {1} »).\n"
 
 #: src/common/property_element.cpp:212
 #, no-c-format
@@ -4357,7 +4361,7 @@ msgstr "C&réer un fichier d'options…"
 #: src/common/audio_emphasis.cpp:52
 #, no-c-format
 msgid "CCIT-J.17"
-msgstr ""
+msgstr "CCIT-J.17"
 
 #: src/mkvtoolnix-gui/forms/info/job_settings_widget.h:173
 #, no-c-format
@@ -4688,9 +4692,9 @@ msgid "Chapter segment edition UID"
 msgstr "UID d'édition de segment de chapitre"
 
 #: src/common/kax_element_names.cpp:313
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Chapter skip type"
-msgstr "Affichage de chapitres"
+msgstr "Type de chapitre à sauter"
 
 #: src/common/kax_element_names.cpp:303
 #, no-c-format
@@ -5118,7 +5122,7 @@ msgstr "Impossible d'extraire l'entête de séquence de cette piste MPEG-1/2.\n"
 msgid "Could not find an index for audio track {0} (avilib error message: {1}). Skipping track.\n"
 msgstr "Impossible de trouver un index pour la piste audio {0} (message d'erreur de avilib : {1}). Piste ignorée.\n"
 
-#: src/merge/output_control.cpp:1830
+#: src/merge/output_control.cpp:1832
 #, no-c-format
 msgid "Could not find gptzr when appending. {0}\n"
 msgstr "Impossible de trouver gptzr lors de la concaténation. {0}\n"
@@ -5619,7 +5623,7 @@ msgstr "Langue par défaut"
 #: src/common/kax_element_names.cpp:331
 #, no-c-format
 msgid "Default language (bogus element with invalid ID)"
-msgstr ""
+msgstr "Langue par défaut (élément défectueux avec un ID invalide)"
 
 #: src/mkvtoolnix-gui/forms/main_window/preferences_dialog.h:2234
 #, no-c-format
@@ -5783,9 +5787,9 @@ msgid "Destination file name: %1"
 msgstr "Nom du fichier destination  : %1"
 
 #: src/mkvtoolnix-gui/main_window/prefs_run_program_widget.cpp:247
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Destination file's absolute path"
-msgstr "Nom du fichier destination"
+msgstr "Chemin absolu du fichier destination"
 
 #: src/mkvtoolnix-gui/forms/merge/tab.h:2263
 #, no-c-format
@@ -5793,9 +5797,9 @@ msgid "Destination file:"
 msgstr "Fichier de destination :"
 
 #: src/mkvtoolnix-gui/main_window/prefs_run_program_widget.cpp:248
-#, fuzzy, no-c-format
-msgid "Destination folders's aboslute path"
-msgstr "Nom du fichier destination"
+#, no-c-format
+msgid "Destination folders's absolute path"
+msgstr "Chemin absolu du dossier destination"
 
 #: src/mkvtoolnix-gui/forms/merge/select_playlist_dialog.h:310
 #, no-c-format
@@ -6196,9 +6200,9 @@ msgid "Edition UID"
 msgstr "UID d'édition"
 
 #: src/common/kax_element_names.cpp:287
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Edition display"
-msgstr "Entrée d'édition"
+msgstr "Affichage d'édition"
 
 #: src/common/kax_element_names.cpp:282
 #: src/mkvtoolnix-gui/chapter_editor/chapter_model.cpp:82
@@ -6223,14 +6227,14 @@ msgid "Edition flag ordered"
 msgstr "Indicateur d'édition ordonné"
 
 #: src/common/kax_element_names.cpp:289
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Edition language (IETF BCP 47)"
-msgstr "Balise de langue (IETF BCP 47)"
+msgstr "Langue d'édition (IETF BCP 47)"
 
 #: src/common/kax_element_names.cpp:288
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Edition string"
-msgstr "Entrée d'édition"
+msgstr "Chaîne d'édition"
 
 #: src/mkvtoolnix-gui/chapter_editor/chapter_model.cpp:33
 #, no-c-format
@@ -6280,17 +6284,17 @@ msgstr "Éléments dans la catégorie « {0} » (« --edit {1} ») :\n"
 #: src/common/kax_element_names.cpp:111
 #, no-c-format
 msgid "Emphasis"
-msgstr ""
+msgstr "Accentuation"
 
 #: src/common/property_element.cpp:215
 #, no-c-format
 msgid "Emphasis applied on audio which must be reversed by player to get the actual samples."
-msgstr ""
+msgstr "L'accentuation s'applique sur de l'audio qui doit être inversé par le lecteur pour obtenir les échantillons réels."
 
 #: src/mkvtoolnix-gui/forms/merge/tab.h:2248
 #, no-c-format
 msgid "Emphasis:"
-msgstr ""
+msgstr "Accentuation :"
 
 #: src/common/hacks.cpp:64
 #, no-c-format
@@ -6734,12 +6738,12 @@ msgstr "FLV (Flash Video)"
 #: src/common/audio_emphasis.cpp:53
 #, no-c-format
 msgid "FM radio in Europe"
-msgstr ""
+msgstr "Radio FM en Europe"
 
 #: src/common/audio_emphasis.cpp:54
 #, no-c-format
 msgid "FM radio in the USA"
-msgstr ""
+msgstr "Radio FM aux USA"
 
 #: src/mkvtoolnix-gui/jobs/job.cpp:273
 #, no-c-format
@@ -9477,7 +9481,7 @@ msgstr "No&mbre d'entrées à créer :"
 #: src/common/stereo_mode.cpp:102
 #, no-c-format
 msgid "Number"
-msgstr ""
+msgstr "Nombre"
 
 #: src/mkvtoolnix-gui/forms/main_window/preferences_dialog.h:2156
 #, no-c-format
@@ -11569,9 +11573,9 @@ msgid "Source file's directory"
 msgstr "Dossier du fichier source"
 
 #: src/mkvtoolnix-gui/main_window/prefs_run_program_widget.cpp:249
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Source files' absolute paths"
-msgstr "Noms des fichiers source"
+msgstr "Chemins absolus des fichiers source"
 
 #: src/common/property_element.cpp:204
 #, no-c-format
@@ -11708,7 +11712,7 @@ msgstr "Mode stéréo"
 #: src/common/kax_element_names.cpp:164
 #, no-c-format
 msgid "Stereo mode (deprecated element)"
-msgstr ""
+msgstr "Mode stéréo (élément obsolète)"
 
 #: src/merge/mkvmerge.cpp:1014
 #, no-c-format
@@ -11793,9 +11797,9 @@ msgstr "Supprimer les messages d'état."
 
 #: src/common/audio_emphasis.cpp:114
 #: src/common/stereo_mode.cpp:102
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Symbolic name"
-msgstr "Nom du codec"
+msgstr "Nom symbolique"
 
 #: src/mkvtoolnix-gui/main_window/main_window.cpp:663
 #, no-c-format
@@ -12308,7 +12312,7 @@ msgstr "La forme correspondante canonique est : %1."
 msgid "The corresponding extended language subtags form is: %1."
 msgstr "La forme correspondante de sous-étiquettes de langue étendue est : %1."
 
-#: src/merge/output_control.cpp:1627
+#: src/merge/output_control.cpp:1629
 #, no-c-format
 msgid "The cue entries (the index) are being written...\n"
 msgstr "Les entrées CUE (l'index) sont en cours d'écriture…\n"
@@ -12619,7 +12623,7 @@ msgstr "Le fichier « {0} » ne peut pas être ouvert en écriture : {1}.\n"
 msgid "The file '{0}' could not be opened or parsed."
 msgstr "Le fichier « {0} » ne peut pas être ouvert ou analysé."
 
-#: src/merge/output_control.cpp:1589
+#: src/merge/output_control.cpp:1591
 #, no-c-format
 msgid "The file '{0}' could not be renamed to '{1}'.\n"
 msgstr "Le fichier « {0} » ne peut pas être renommé en « {1} ».\n"
@@ -12639,7 +12643,7 @@ msgstr "Le fichier « {0} » est d'un type non géré ({1}).\n"
 msgid "The file '{0}' is not a Matroska file or it could not be found.\n"
 msgstr "Le fichier « {0} » n'est pas un fichier Matroska ou il ne peut pas être trouvé.\n"
 
-#: src/merge/output_control.cpp:1587
+#: src/merge/output_control.cpp:1589
 #, no-c-format
 msgid "The file '{0}' was renamed to '{1}'.\n"
 msgstr "Le fichier « {0} » a été renommé en « {1} ».\n"
@@ -14036,7 +14040,7 @@ msgstr "Cette propriété est obligatoire et ne peut pas être supprimée dans �
 msgid "This property is unique. More instances cannot be added in '{0}'. {1}\n"
 msgstr "Cette propriété est unique. D'autres instances ne peuvent pas être ajoutées dans « {0} ». {1}\n"
 
-#: src/merge/output_control.cpp:1743
+#: src/merge/output_control.cpp:1745
 #, no-c-format
 msgid "This should REALLY not have happened. The space reserved for the first meta seek element was too small. Size needed: {0}. {1}\n"
 msgstr "Ceci ne devrait VRAIMENT pas se produire. L'espace réservé au premier méta-index de positionnement est trop petit. Taille nécessaire : {0}. {1}\n"
@@ -15583,7 +15587,7 @@ msgstr "ac3_bs_packetizer::add_to_buffer() : code non testé (« size » est imp
 #: src/common/kax_info.cpp:863
 #, no-c-format
 msgid "advertisement"
-msgstr ""
+msgstr "publicité"
 
 #: src/common/stereo_mode.cpp:60
 #, no-c-format
@@ -15732,7 +15736,7 @@ msgstr "chiffrage"
 #: src/common/kax_info.cpp:859
 #, no-c-format
 msgid "end credits"
-msgstr ""
+msgstr "crédits de fin"
 
 #: src/common/kax_info.cpp:711
 #, no-c-format
@@ -15752,7 +15756,7 @@ msgstr "filelist_t non trouvé pour generic_packetizer_c. {0}\n"
 #: src/common/audio_emphasis.cpp:50
 #, no-c-format
 msgid "first order filter found in CD/DVD/MPEG audio"
-msgstr ""
+msgstr "filtre de premier ordre trouvé dans l'audio du CD/DVD/MPEG"
 
 #: src/common/flac.cpp:139
 #, no-c-format
@@ -16177,7 +16181,7 @@ msgstr "mpeg_ps_reader : n'aurait pas dû se produire #2. {0}"
 #: src/common/audio_emphasis.cpp:49
 #, no-c-format
 msgid "no emphasis"
-msgstr ""
+msgstr "pas d'accentuation"
 
 #: src/common/kax_info.cpp:798
 #, no-c-format
@@ -16210,9 +16214,9 @@ msgid "no signature hash algorithm"
 msgstr "pas d'algorithme de hachage de signature"
 
 #: src/common/kax_info.cpp:857
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "no skipping"
-msgstr "Recadrage :"
+msgstr "pas de saut"
 
 #: src/input/r_ogm.cpp:431
 #, no-c-format
@@ -16227,7 +16231,7 @@ msgstr "échec de ogg_sync_buffer\n"
 #: src/common/kax_info.cpp:858
 #, no-c-format
 msgid "opening credits"
-msgstr ""
+msgstr "crédits de début"
 
 #: src/mkvtoolnix-gui/main_window/prefs_run_program_widget.cpp:127
 #: src/mkvtoolnix-gui/main_window/prefs_run_program_widget.cpp:131
@@ -16248,37 +16252,37 @@ msgstr "laisser-passer"
 #: src/common/audio_emphasis.cpp:63
 #, no-c-format
 msgid "phono filter (Columbia LP)"
-msgstr ""
+msgstr "filtre phono (Columbia LP)"
 
 #: src/common/audio_emphasis.cpp:62
 #, no-c-format
 msgid "phono filter (EMI)"
-msgstr ""
+msgstr "filtre phono (EMI)"
 
 #: src/common/audio_emphasis.cpp:60
 #, no-c-format
 msgid "phono filter (IEC N78)"
-msgstr ""
+msgstr "filtre phono (IEC N78)"
 
 #: src/common/audio_emphasis.cpp:64
 #, no-c-format
 msgid "phono filter (London)"
-msgstr ""
+msgstr "filtre phono (Londres)"
 
 #: src/common/audio_emphasis.cpp:65
 #, no-c-format
 msgid "phono filter (NARTB)"
-msgstr ""
+msgstr "filtre phono (NARTB)"
 
 #: src/common/audio_emphasis.cpp:59
 #, no-c-format
 msgid "phono filter (RIAA)"
-msgstr ""
+msgstr "filtre phono (RIAA)"
 
 #: src/common/audio_emphasis.cpp:61
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "phono filter (Teldec)"
-msgstr "aucun fichier chargé"
+msgstr "flltre phono (Teldec)"
 
 #: src/common/kax_info.cpp:627
 #, no-c-format
@@ -16313,12 +16317,12 @@ msgstr "largeur (pixels) : {0}"
 #: src/common/kax_info.cpp:862
 #, no-c-format
 msgid "preview of current episode"
-msgstr ""
+msgstr "aperçu de l'épisode en cours"
 
 #: src/common/kax_info.cpp:861
 #, no-c-format
 msgid "preview of next episode"
-msgstr ""
+msgstr "aperçu du prochain épisode"
 
 #: src/common/kax_info.cpp:734
 #, no-c-format
@@ -16348,7 +16352,7 @@ msgstr "real_reader : seules les versions d'entête 3, 4 et 5 sont acceptées. L
 #: src/common/kax_info.cpp:860
 #, no-c-format
 msgid "recap"
-msgstr ""
+msgstr "récap."
 
 #: src/common/kax_info.cpp:710
 #, no-c-format

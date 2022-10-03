@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: Moritz Bunkus <moritz@bunkus.org>\n"
-"POT-Creation-Date: 2022-10-01 20:57+0200\n"
+"POT-Creation-Date: 2022-10-03 10:03+0200\n"
 "PO-Revision-Date: 2016-01-14 08:27+0000\n"
 "Last-Translator: Andrei Stepanov, 2018-2022\n"
 "Language-Team: Russian (http://www.transifex.com/moritz-bunkus/mkvtoolnix/language/ru/)\n"
@@ -2789,9 +2789,9 @@ msgid "<Do not change>"
 msgstr "<Не менять>"
 
 #: src/common/xml/ebml_chapters_converter.cpp:194
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "<EditionDisplay> is missing the <EditionString> child."
-msgstr "В <ChapterDisplay> отсутствует дочерний элемент <ChapterString>."
+msgstr "В <EditionDisplay> отсутствует дочерний элемент <EditionString>."
 
 #: src/mkvtoolnix-gui/merge/tab.cpp:145
 #, no-c-format
@@ -3684,7 +3684,7 @@ msgstr "Все поддерживаемые медиафайлы"
 msgid "Append to an e&xisting source file"
 msgstr "Добавить к су&ществующему исходному файлу"
 
-#: src/merge/output_control.cpp:1904
+#: src/merge/output_control.cpp:1906
 #, no-c-format
 msgid "Appending track {0} from file no. {1} ('{2}') to track {3} from file no. {4} ('{5}').\n"
 msgstr "Присоединение дорожки {0} из файла № {1} (\"{2}\") к дорожке {3} из файла № {4} (\"{5}\").\n"
@@ -4876,7 +4876,7 @@ msgstr "Невозможно извлечь заголовок последов�
 msgid "Could not find an index for audio track {0} (avilib error message: {1}). Skipping track.\n"
 msgstr "Невозможно найти индекс для звуковой дорожки {0} (сообщение об ошибке avilib: {1}). Дорожка пропущена.\n"
 
-#: src/merge/output_control.cpp:1830
+#: src/merge/output_control.cpp:1832
 #, no-c-format
 msgid "Could not find gptzr when appending. {0}\n"
 msgstr "Невозможно обнаружить gptzr при присоединении. {0}\n"
@@ -5552,7 +5552,7 @@ msgstr "Файл назначения:"
 
 #: src/mkvtoolnix-gui/main_window/prefs_run_program_widget.cpp:248
 #, fuzzy, no-c-format
-msgid "Destination folders's aboslute path"
+msgid "Destination folders's absolute path"
 msgstr "Имена файлов назначения"
 
 #: src/mkvtoolnix-gui/forms/merge/select_playlist_dialog.h:310
@@ -9237,7 +9237,7 @@ msgstr "Ко&личество создаваемых записей:"
 #: src/common/stereo_mode.cpp:102
 #, no-c-format
 msgid "Number"
-msgstr ""
+msgstr "Число"
 
 #: src/mkvtoolnix-gui/forms/main_window/preferences_dialog.h:2156
 #, no-c-format
@@ -11565,9 +11565,9 @@ msgstr "Скрыть вывод состояния."
 
 #: src/common/audio_emphasis.cpp:114
 #: src/common/stereo_mode.cpp:102
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Symbolic name"
-msgstr "Название кодека"
+msgstr "Символическое имя"
 
 #: src/mkvtoolnix-gui/main_window/main_window.cpp:663
 #, no-c-format
@@ -12081,7 +12081,7 @@ msgstr "Соответствующая каноническая форма: %1."
 msgid "The corresponding extended language subtags form is: %1."
 msgstr "Соответствующая форма подтегов расширенного языка: %1."
 
-#: src/merge/output_control.cpp:1627
+#: src/merge/output_control.cpp:1629
 #, no-c-format
 msgid "The cue entries (the index) are being written...\n"
 msgstr "Пишутся записи cue (индекс)...\n"
@@ -12387,7 +12387,7 @@ msgstr "Файл \"{0}\" не может быть открыт для запис
 msgid "The file '{0}' could not be opened or parsed."
 msgstr "Файл \"{0}\" не может быть открыт или проанализирован."
 
-#: src/merge/output_control.cpp:1589
+#: src/merge/output_control.cpp:1591
 #, no-c-format
 msgid "The file '{0}' could not be renamed to '{1}'.\n"
 msgstr "Невозможно переименовать файл \"{0}\" на \"{1}\".\n"
@@ -12407,7 +12407,7 @@ msgstr "Файл \"{0}\" имеет неподдерживаемый тип ({1}
 msgid "The file '{0}' is not a Matroska file or it could not be found.\n"
 msgstr "Файл \"{0}\" не является файлом Matroska или не может быть найден.\n"
 
-#: src/merge/output_control.cpp:1587
+#: src/merge/output_control.cpp:1589
 #, no-c-format
 msgid "The file '{0}' was renamed to '{1}'.\n"
 msgstr "Файл \"{0}\" был переименован на \"{1}\".\n"
@@ -13805,7 +13805,7 @@ msgstr "Это свойство обязательно и не может быт
 msgid "This property is unique. More instances cannot be added in '{0}'. {1}\n"
 msgstr "Это свойство уникально. Больше таких не может быть включено в \"{0}\". {1}\n"
 
-#: src/merge/output_control.cpp:1743
+#: src/merge/output_control.cpp:1745
 #, no-c-format
 msgid "This should REALLY not have happened. The space reserved for the first meta seek element was too small. Size needed: {0}. {1}\n"
 msgstr "Такого НА САМОМ ДЕЛЕ не должно происходить. Пространство, зарезервированное для первого метаэлемента поиска, слишком мало. Необходимо места: {0}. {1}\n"
@@ -15352,7 +15352,7 @@ msgstr "ac3_bs_packetizer::add_to_buffer(): Непроверенный код (\
 #: src/common/kax_info.cpp:863
 #, no-c-format
 msgid "advertisement"
-msgstr ""
+msgstr "реклама"
 
 #: src/common/stereo_mode.cpp:60
 #, no-c-format
@@ -15501,7 +15501,7 @@ msgstr "шифрование"
 #: src/common/kax_info.cpp:859
 #, no-c-format
 msgid "end credits"
-msgstr ""
+msgstr "финальные титры"
 
 #: src/common/kax_info.cpp:711
 #, no-c-format
@@ -15996,7 +15996,7 @@ msgstr "ogg_sync_buffer окончился неудачно\n"
 #: src/common/kax_info.cpp:858
 #, no-c-format
 msgid "opening credits"
-msgstr ""
+msgstr "вступительные титры"
 
 #: src/mkvtoolnix-gui/main_window/prefs_run_program_widget.cpp:127
 #: src/mkvtoolnix-gui/main_window/prefs_run_program_widget.cpp:131
@@ -16017,37 +16017,37 @@ msgstr "сквозной"
 #: src/common/audio_emphasis.cpp:63
 #, no-c-format
 msgid "phono filter (Columbia LP)"
-msgstr ""
+msgstr "фоно-фильтр (Columbia LP)"
 
 #: src/common/audio_emphasis.cpp:62
 #, no-c-format
 msgid "phono filter (EMI)"
-msgstr ""
+msgstr "фоно-фильтр (EMI)"
 
 #: src/common/audio_emphasis.cpp:60
 #, no-c-format
 msgid "phono filter (IEC N78)"
-msgstr ""
+msgstr "фоно-фильтр (IEC N78)"
 
 #: src/common/audio_emphasis.cpp:64
 #, no-c-format
 msgid "phono filter (London)"
-msgstr ""
+msgstr "фоно-фильтр (London)"
 
 #: src/common/audio_emphasis.cpp:65
 #, no-c-format
 msgid "phono filter (NARTB)"
-msgstr ""
+msgstr "фоно-фильтр (NARTB)"
 
 #: src/common/audio_emphasis.cpp:59
 #, no-c-format
 msgid "phono filter (RIAA)"
-msgstr ""
+msgstr "фоно-фильтр (RIAA)"
 
 #: src/common/audio_emphasis.cpp:61
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "phono filter (Teldec)"
-msgstr "файл не загружен"
+msgstr "фоно-фильтр (Teldec)"
 
 #: src/common/kax_info.cpp:627
 #, no-c-format
@@ -16082,12 +16082,12 @@ msgstr "ширина в пикселях: {0}"
 #: src/common/kax_info.cpp:862
 #, no-c-format
 msgid "preview of current episode"
-msgstr ""
+msgstr "предпросмотр текущего эпизода"
 
 #: src/common/kax_info.cpp:861
 #, no-c-format
 msgid "preview of next episode"
-msgstr ""
+msgstr "предпросмотр следующего эпизода"
 
 #: src/common/kax_info.cpp:734
 #, no-c-format
@@ -16117,7 +16117,7 @@ msgstr "Считыватель Real: поддерживается только �
 #: src/common/kax_info.cpp:860
 #, no-c-format
 msgid "recap"
-msgstr ""
+msgstr "рекап"
 
 #: src/common/kax_info.cpp:710
 #, no-c-format
