@@ -1,7 +1,28 @@
 # Version ?
 
+## Bug fixes
+
+* Chapters DTD: added the new edition & chapter elements from Matroska v5.
+* Chapters DTD: fixed EditionUID being mandatory. mkvmerge can auto-generate
+  it if it's missing from the XML file.
+* Chapters DTD: fixed the `example-chapters-1.xml` not validating against the
+  DTD.
+* XML DTDs: fixed elements representing binary data not allowing the `format`
+  attribute.
+
+
+# Version 71.0.0 "Altitude" 2022-10-08
+
 ## New features and enhancements
 
+* mkvmerge, MKVToolNix GUI's multiplexer: added support for the Emphasis audio
+  track header element via the `--audio-emphasis` option. It is also read from
+  Matroska files.
+* mkvmerge: the options `--list-stereo-modes` and `--list-audio-emphasis` have
+  been added to list all support numerical & textual values for the
+  `--stereo-mode` & `--audio-emphasis` options.
+* mkvpropedit, MKVToolNix GUI's header editor: added support for the Emphasis
+  audio track header element via the `emphasis` property.
 * MKVToolNix GUI: multiplexer: when the track properties are
   configured to be displayed in a tab widget below the files & tracks
   in the "Input" tab, the "Color information" tab will be laid out in
@@ -13,17 +34,10 @@
 * mkvinfo, MKVToolNix GUI's info tool: added support for the following new
   elements from Matroska v5: Emphasis audio track header element; Chapter Skip
   Type; Edition Display; Edition String; Edition Language IETF.
-* mkvmerge, MKVToolNix GUI's multiplexer: added support for the Emphasis audio
-  track header element via the `--audio-emphasis` option. It is also read from
-  Matroska files.
-* mkvmerge: the options `--list-stereo-modes` and `--list-audio-emphasis` have
-  been added to list all support numerical & textual values for the
-  `--stereo-mode` & `--audio-emphasis` options.
-* mkvpropedit, MKVToolNix GUI's header editor: added support for the Emphasis
-  audio track header element via the `emphasis` property.
 * mkvmerge, mkvpropedit: added support for the following new chapter elements
   from Matroska v5: Chapter Skip Type; Edition Display; Edition String;
-  Edition Language IETF.
+  Edition Language IETF. The GUI's chapter editor will receive support for
+  them in the next release.
 
 ## Bug fixes
 
@@ -34,6 +48,10 @@
 ## Build system changes
 
 * libEBML 1.4.4 & libMatroska 1.7.1 are now required.
+* The bundled libEBML & libMatroska libraries were updated to v1.4.4 & v1.7.1
+  respectively.
+* The bundled `fmt` library was updated to v9.1.0.
+* The bundled `nlohmann-json` library was updated to v3.11.2.
 
 
 # Version 70.0.0 "Caught A Lite Sneeze" 2022-08-14

@@ -1,15 +1,23 @@
+<!ENTITY % format "(ascii|base64|hex)">
 <!ELEMENT Chapters (EditionEntry*)>
 <!ELEMENT EditionEntry (
-          EditionUID,
+          EditionUID?,
           EditionFlagHidden?,
           EditionManaged?,
           EditionFlagDefault?,
+          EditionDisplay*,
           ChapterAtom*)>
 
 <!ELEMENT EditionUID (#PCDATA)>
 <!ELEMENT EditionFlagHidden (#PCDATA)>
 <!ELEMENT EditionManaged (#PCDATA)>
 <!ELEMENT EditionFlagDefault (#PCDATA)>
+<!ELEMENT EditionString (#PCDATA)>
+<!ELEMENT EditionLanguageIETF (#PCDATA)>
+
+<!ELEMENT EditionDisplay (
+          EditionString,
+          EditionLanguageIETF* )>
 
 <!ELEMENT ChapterAtom (
           ChapterTimeStart,
@@ -23,6 +31,7 @@
           ChapterFlagEnabled?,
           ChapterDisplay*,
           ChapterProcess*,
+          ChapterSkipType?,
           ChapterAtom*)>
 
 <!ELEMENT ChapterTrack (ChapterTrackNumber)>
@@ -48,15 +57,19 @@
 <!ELEMENT ChapterFlagHidden (#PCDATA)>
 <!ELEMENT ChapterFlagEnabled (#PCDATA)>
 <!ELEMENT ChapterUID (#PCDATA)>
+<!ELEMENT ChapterSkipType (#PCDATA)>
 
 <!ELEMENT ChapterSegmentUID (#PCDATA)>
+<!ATTLIST ChapterSegmentUID format %format; "ascii">
 <!ELEMENT ChapterSegmentEditionUID (#PCDATA)>
 <!ELEMENT ChapterPhysicalEquiv (#PCDATA)>
 
 <!ELEMENT ChapterProcessCodecID (#PCDATA)>
 <!ELEMENT ChapterProcessPrivate (#PCDATA)>
+<!ATTLIST ChapterProcessPrivate format %format; "ascii">
 <!ELEMENT ChapterProcessTime (#PCDATA)>
 <!ELEMENT ChapterProcessData (#PCDATA)>
+<!ATTLIST ChapterProcessData format %format; "ascii">
 
 <!ELEMENT ChapterString (#PCDATA)>
 <!ELEMENT ChapterLanguage (#PCDATA)>
