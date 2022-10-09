@@ -1,4 +1,4 @@
-# Version ?
+# Version 71.1.0 "Fortitude" 2022-10-09
 
 ## Bug fixes
 
@@ -7,8 +7,17 @@
   it if it's missing from the XML file.
 * Chapters DTD: fixed the `example-chapters-1.xml` not validating against the
   DTD.
+* Chapters DTD: corrected the old name `EditionManaged` to
+  `EditionFlagOrdered`.
+* Chapters DTD: fixed `ChapLanguageIETF` missing its element declaration &
+  `ChapterLanguage` being required.
 * XML DTDs: fixed elements representing binary data not allowing the `format`
   attribute.
+
+## Build system changes
+
+* bug fix: configure accidentally tested for libEBML ≥ 2.0.0 & libMatroska ≥
+  2.0.0, even though the actual requirements are 1.4.4 & 1.7.1 respectively.
 
 
 # Version 71.0.0 "Altitude" 2022-10-08

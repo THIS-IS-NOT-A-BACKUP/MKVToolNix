@@ -3,14 +3,14 @@
 <!ELEMENT EditionEntry (
           EditionUID?,
           EditionFlagHidden?,
-          EditionManaged?,
+          EditionFlagOrdered?,
           EditionFlagDefault?,
           EditionDisplay*,
           ChapterAtom*)>
 
 <!ELEMENT EditionUID (#PCDATA)>
 <!ELEMENT EditionFlagHidden (#PCDATA)>
-<!ELEMENT EditionManaged (#PCDATA)>
+<!ELEMENT EditionFlagOrdered (#PCDATA)>
 <!ELEMENT EditionFlagDefault (#PCDATA)>
 <!ELEMENT EditionString (#PCDATA)>
 <!ELEMENT EditionLanguageIETF (#PCDATA)>
@@ -39,7 +39,7 @@
 
 <!ELEMENT ChapterDisplay (
           ChapterString,
-          ChapterLanguage+,
+          ChapterLanguage*,
           ChapLanguageIETF*,
           ChapterCountry*)>
 
@@ -73,4 +73,5 @@
 
 <!ELEMENT ChapterString (#PCDATA)>
 <!ELEMENT ChapterLanguage (#PCDATA)>
+<!ELEMENT ChapLanguageIETF (#PCDATA)>
 <!ELEMENT ChapterCountry (#PCDATA)>
