@@ -51,7 +51,8 @@ namespace balg = boost::algorithm;
 
 using namespace std::string_literals;
 
-#include <ebml/c/libebml_t.h>
+#include <ebml/EbmlTypes.h>
+#include <matroska/KaxTypes.h>
 #undef min
 #undef max
 
