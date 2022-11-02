@@ -1,5 +1,14 @@
 # Version ?
 
+## New features and enhancements
+
+* mkvmerge: when splitting is active the program will output the timestamps
+  actually used for making the decision when to split. If GUI mode is active,
+  a specially formatted line `#GUI#splitting_before_timestamp <timestamp>` is
+  output as well. Lines prefixed with`#GUI#` are suitable for machine parsing,
+  won't be translated and are guaranteed not to change in format. Implements
+  #3421.
+
 ## Bug fixes
 
 * mkvmerge: HDMV PGS subtitles: reverted the change that implemented a
@@ -10,6 +19,22 @@
 * mkvmerge: fixed reversed attachment selection: `--attachments !4` would not
   copy any attachment instead of all attachments but the one with ID 4. Fixes
   #3427.
+* MKVToolNix GUI: header editor: fixed pixelated icons on higher display
+  scaling values. Fixes #3420.
+* mkvpropedit, MKVToolNix GUI's chapter & header editors: updated the list of
+  deprecated Matroska elements. The applications will no longer try to write
+  those elements, even if they're found in the file to be modified. The
+  programs will no longer abort with error messages such as `assertion "false"
+  failed`. Fixes #3416.
+* mkvpropedit, MKVToolNix GUI's chapter & header editors: when the Matroska
+  version numbers stored in the EBML Head element are updated, the updated
+  EBML Head element might be smaller than the existing one. In that case the
+  programs used to shrink the EBML Head & write a small EBML Void element
+  between the updated EBML Head & the following element, usually a Matroska
+  Segment element. This isn't widely supported by programs including
+  MKVToolNix itself, causing them to declare such files as invalid. The
+  programs will now create the EBML Void element inside the EBML Head element,
+  making them a level 1 element instead of a level 0 element. Fixes #3355.
 
 
 # Version 71.1.0 "Fortitude" 2022-10-09
