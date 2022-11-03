@@ -8,6 +8,11 @@
   output as well. Lines prefixed with`#GUI#` are suitable for machine parsing,
   won't be translated and are guaranteed not to change in format. Implements
   #3421.
+* MKVToolNix GUI: info tool: added information about the file (directory,
+  size, modification timestamp) at the top of each tab. Implements #3407.
+* MKVToolNix GUI: multiplexer: when dragging & dropping directories to the
+  "attachments" tab, the files contained in those directories will be
+  attached. Implements #3410.
 
 ## Bug fixes
 
@@ -35,6 +40,18 @@
   MKVToolNix itself, causing them to declare such files as invalid. The
   programs will now create the EBML Void element inside the EBML Head element,
   making them a level 1 element instead of a level 0 element. Fixes #3355.
+* mkvpropedit, MKVToolNix GUI's chapter & header editors: often the programs
+  have to relocate the Master elements in which the modifications were
+  done. In that case the Seek Head elements must also be updated to reflect to
+  the Master elements' new positions. If a file contained a Seek Head element
+  at the start already and if that Seek Head was too small to contain the
+  updated positions, the programs would end up in an endless loop trying to
+  write data to the end, creating ever-growing files. This is now handled
+  properly by voiding this too-small Seek Head & finding a proper space for a
+  new one instead. Fixes #3338.
+* mkvextract: IETF BCP 47/RFC 5646 language tags: mkvextract will now use &
+  prefer IETF BCP 47 track language elements if they're present. Only affects
+  the VobSub & USF subtitle extraction.
 
 
 # Version 71.1.0 "Fortitude" 2022-10-09

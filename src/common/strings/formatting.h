@@ -53,7 +53,12 @@ format_timestamp(mtx_mp_rational_t const &timestamp,
   return format_timestamp(mtx::to_int(timestamp), precision);
 }
 
-std::string format_file_size(int64_t size);
+enum class file_size_format_e {
+  compact,
+  full,
+};
+
+std::string format_file_size(int64_t size, file_size_format_e format = file_size_format_e::compact);
 
 std::string format_paragraph(std::string const &text_to_wrap,
                              int indent_column                    = 0,
@@ -65,6 +70,7 @@ std::string format_paragraph(std::string const &text_to_wrap,
 std::string format_rational(int64_t numerator, int64_t denominator, unsigned int precision);
 std::string format_number(int64_t number);
 std::string format_number(uint64_t number);
+std::string format_thousands(uint64_t value);
 
 std::string to_hex(const unsigned char *buf, size_t size, bool compact = false);
 inline std::string

@@ -35,6 +35,23 @@ normalize_fmt_double_output_formatter(QRegularExpressionMatch const &match) {
 namespace mtx::string {
 
 std::string
+format_thousands(uint64_t value) {
+  auto value_str = fmt::to_string(value);
+
+  if (value < 1000)
+    return value_str;
+
+  auto idx = (value_str.size() - 1) % 3 + 1;
+
+  while (idx < value_str.size()) {
+    value_str.insert(idx, ",");
+    idx += 4;
+  }
+
+  return value_str;
+}
+
+std::string
 format_timestamp(int64_t timestamp,
                 unsigned int precision) {
   bool negative = 0 > timestamp;
@@ -266,11 +283,23 @@ create_minutes_seconds_time_string(unsigned int seconds,
 }
 
 std::string
-format_file_size(int64_t size) {
-  return size <       1024ll ? fmt::format(NY("{0} byte", "{0} bytes", size), size)
-       : size <    1048576ll ? fmt::format(Y("{0}.{1} KiB"),                  size / 1024,               (size * 10 /               1024) % 10)
-       : size < 1073741824ll ? fmt::format(Y("{0}.{1} MiB"),                  size / 1024 / 1024,        (size * 10 /        1024 / 1024) % 10)
-       :                       fmt::format(Y("{0}.{1} GiB"),                  size / 1024 / 1024 / 1024, (size * 10 / 1024 / 1024 / 1024) % 10);
+format_file_size(int64_t size,
+                 file_size_format_e format) {
+  auto full = format == file_size_format_e::full;
+  std::string bytes, suffix;
+
+  if ((size < 1024) || full)
+    bytes = fmt::format(NY("{0} byte", "{0} bytes", size), format_thousands(size));
+
+  if ((size >= 1024) && full)
+    suffix = fmt::format(" ({0})", bytes);
+
+  auto formatted = size <       1024ll ? bytes
+                 : size <    1048576ll ? fmt::format(Y("{0}.{1} KiB"), format_thousands(size / 1024),               (size * 10 /               1024) % 10)
+                 : size < 1073741824ll ? fmt::format(Y("{0}.{1} MiB"), format_thousands(size / 1024 / 1024),        (size * 10 /        1024 / 1024) % 10)
+                 :                       fmt::format(Y("{0}.{1} GiB"), format_thousands(size / 1024 / 1024 / 1024), (size * 10 / 1024 / 1024 / 1024) % 10);
+
+  return formatted + suffix;
 }
 
 std::string
