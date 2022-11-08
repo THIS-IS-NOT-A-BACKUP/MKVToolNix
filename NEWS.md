@@ -13,6 +13,8 @@
 * MKVToolNix GUI: multiplexer: when dragging & dropping directories to the
   "attachments" tab, the files contained in those directories will be
   attached. Implements #3410.
+* mkvmerge: AV1 parser: the variable-width OBU size field will be re-written
+  with minimal length if it's encoded longer than necessary.
 
 ## Bug fixes
 
@@ -54,6 +56,10 @@
   the VobSub & USF subtitle extraction.
 * mkvmerge: Matroska reader: fixed reading files with EBML Void elements
   before the Matroska Segment element.
+* mkvmerge: AV1 parser: fixed the parser completely aborting when parsing the
+  OBU size field fails due to there not being enough data to parse. Instead
+  the parser will remember the last known-good position & restart from there
+  after more data is available. Fixes #3431.
 
 ## Build system changes
 
