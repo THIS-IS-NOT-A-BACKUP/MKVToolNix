@@ -1,3 +1,18 @@
+# Version ?
+
+## New features and enhancements
+
+* mkvmerge: greatly enhanced the speed of Base64 decoding which is used used
+  e.g. when reading pictures embedded in Ogg or FLAC files or for binary data
+  inside XML chapter & tag files. Even small blocks of data could take
+  unreasonably long.
+
+## Bug fixes
+
+* mkvmerge: splitting: fixed a typo in the string output in GUI mode regarding
+  the timestamps before which splitting was done. See #3421.
+
+
 # Version 72.0.0 "Minuano (Six-eight)" 2022-11-13
 
 ## New features and enhancements
