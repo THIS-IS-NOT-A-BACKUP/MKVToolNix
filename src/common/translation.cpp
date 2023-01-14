@@ -271,6 +271,11 @@ translation_c::set_active_translation(const std::string &locale) {
   mxdebug_if(debugging_c::requested("locale"), fmt::format("[translation_c::set_active_translation() active_translation_idx {0} for locale {1}]\n", ms_active_translation_idx, locale));
 }
 
+void
+translation_c::initialize_std_and_boost_filesystem_locales() {
+  std::locale::global(std::locale{ std::locale(), new std::codecvt_utf8<wchar_t> });
+}
+
 // ------------------------------------------------------------
 
 translatable_string_c::translatable_string_c(const std::string &untranslated_string)
@@ -324,11 +329,6 @@ translatable_string_c::join(std::vector<std::string> const &strings)
   return mtx::string::join(strings, separator);
 }
 
-void
-translation_c::initialize_std_locale() {
-  std::locale::global(std::locale{ std::locale(), new std::codecvt_utf8<wchar_t> });
-}
-
 // ------------------------------------------------------------
 
 #if defined(HAVE_LIBINTL_H)
@@ -373,7 +373,7 @@ init_locales(std::string locale) {
     translation_c::set_active_translation(locale);
   }
 
-  locale_dir = g_cc_local_utf8->native((mtx::sys::get_installation_path() / "locale").u8string());
+  locale_dir = g_cc_local_utf8->native((mtx::sys::get_installation_path() / "locale").string());
 
 # else  // SYS_WINDOWS
   auto language_var = mtx::sys::get_environment_variable("LANGUAGE");
@@ -421,10 +421,10 @@ init_locales(std::string locale) {
   translation_c::set_active_translation(chosen_locale);
 
 #  if defined(SYS_APPLE)
-  locale_dir = (mtx::sys::get_installation_path() / "locale").u8string();
+  locale_dir = (mtx::sys::get_installation_path() / "locale").string();
 #  else
   auto appimage_locale_dir = mtx::sys::get_installation_path() / ".." / "share" / "locale";
-  locale_dir               = std::filesystem::is_directory(appimage_locale_dir) ? appimage_locale_dir.u8string() : std::string{MTX_LOCALE_DIR};
+  locale_dir               = boost::filesystem::is_directory(appimage_locale_dir) ? appimage_locale_dir.string() : std::string{MTX_LOCALE_DIR};
 #  endif  // SYS_APPLE
 
 # endif  // SYS_WINDOWS
