@@ -1,5 +1,12 @@
 # Version ?
 
+## New features and enhancements
+
+* mkvmerge: SRT handling: added a hack called `--engage
+  keep_whitespaces_in_text_subtitles` which disables stripping whitespaces
+  from the start & end of each line of SRT entries during muxing. Part of the
+  implementation of #3470.
+
 ## Bug fixes
 
 * build system: fixed compatibility with Ruby 3.2.0 by using `FileTest.exist?`
@@ -18,6 +25,11 @@
 * all: Windows: UNC paths of type `\\?\C:\…` are supported again by switching
   back to Boost's file system library instead of using C++17's file system
   library. Fixes #3058.
+* mkvmerge: SRT handling: whitespaces will now be stripped from the start &
+  the end of each line of each entry, not just from the end of the last
+  line. Part of the fix of #3470.
+* mkvextract: SRT extraction: whitespaces will not be stripped from the start
+  & end of the whole entry anymore. Part of the fix of #3470.
 
 ## Build system changes
 
