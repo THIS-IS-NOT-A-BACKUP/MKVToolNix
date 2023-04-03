@@ -1,9 +1,20 @@
 # Version ?
 
+## New features and enhancements
+
+* mkvmerge: JSON file identification: added a child element called
+  `num_index_entries` to the `properties` track element containing the number
+  of index entries found for a track. Currently only implemented for Matroska
+  files where it contains the number of cue points. See #3510.
+
 ## Bug fixes
 
 * mkvpropedit: fixed replacing chapters & tags in files that don't contain
   tracks. Fixes #3498.
+* mkvmerge: mkvmerge will now only try to probe for VobSubs if the name of the
+  file to identify ends in either `.idx` or `.sub`, preventing
+  mis-identification of other file types if VobSubs with the same base name
+  exist in the same directory. Fixes #3508.
 
 
 # Version 75.0.0 "Goliath" 2023-03-26
