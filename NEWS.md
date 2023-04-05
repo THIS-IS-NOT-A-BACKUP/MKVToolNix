@@ -6,6 +6,16 @@
   `num_index_entries` to the `properties` track element containing the number
   of index entries found for a track. Currently only implemented for Matroska
   files where it contains the number of cue points. See #3510.
+* mkvmerge, MKVToolNix GUI's multiplexer: added an option to stop processing
+  after the primary video track ends called `--stop-after-video-ends`. This
+  discards any remaining packets of other tracks. Part of the implementation
+  #3506.
+* MKVToolNix GUI: only on Windows: the GUI now uses Qt's "Fusion" style
+  instead of the deprecated "Windows Vista" style. The advantage is that as of
+  Qt 6.5 the "Fusion" style properly supports Windows 10's & 11's dark
+  application mode. The Windows binaries are now built with said Qt
+  version. Therefore the option to disable the dark mode has been
+  removed. Fixes #3264 and likely others.
 
 ## Bug fixes
 
