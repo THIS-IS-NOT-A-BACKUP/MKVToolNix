@@ -20,6 +20,15 @@
   name: added an option in the preferences for using the first source file's
   directory name instead of its file name as the basis for the destination
   file name. Implements #3512.
+* mkvmerge: removed the option `--blockadd`. Removing block additional data is
+  not possible anymore, as it is often required for proper decoding. Part of
+  the implementation of #3511.
+* mkvmerge: the maximum block addition ID track header value is now calculated
+  automatically from both the existing mappings & the actually used block
+  additions in the block groups. Part of the implementation of #3511.
+* mkvmerge: Matroska reader: when reading WebM files that use block additions
+  with ID 4 (HDR for VP9) an appropriate block addition mapping will be
+  created automatically. Part of the implementation of #3511.
 
 ## Bug fixes
 
@@ -29,6 +38,14 @@
   file to identify ends in either `.idx` or `.sub`, preventing
   mis-identification of other file types if VobSubs with the same base name
   exist in the same directory. Fixes #3508.
+* mkvmerge: Matroska reader: when reading files that use block additions with
+  IDs other than 1 (e.g. 4 for HDR for VP9) the IDs will now be kept & written
+  to the output file. Before no ID would be written, effectively using 1 as
+  that's the default value for the corresponding element. Part of the
+  implementation of #3511.
+* mkvmerge: mkvmerge will no longer write block addition mappings or the max
+  block addition ID track header elements when creating a WebM file as those
+  elements aren't supported there. Part of the implementation of #3511.
 
 
 # Version 75.0.0 "Goliath" 2023-03-26

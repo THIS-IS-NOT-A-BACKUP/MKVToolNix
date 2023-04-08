@@ -313,6 +313,30 @@ kax_track_t::discard_track_statistics_tags() {
     tags.reset();
 }
 
+void
+kax_track_t::register_use_of_webm_block_addition_id(uint64_t id) {
+  // So far we only know about IDs 1 & 4. For 1 no mapping must be added.
+
+  if ((id != 4) || m_registered_used_of_webm_block_addition_id[id])
+    return;
+
+  m_registered_used_of_webm_block_addition_id[id] = true;
+
+  for (auto const &mapping : block_addition_mappings)
+    if (mapping.id_value.value_or(1) == id)
+      return;
+
+  block_addition_mapping_t mapping;
+  mapping.id_type  = 4;
+  mapping.id_value = id;
+
+  block_addition_mappings.push_back(mapping);
+  ptzr_ptr->set_block_addition_mappings(block_addition_mappings);
+
+  rerender_track_headers();
+}
+
+
 /*
    Probes a file by simply comparing the first four bytes to the EBML
    head signature.
@@ -1602,12 +1626,20 @@ kax_reader_c::read_headers_internal() {
 
     // Find the EbmlHead element. Must be the first one.
     auto l0 = std::shared_ptr<EbmlElement>(m_es->FindNextID(EBML_INFO(EbmlHead), 0xFFFFFFFFFFFFFFFFLL));
-    if (!l0) {
+    if (!l0 || !dynamic_cast<EbmlHead *>(l0.get())) {
       mxwarn(Y("matroska_reader: no EBML head found.\n"));
       return false;
     }
 
-    // Don't verify its data for now.
+    auto &head                 = static_cast<EbmlHead &>(*l0);
+    int upper_lvl_el           = 0;
+    EbmlElement *element_found = nullptr;
+
+    head.Read(*m_es, EBML_CONTEXT(&head), upper_lvl_el, element_found, true);
+    delete element_found;
+
+    m_is_webm = FindChildValue<EDocType>(head) == "webm";
+
     l0->SkipData(*m_es, EBML_CONTEXT(l0));
 
     while (true) {
@@ -2541,12 +2573,23 @@ kax_reader_c::process_block_group_common(KaxBlockGroup *block_group,
     if (!(Is<KaxBlockMore>(child)))
       continue;
 
-    auto blockmore     = static_cast<KaxBlockMore *>(child);
-    auto blockadd_data = &GetChild<KaxBlockAdditional>(*blockmore);
-    auto blockadded    = memory_c::borrow(blockadd_data->GetBuffer(), blockadd_data->GetSize());
-    block_track.content_decoder.reverse(blockadded, CONTENT_ENCODING_SCOPE_BLOCK);
+    auto blockmore  = static_cast<KaxBlockMore *>(child);
+    auto k_blockadd = FindChild<KaxBlockAdditional>(*blockmore);
 
-    packet->data_adds.push_back(blockadded);
+    if (!k_blockadd)
+      continue;
+
+    block_add_t add{ memory_c::borrow(k_blockadd->GetBuffer(), k_blockadd->GetSize()) };
+
+    block_track.content_decoder.reverse(add.data, CONTENT_ENCODING_SCOPE_BLOCK);
+
+    auto k_blockadd_id = FindChild<KaxBlockAddID>(*blockmore);
+    add.id             = k_blockadd_id ? k_blockadd_id->GetValue() : 1;
+
+    packet->data_adds.push_back(add);
+
+    if (m_is_webm)
+      block_track.register_use_of_webm_block_addition_id(add.id.value());
   }
 }
 

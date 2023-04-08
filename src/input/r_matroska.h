@@ -116,6 +116,8 @@ struct kax_track_t {
 
   memory_cptr v_color_space;
 
+  std::unordered_map<uint64_t, bool> m_registered_used_of_webm_block_addition_id;
+
   kax_track_t()
     : tnum(0)
     , track_number(0)
@@ -175,6 +177,7 @@ struct kax_track_t {
   void fix_display_dimension_parameters();
   void get_source_id_from_track_statistics_tags();
   void discard_track_statistics_tags();
+  void register_use_of_webm_block_addition_id(uint64_t id);
 };
 using kax_track_cptr = std::shared_ptr<kax_track_t>;
 
@@ -220,7 +223,7 @@ private:
 
   file_status_e m_file_status{FILE_STATUS_MOREDATA};
 
-  bool m_opus_experimental_warning_shown{}, m_regenerate_chapter_uids{};
+  bool m_opus_experimental_warning_shown{}, m_regenerate_chapter_uids{}, m_is_webm{};
 
   debugging_option_c m_debug_minimum_timestamp{"kax_reader|kax_reader_minimum_timestamp"}, m_debug_track_headers{"kax_reader|kax_reader_track_headers"};
 
