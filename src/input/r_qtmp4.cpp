@@ -30,6 +30,7 @@
 #include "common/avc/es_parser.h"
 #include "common/chapters/chapters.h"
 #include "common/codec.h"
+#include "common/construct.h"
 #include "common/endian.h"
 #include "common/frame_timing.h"
 #include "common/hacks.h"
@@ -44,8 +45,10 @@
 #include "common/mp3.h"
 #include "common/mp4.h"
 #include "common/qt.h"
+#include "common/strings/editing.h"
 #include "common/strings/formatting.h"
 #include "common/strings/parsing.h"
+#include "common/tags/tags.h"
 #include "common/vobsub.h"
 #include "input/r_qtmp4.h"
 #include "input/timed_text_to_text_utf8_converter.h"
@@ -329,6 +332,8 @@ qtmp4_reader_c::parse_headers() {
   }
 
   mxdebug_if(m_debug_headers, fmt::format("Number of valid tracks found: {0}\n", m_demuxers.size()));
+
+  create_global_tags_from_meta_data();
 }
 
 void
@@ -1017,6 +1022,12 @@ qtmp4_reader_c::handle_ilst_atom(qt_atom_t parent,
 
     else if (atom.fourcc == "covr")
       handle_covr_atom(atom.to_parent(), level + 1);
+
+    else if (mtx::included_in(atom.fourcc,
+                              fourcc_c{0xa96e'616du},  // ©nam
+                              fourcc_c{0xa974'6f6fu},  // ©too
+                              fourcc_c{0xa963'6d74u})) // ©cmt
+      handle_ilst_metadata_atom(atom.to_parent(), level + 1, atom.fourcc);
   });
 }
 
@@ -1093,6 +1104,37 @@ qtmp4_reader_c::handle_covr_atom(qt_atom_t parent,
 
     } catch (mtx::exception const &ex) {
       mxdebug_if(m_debug_headers, fmt::format("{0}exception while reading cover art: {}\n", ex.what()));
+    }
+  });
+}
+
+void
+qtmp4_reader_c::handle_ilst_metadata_atom(qt_atom_t parent,
+                                          int level,
+                                          fourcc_c const &fourcc) {
+  process_atom(parent, level, [&](qt_atom_t const &atom) {
+    if (atom.fourcc != "data")
+      return;
+
+    size_t data_size = atom.size - atom.hsize;
+    if (data_size <= 8)
+      return;
+
+    try {
+      auto content = read_string_atom(atom, 8);
+      mtx::string::strip(content, true);
+
+      if (fourcc == fourcc_c{0xa96e'616du}) // ©nam
+        m_title = content;
+
+      else if (fourcc == fourcc_c{0xa974'6f6fu}) // ©too
+        m_encoder = content;
+
+      else if (fourcc == fourcc_c{0xa963'6d74u}) // ©cmt
+        m_comment = content;
+
+    } catch (mtx::exception const &ex) {
+      mxdebug_if(m_debug_headers, fmt::format("{0}exception while reading title: {}\n", ex.what()));
     }
   });
 }
@@ -2009,12 +2051,43 @@ qtmp4_reader_c::create_packetizer(int64_t tid) {
 }
 
 void
+qtmp4_reader_c::create_global_tags_from_meta_data() {
+  if (m_comment.empty() && m_encoder.empty())
+    return;
+
+  m_tags.reset(mtx::construct::cons<libmatroska::KaxTags>(mtx::construct::cons<libmatroska::KaxTag>(mtx::construct::cons<libmatroska::KaxTagTargets>(new libmatroska::KaxTagTargetTypeValue, 50,
+                                                                                                                                                     new libmatroska::KaxTagTargetType,      "MOVIE"))));
+  auto &tag = static_cast<KaxTag &>(*(*m_tags)[0]);
+
+  if (!m_comment.empty())
+    tag.PushElement(*mtx::construct::cons<libmatroska::KaxTagSimple>(new libmatroska::KaxTagName,   "COMMENT",
+                                                                     new libmatroska::KaxTagString, m_comment));
+
+  if (!m_encoder.empty())
+    tag.PushElement(*mtx::construct::cons<libmatroska::KaxTagSimple>(new libmatroska::KaxTagName,   "ENCODER",
+                                                                     new libmatroska::KaxTagString, m_encoder));
+}
+
+void
+qtmp4_reader_c::process_global_tags() {
+  if (!m_tags || g_identifying)
+    return;
+
+  for (auto tag : *m_tags)
+    add_tags(static_cast<KaxTag &>(*tag));
+
+  m_tags->RemoveAll();
+}
+
+void
 qtmp4_reader_c::create_packetizers() {
-  unsigned int i;
+  maybe_set_segment_title(m_title);
+  if (!m_ti.m_no_global_tags)
+    process_global_tags();
 
   m_main_dmx = -1;
 
-  for (i = 0; i < m_demuxers.size(); ++i)
+  for (unsigned int i = 0; i < m_demuxers.size(); ++i)
     create_packetizer(m_demuxers[i]->id);
 }
 
@@ -2031,12 +2104,19 @@ qtmp4_reader_c::get_maximum_progress() {
 void
 qtmp4_reader_c::identify() {
   unsigned int i;
+  auto info = mtx::id::info_c{};
 
-  id_result_container();
+  if (!m_title.empty())
+    info.add(mtx::id::title, m_title);
+
+  id_result_container(info.get());
+
+  if (m_tags)
+    id_result_tags(ID_RESULT_GLOBAL_TAGS_ID, mtx::tags::count_simple(*m_tags));
 
   for (i = 0; i < m_demuxers.size(); ++i) {
     auto &dmx = *m_demuxers[i];
-    auto info = mtx::id::info_c{};
+    info      = mtx::id::info_c{};
 
     info.set(mtx::id::number, dmx.container_id);
     info.set(mtx::id::enabled_track, dmx.m_enabled);

@@ -461,6 +461,7 @@ private:
   std::vector<qtmp4_demuxer_cptr> m_demuxers;
   std::unordered_map<unsigned int, bool> m_chapter_track_ids;
   std::unordered_map<unsigned int, qt_track_defaults_t> m_track_defaults;
+  std::unique_ptr<libmatroska::KaxTags> m_tags;
 
   int64_t m_time_scale{1};
   fourcc_c m_compression_algorithm;
@@ -476,6 +477,8 @@ private:
   std::optional<uint64_t> m_duration;
 
   uint64_t m_attachment_id{};
+
+  std::string m_title, m_encoder, m_comment;
 
   int64_t m_bytes_to_process{}, m_bytes_processed{};
 
@@ -514,6 +517,9 @@ protected:
   virtual std::optional<int64_t> calculate_global_min_timestamp() const;
   virtual void calculate_num_bytes_to_process();
 
+  virtual void create_global_tags_from_meta_data();
+  virtual void process_global_tags();
+
   virtual qt_atom_t read_atom(mm_io_c *read_from = nullptr, bool exit_on_error = true);
   virtual bool resync_to_top_level_atom(uint64_t start_pos);
   virtual void parse_itunsmpb(std::string data);
@@ -536,6 +542,7 @@ protected:
   virtual void handle_ilst_atom(qt_atom_t parent, int level);
   virtual void handle_4dashes_atom(qt_atom_t parent, int level);
   virtual void handle_covr_atom(qt_atom_t parent, int level);
+  virtual void handle_ilst_metadata_atom(qt_atom_t parent, int level, fourcc_c const &fourcc);
   virtual void handle_mvex_atom(qt_atom_t parent, int level);
   virtual void handle_trex_atom(qt_atom_t parent, int level);
   virtual void handle_moof_atom(qt_atom_t parent, int level, qt_atom_t const &moof_atom);

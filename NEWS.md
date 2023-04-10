@@ -29,6 +29,21 @@
 * mkvmerge: Matroska reader: when reading WebM files that use block additions
   with ID 4 (HDR for VP9) an appropriate block addition mapping will be
   created automatically. Part of the implementation of #3511.
+* MKVToolNix GUI: multiplexer: double-clicking on certain columns in the
+  "tracks" view will now toggle them directly (columns "Default track" &
+  "Forced track") or activate the corresponding control (columns "Language",
+  "Name" & "Delay"). Double-clicks on other columns will do what they've done
+  before, too: toggling the "Copy item" state. Implements #3513 & others.
+* MKVToolNix GUI: the dialog for editing language tags is now created only the
+  first time the user wants to edit a language tag & cached afterwards instead
+  of creating a new instance each time. This makes subsequent uses instant.
+* mkvmerge: MP4 reader: the title/movie name meta data (content of the
+  `udta.meta.ilst.©nam` atom) will now be copied over as the segment title
+  track header attribute. Part of the implementation of #3475.
+* mkvmerge: MP4 reader: the comment & encoder meta data (content of the
+  `udta.meta.ilst.©cmt` & `….©too` atoms) will now be copied over as global
+  tags `COMMENT` & `ENCODER` respectively. Part of the implementation of
+  #3475.
 
 ## Bug fixes
 
