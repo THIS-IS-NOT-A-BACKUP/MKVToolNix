@@ -74,6 +74,24 @@ gatherGeneralInfo(QStringList &info) {
   info << Q("* INI file location: %1").arg(QDir::toNativeSeparators(Util::Settings::iniFileName()));
   info << Q("* Job queue location: %1").arg(QDir::toNativeSeparators(Jobs::Job::queueLocation()));
 
+  //
+  // Original command-line arguments
+  //
+
+  info << QString{} << Q("## Original command-line arguments") << QString{};
+  auto &args = App::originalCLIArgs();
+
+  if (args.isEmpty())
+    info << Q("The application was started without command-line arguments.");
+
+  else
+    for (auto const &arg : args)
+      info << Q("* `%1`").arg(arg);
+
+  //
+  // Installation problems
+  //
+
   info << Q("") << Q("## Installation problems") << Q("");
 
   auto problems = checker.problems();
@@ -138,15 +156,20 @@ gatherScreenInfo(QStringList &info) {
     info << Q("* Virtual size: %1x%2").arg(screen->virtualSize().width()).arg(screen->virtualSize().height());
     info << Q("* Geometry: %1x%2@%3x%4").arg(screen->geometry().width()).arg(screen->geometry().height()).arg(screen->geometry().x()).arg(screen->geometry().y());
   }
+}
 
+void
+gatherDesktopScalingAndThemeSettings([[maybe_unused]] QStringList &info) {
 #if defined(SYS_WINDOWS)
-  QSettings reg{Q("HKEY_CURRENT_USER\\Control Panel\\Desktop"), QSettings::NativeFormat};
+  QSettings regDesktop{Q("HKEY_CURRENT_USER\\Control Panel\\Desktop"), QSettings::NativeFormat};
+  QSettings regPersonalize{Q("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize"), QSettings::NativeFormat};
 
-  info << Q("") << Q("### Desktop scaling settings") << Q("");
+  info << Q("") << Q("## Desktop scaling & theme settings") << Q("");
 
-  info << Q("* Scaling mode (`Win8DpiScaling`): %1").arg(reg.value("Win8DpiScaling", "not set").toString());
-  info << Q("* Scaling override (`DesktopDPIOverride`): %1").arg(reg.value("DesktopDPIOverride", "not set").toString());
-  info << Q("* System-wide scale factor (`LogPixels`): %1").arg(reg.value("LogPixels", "not set").toString());
+  info << Q("* Scaling mode (`Win8DpiScaling`): %1").arg(regDesktop.value("Win8DpiScaling", "not set").toString());
+  info << Q("* Scaling override (`DesktopDPIOverride`): %1").arg(regDesktop.value("DesktopDPIOverride", "not set").toString());
+  info << Q("* System-wide scale factor (`LogPixels`): %1").arg(regDesktop.value("LogPixels", "not set").toString());
+  info << Q("* Windows 11 application light theme (`AppUseLightTheme`): %1").arg(regPersonalize.value("AppUseLightTheme", "not set").toString());
 #endif
 }
 
@@ -155,7 +178,7 @@ gatherEnvironmentVariables(QStringList &info) {
   info << Q("") << Q("## Environment variables") << Q("");
 
   auto keys = QStringList{} << Q("QT_AUTO_SCREEN_SCALE_FACTOR") << Q("QT_SCALE_FACTOR") << Q("QT_SCREEN_SCALE_FACTORS") << Q("QT_DEVICE_PIXEL_RATIO") << Q("QT_SCALE_FACTOR_ROUNDING_POLICY")
-                            << Q("QT_STYLE_OVERRIDE")           << Q("QT_QPA_PLATFORMTHEME")
+                            << Q("QT_STYLE_OVERRIDE")           << Q("QT_QPA_PLATFORM") << Q("QT_QPA_PLATFORMTHEME")    << Q("QT_QPA_GENERIC_PLUGINS")
                             << Q("MTX_LOGGER")                  << Q("MTX_DEBUG")       << Q("MKVTOOLNIX_DEBUG")        << Q("MKVMERGE_DEBUG")
                             << Q("LC_ALL")                      << Q("LC_MESSAGES")     << Q("LC_CTYPE")                << Q("LANG") << Q("LANGUAGE");
   keys.sort();
@@ -270,6 +293,7 @@ gatherSystemInformation() {
 
   gatherOperatingSystemInfo(info);
   gatherScreenInfo(info);
+  gatherDesktopScalingAndThemeSettings(info);
   gatherEnvironmentVariables(info);
 
   gatherQtInfo(info);

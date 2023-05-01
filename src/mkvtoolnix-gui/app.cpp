@@ -59,6 +59,7 @@ static Iso639LanguageList s_iso639Languages, s_iso639_2Languages, s_commonIso639
 static RegionList s_regions, s_commonRegions;
 static CharacterSetList s_characterSets, s_commonCharacterSets;
 static QHash<QString, QString> s_iso639_2LanguageCodeToDescription, s_regionToDescription;
+static QStringList s_originalCLIArgs;
 
 static std::optional<bool> s_is_installed;
 
@@ -574,15 +575,20 @@ App::setupAppearance() {
 #if defined(SYS_WINDOWS)
 void
 App::setupColorMode() {
-  if (isWindows11OrLater())
-    return;
-
   QSettings regKey{Q("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize"), QSettings::NativeFormat};
 
   auto useLightTheme = regKey.value(Q("AppsUseLightTheme"));
 
   if (!useLightTheme.isValid() || useLightTheme.toBool())
     return;
+
+  if (isWindows11OrLater()) {
+    auto darkPalette = palette();
+    darkPalette.setColor(QPalette::Link, QColor{29, 153, 243});
+    setPalette(darkPalette);
+
+    return;
+  }
 
   QPalette darkPalette;
   auto darkColor     = QColor{45, 45, 45};
@@ -640,6 +646,18 @@ App::run() {
   MainWindow::mergeTool()->addMergeTabIfNoneOpen();
 
   exec();
+}
+
+void
+App::registerOriginalCLIArgs(int argc,
+                             char **argv) {
+  for (int arg = 1; (arg < argc) && argv[arg]; ++arg)
+    s_originalCLIArgs << Q(argv[arg]);
+}
+
+QStringList const &
+App::originalCLIArgs() {
+  return s_originalCLIArgs;
 }
 
 }
