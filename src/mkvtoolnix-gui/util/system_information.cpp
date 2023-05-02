@@ -169,7 +169,8 @@ gatherDesktopScalingAndThemeSettings([[maybe_unused]] QStringList &info) {
   info << Q("* Scaling mode (`Win8DpiScaling`): %1").arg(regDesktop.value("Win8DpiScaling", "not set").toString());
   info << Q("* Scaling override (`DesktopDPIOverride`): %1").arg(regDesktop.value("DesktopDPIOverride", "not set").toString());
   info << Q("* System-wide scale factor (`LogPixels`): %1").arg(regDesktop.value("LogPixels", "not set").toString());
-  info << Q("* Windows 11 application light theme (`AppUseLightTheme`): %1").arg(regPersonalize.value("AppUseLightTheme", "not set").toString());
+  info << Q("* Windows 11 application light theme (`AppsUseLightTheme`): %1").arg(regPersonalize.value("AppsUseLightTheme", "not set").toString());
+  info << Q("* High contrast mode: %1").arg(mtx::sys::is_high_contrast_enabled());
 #endif
 }
 
