@@ -1,8 +1,10 @@
 #include "common/common_pch.h"
 
-#include <QColor>
 #include <QDebug>
 #include <QFile>
+#if defined(SYS_APPLE)
+# include <QFileOpenEvent>
+#endif
 #include <QLibraryInfo>
 #include <QLocalServer>
 #include <QLocalSocket>
@@ -629,5 +631,22 @@ QStringList const &
 App::originalCLIArgs() {
   return s_originalCLIArgs;
 }
+
+#if defined(SYS_APPLE)
+bool
+App::event(QEvent *event) {
+  if (event->type() == QEvent::FileOpen) {
+    auto fileNames = QStringList{} << static_cast<QFileOpenEvent &>(*event).file();
+
+    if (fileNames[0].endsWith(Q(".mtxcfg")))
+      Q_EMIT openConfigFilesRequested(fileNames);
+
+    else
+      Q_EMIT addingFilesToMergeRequested(fileNames);
+  }
+
+  return QApplication::event(event);
+}
+#endif
 
 }

@@ -10,6 +10,9 @@
 * MKVToolNix GUI: Windows: a new settings in the preferences lets the user
   chose whether to use the light or the dark color palette, or to follow the
   system settings. Part of the fix for #3528.
+* MKVToolNix GUI: macOS: when you install the application from the DMG it'll
+  register itself as an alternate handler for its supported file types. This
+  allows the use of the "Open with" context menu action in Finder.
 
 ## Bug fixes
 
@@ -35,6 +38,9 @@
 * mkvmerge: JSON identification: cropping parameters are reported again even
   if some of the four values are not present in the file or set to 0. Fixes
   #3534.
+* mkvmerge: AV1 packetizer: the packetizer did not honor the aspect ratio
+  (factor) given on the command-line via the `--aspect-ratio` or
+  `--aspect-ratio-factor` options.
 
 
 # Version 76.0 "Celebration" 2023-04-30
