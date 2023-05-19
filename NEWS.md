@@ -42,10 +42,23 @@
   (factor) given on the command-line via the `--aspect-ratio` or
   `--aspect-ratio-factor` options.
 * Fixed compilation with fmt v10.0.0.
+* mkvmerge: Windows: when writing to a network share connected via SMB1
+  `mkvmerge` was aborting with a error about `create_directory() failed` with
+  existing directories. This was due to a bug in recent versions of the
+  Boost.Filesystem library. The Windows version of MKVToolNix will be built
+  with Boost 1.82.0 from now on which includes the fix. Fixes #3547.
 
 ## Build system changes
 
 * The bundled `fmt` library was updated to v10.0.0.
+* MKVToolNix GUI now uses an external Qt resource file instead of compiling it
+  into the executable. The resource file has reached a size at which the C++
+  compiler exhausts available virtual memory on some 32-bit architectures. On
+  Windows & macOS the GUI will look for the file in
+  `<folder_with_executables>/data/qt_resources.rcc`, and in the directory set
+  with `configure`'s `--datadir` parameter on other systems (which usually
+  means `/usr/share/mkvtoolnix`). The `install` build system commands installs
+  it into that folder.
 
 
 # Version 76.0 "Celebration" 2023-04-30
