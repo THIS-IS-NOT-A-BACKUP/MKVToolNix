@@ -13,6 +13,19 @@
 * MKVToolNix GUI: macOS: when you install the application from the DMG it'll
   register itself as an alternate handler for its supported file types. This
   allows the use of the "Open with" context menu action in Finder.
+* mkvmerge: tracks in the destination file will now be sorted by their type
+  automatically unless the track order is specified with the `--track-order`
+  option. The order is as follows: video tracks first followed by audio &
+  subtitle tracks with other rarely used types of tracks last. Tracks of the
+  same type will be sorted in the same order as their source files occur in
+  the command-line arguments. Note that this doesn't affect file
+  identification. Implements #3545.
+* MKVToolNix GUI: multiplexer: the GUI will now check the state of the 'track
+  enabled' flag of all video, audio & subtitle tracks when starting to
+  multiplex or adding a job to the job queue. If there's no track with its
+  flag turned on for a type, the GUI will turn on the flag for the first track
+  of the type. This behavior can be turned off in the preferences. Implements
+  #3535.
 
 ## Bug fixes
 
@@ -47,6 +60,8 @@
   existing directories. This was due to a bug in recent versions of the
   Boost.Filesystem library. The Windows version of MKVToolNix will be built
   with Boost 1.82.0 from now on which includes the fix. Fixes #3547.
+* mkvmerge: fixed several instances of wrong format strings for `fmt::format`
+  used in debug messages. Fixes #3548.
 
 ## Build system changes
 

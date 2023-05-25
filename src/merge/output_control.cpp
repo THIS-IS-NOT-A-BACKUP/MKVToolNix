@@ -539,6 +539,39 @@ generate_segment_uids() {
   s_seguid_next.generate_random();
 }
 
+static int
+sortable_track_type_for_file_and_track_id(track_order_t const &track_order) {
+  auto const type = g_files[track_order.file_id]->reader->m_reader_packetizers[track_order.track_id]->get_track_type();
+
+  return type == track_video    ?  1
+       : type == track_audio    ?  2
+       : type == track_subtitle ?  3
+       :                          99;
+}
+
+static bool
+track_order_less_than_for_type(track_order_t const &a,
+                               track_order_t const &b) {
+  return sortable_track_type_for_file_and_track_id(a) < sortable_track_type_for_file_and_track_id(b);
+}
+
+static void
+create_type_based_track_order() {
+  auto file_id = -1;
+
+  for (auto const &file : g_files) {
+    ++file_id;
+
+    if (file->appending)
+      continue;
+
+    for (int track_id = 0, end = file.get()->reader->m_reader_packetizers.size(); track_id < end; ++track_id)
+      g_track_order.push_back(track_order_t{ file_id, track_id });
+  }
+
+  std::stable_sort(g_track_order.begin(), g_track_order.end(), track_order_less_than_for_type);
+}
+
 /** \brief Render the basic EBML and Matroska headers
 
    Renders the segment information and track headers. Also reserves
@@ -651,20 +684,22 @@ render_headers(mm_io_c *out) {
     if (first_file) {
       g_kax_last_entry = nullptr;
 
-      size_t i;
-      for (i = 0; i < g_track_order.size(); i++)
-        if ((g_track_order[i].file_id >= 0) && (g_track_order[i].file_id < static_cast<int>(g_files.size())) && !g_files[g_track_order[i].file_id]->appending)
-          g_files[g_track_order[i].file_id]->reader->set_headers_for_track(g_track_order[i].track_id);
+      if (g_track_order.empty())
+        create_type_based_track_order();
 
-      for (i = 0; i < g_files.size(); i++)
-        if (!g_files[i]->appending)
-          g_files[i]->reader->set_headers();
+      for (auto const &order : g_track_order)
+        if ((order.file_id >= 0) && (order.file_id < static_cast<int>(g_files.size())) && !g_files[order.file_id]->appending)
+          g_files[order.file_id]->reader->set_headers_for_track(order.track_id);
+
+      for (auto const &file : g_files)
+        if (!file->appending)
+          file->reader->set_headers();
 
       set_timestamp_scale();
 
-      for (i = 0; i < g_packetizers.size(); i++)
-        if (g_packetizers[i].packetizer)
-          g_packetizers[i].packetizer->fix_headers();
+      for (auto const &packetizer : g_packetizers)
+        if (packetizer.packetizer)
+          packetizer.packetizer->fix_headers();
 
     } else
       set_timestamp_scale();
