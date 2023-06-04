@@ -3,7 +3,13 @@
 #include "common/ebml.h"
 #include "common/qt.h"
 #include "mkvtoolnix-gui/forms/header_editor/track_type_page.h"
+#include "mkvtoolnix-gui/header_editor/bool_value_page.h"
+#include "mkvtoolnix-gui/header_editor/float_value_page.h"
+#include "mkvtoolnix-gui/header_editor/language_ietf_value_page.h"
+#include "mkvtoolnix-gui/header_editor/page_model.h"
 #include "mkvtoolnix-gui/header_editor/track_type_page.h"
+#include "mkvtoolnix-gui/header_editor/unsigned_integer_value_page.h"
+#include "mkvtoolnix-gui/header_editor/value_page.h"
 #include "mkvtoolnix-gui/main_window/main_window.h"
 #include "mkvtoolnix-gui/util/model.h"
 
@@ -100,20 +106,20 @@ TrackTypePage::setItems(QList<QStandardItem *> const &items)
   const {
   TopLevelPage::setItems(items);
 
-  items.at(1)->setText(m_codecId);
-  items.at(2)->setText(Q(m_language.format_long()));
-  items.at(3)->setText(m_name);
-  items.at(4)->setText(QString::number(m_trackUid));
-  items.at(5)->setText(m_defaultTrackFlag ? QY("Yes") : QY("No"));
-  items.at(6)->setText(m_forcedTrackFlag  ? QY("Yes") : QY("No"));
-  items.at(7)->setText(m_enabledTrackFlag ? QY("Yes") : QY("No"));
-  items.at(8)->setText(m_properties);
+  items.at(PageModel::CodecColumn)        ->setText(m_codecId);
+  items.at(PageModel::LanguageColumn)     ->setText(Q(m_language.format_long()));
+  items.at(PageModel::NameColumn)         ->setText(m_name);
+  items.at(PageModel::UidColumn)          ->setText(QString::number(m_trackUid));
+  items.at(PageModel::DefaultTrackColumn) ->setText(m_defaultTrackFlag ? QY("Yes") : QY("No"));
+  items.at(PageModel::ForcedDisplayColumn)->setText(m_forcedTrackFlag  ? QY("Yes") : QY("No"));
+  items.at(PageModel::EnabledColumn)      ->setText(m_enabledTrackFlag ? QY("Yes") : QY("No"));
+  items.at(PageModel::PropertiesColumn)   ->setText(m_properties);
 
-  items.at(5)->setIcon(m_defaultTrackFlag ? m_yesIcon : m_noIcon);
-  items.at(6)->setIcon(m_forcedTrackFlag  ? m_yesIcon : m_noIcon);
-  items.at(7)->setIcon(m_enabledTrackFlag ? m_yesIcon : m_noIcon);
+  items.at(PageModel::DefaultTrackColumn) ->setIcon(m_defaultTrackFlag ? m_yesIcon : m_noIcon);
+  items.at(PageModel::ForcedDisplayColumn)->setIcon(m_forcedTrackFlag  ? m_yesIcon : m_noIcon);
+  items.at(PageModel::EnabledColumn)      ->setIcon(m_enabledTrackFlag ? m_yesIcon : m_noIcon);
 
-  items.at(4)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+  items.at(PageModel::UidColumn)          ->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
 }
 
 void
@@ -123,27 +129,18 @@ TrackTypePage::summarizeProperties() {
   auto properties = QStringList{};
 
   if (track_audio == m_trackType) {
-    auto trackAudio = FindChild<KaxTrackAudio>(m_master);
+    auto channels      = getPageUnsignedIntegerValueForElement(EBML_ID(KaxAudioChannels), 1);
+    auto bitsPerSample = getPageUnsignedIntegerValueForElement(EBML_ID(KaxAudioBitDepth), 0);
 
-    if (!trackAudio)
-      return;
-
-    auto channels      = FindChildValue<KaxAudioChannels>(trackAudio, 1);
-    auto bitsPerSample = FindChild<KaxAudioBitDepth>(trackAudio);
-
-    properties << QY("%1 Hz").arg(FindChildValue<KaxAudioSamplingFreq>(trackAudio, 8000.0));
+    properties << QY("%1 Hz").arg(getPageDoubleValueForElement(EBML_ID(KaxAudioSamplingFreq), 8000));
     properties << QNY("%1 channel", "%1 channels", channels).arg(channels);
-    if (bitsPerSample)
-      properties << QNY("%1 bit per sample", "%1 bits per sample", bitsPerSample->GetValue()).arg(bitsPerSample->GetValue());
+    if (bitsPerSample != 0)
+      properties << QNY("%1 bit per sample", "%1 bits per sample", bitsPerSample).arg(bitsPerSample);
 
-  } else if (track_video == m_trackType) {
-    auto trackVideo = FindChild<KaxTrackVideo>(m_master);
-
-    if (!trackVideo)
-      return;
-
-    properties << QY("%1 pixels").arg(Q("%1x%2").arg(FindChildValue<KaxVideoPixelWidth>(trackVideo, 0u)).arg(FindChildValue<KaxVideoPixelHeight>(trackVideo, 0u)));
-  }
+  } else if (track_video == m_trackType)
+    properties << QY("%1 pixels").arg(Q("%1x%2")
+                                      .arg(getPageUnsignedIntegerValueForElement(EBML_ID(KaxVideoPixelWidth),  0))
+                                      .arg(getPageUnsignedIntegerValueForElement(EBML_ID(KaxVideoPixelHeight), 0)));
 
   m_properties = properties.join(Q(", "));
 }
@@ -152,6 +149,70 @@ QString
 TrackTypePage::internalIdentifier()
   const {
   return Q("track %1").arg(m_trackIdxMkvmerge);
+}
+
+ValuePage *
+TrackTypePage::findPageForElement(EbmlId const &wantedId) {
+  for (auto child : m_children) {
+    auto valueChild = dynamic_cast<ValuePage *>(child);
+    if (valueChild && (valueChild->m_callbacks.ClassId() == wantedId))
+      return valueChild;
+  }
+
+  return nullptr;
+}
+
+QString
+TrackTypePage::getPageStringValueForElement(EbmlId const &wantedId) {
+  auto valuePage = findPageForElement(wantedId);
+  return valuePage ? valuePage->currentValueAsString() : QString{};
+}
+
+uint64_t
+TrackTypePage::getPageUnsignedIntegerValueForElement(EbmlId const &wantedId,
+                                                     uint64_t valueIfNotPresent) {
+  auto valuePage = dynamic_cast<UnsignedIntegerValuePage *>(findPageForElement(wantedId));
+  return valuePage ? valuePage->currentValue(valueIfNotPresent) : valueIfNotPresent;
+}
+
+double
+TrackTypePage::getPageDoubleValueForElement(EbmlId const &wantedId,
+                                            double valueIfNotPresent) {
+  auto valuePage = dynamic_cast<FloatValuePage *>(findPageForElement(wantedId));
+  return valuePage ? valuePage->currentValue(valueIfNotPresent) : valueIfNotPresent;
+}
+
+bool
+TrackTypePage::getPageBoolValueForElement(EbmlId const &wantedId,
+                                          bool valueIfNotPresent) {
+  auto valuePage = dynamic_cast<BoolValuePage *>(findPageForElement(wantedId));
+  return valuePage ? valuePage->currentValue(valueIfNotPresent) : valueIfNotPresent;
+}
+
+void
+TrackTypePage::updateModelItems() {
+  m_trackNumber             = getPageUnsignedIntegerValueForElement(EBML_ID(KaxTrackNumber), 0);
+  m_trackUid                = getPageUnsignedIntegerValueForElement(EBML_ID(KaxTrackUID),    0);
+  m_codecId                 = getPageStringValueForElement(EBML_ID(KaxCodecID));
+  m_name                    = getPageStringValueForElement(EBML_ID(KaxTrackName));
+  m_defaultTrackFlag        = getPageBoolValueForElement(EBML_ID(KaxTrackFlagDefault), true);
+  m_forcedTrackFlag         = getPageBoolValueForElement(EBML_ID(KaxTrackFlagForced),  false);
+  m_enabledTrackFlag        = getPageBoolValueForElement(EBML_ID(KaxTrackFlagEnabled), true);
+
+  auto languagePage         = dynamic_cast<LanguageIETFValuePage *>(findPageForElement(EBML_ID(KaxLanguageIETF)));
+  auto languageIfNotPresent = mtx::bcp47::language_c::parse("eng");
+
+  if (languagePage)
+    m_language = languagePage->currentValue(languageIfNotPresent);
+
+  if (!m_language.is_valid())
+    m_language = languageIfNotPresent;
+
+  summarizeProperties();
+
+  setItems(m_parent.model()->itemsForIndex(m_pageIdx));
+
+  retranslateUi();
 }
 
 }

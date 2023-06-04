@@ -18,6 +18,13 @@ BoolValuePage::BoolValuePage(Tab &parent,
                              translatable_string_c const &description)
   : ValuePage{parent, topLevelPage, master, callbacks, ValueType::Bool, title, description}
 {
+  auto eltWithDefault = std::unique_ptr<EbmlElement>(&callbacks.NewElement());
+
+  if (!dynamic_cast<EbmlUInteger *>(eltWithDefault.get()))
+    return;
+
+  auto &eltUInt = static_cast<EbmlUInteger &>(*eltWithDefault.get());
+  m_valueIfNotPresent = eltUInt.ValueIsSet() && (eltUInt.GetValue() == 1);
 }
 
 BoolValuePage::~BoolValuePage() {
@@ -34,6 +41,8 @@ BoolValuePage::createInputControl() {
 
   m_cbValue->setCurrentIndex(m_originalValue);
 
+  connect(m_cbValue, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [this]() { Q_EMIT valueChanged(); });
+
   return m_cbValue;
 }
 
@@ -47,6 +56,15 @@ QString
 BoolValuePage::currentValueAsString()
   const {
   return m_cbValue->currentText();
+}
+
+bool
+BoolValuePage::currentValue(bool valueIfNotPresent)
+  const {
+  if (!m_present && !m_cbAddOrRemove->isChecked())
+    return valueIfNotPresent;
+
+  return m_cbValue->currentIndex() == 1;
 }
 
 void
@@ -67,8 +85,10 @@ BoolValuePage::copyValueToElement() {
 
 void
 BoolValuePage::toggleFlag() {
-  if (!m_present && !m_cbAddOrRemove->isChecked())
+  if (!m_present && !m_cbAddOrRemove->isChecked()) {
+    m_cbValue->setCurrentIndex(m_valueIfNotPresent ? 1 : 0);
     m_cbAddOrRemove->setChecked(true);
+  }
 
   m_cbValue->setCurrentIndex(1 - m_cbValue->currentIndex());
 }
