@@ -569,7 +569,8 @@ Tab::createValuePage(TopLevelPage &parentPage,
 
   if (page) {
     page->init();
-    connect(page, &ValuePage::valueChanged, static_cast<TrackTypePage *>(&parentPage), &TrackTypePage::updateModelItems);
+    if (dynamic_cast<TrackTypePage *>(&parentPage))
+      connect(page, &ValuePage::valueChanged, static_cast<TrackTypePage *>(&parentPage), &TrackTypePage::updateModelItems);
   }
 
   return page;
@@ -662,6 +663,8 @@ Tab::handleTracks(kax_analyzer_data_c const &data) {
       if (parentPage && parentMaster)
         createValuePage(*parentPage, *parentMaster, propElement);
     }
+
+    page->deriveLanguageIETFFromLegacyIfNotPresent();
   }
 }
 
