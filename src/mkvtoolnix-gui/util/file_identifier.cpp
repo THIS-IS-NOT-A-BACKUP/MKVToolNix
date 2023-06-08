@@ -68,7 +68,15 @@ FileIdentifier::identify() {
   if (cfg.m_defaultAdditionalMergeOptions.contains(Q("keep_last_chapter_in_mpls")))
     args << "--engage" << "keep_last_chapter_in_mpls";
 
-  auto process  = Process::execute(cfg.actualMkvmergeExe(), args);
+  ProcessPtr process;
+
+  try {
+    process = Process::execute(cfg.actualMkvmergeExe(), args);
+  } catch (ProcessX const &ex) {
+    setError(QY("Error executing mkvmerge"), Q(ex.what()));
+    return false;
+  }
+
   p->m_exitCode = process->process().exitCode();
 
   if (process->hasError()) {
@@ -79,7 +87,12 @@ FileIdentifier::identify() {
   p->m_output    = process->output();
   p->m_succeeded = parseOutput();
 
-  storeResultInCache();
+  try {
+    storeResultInCache();
+  } catch (ProcessX const &ex) {
+    setError(QY("Storing result in cache filed"), Q(ex.what()));
+    return false;
+  }
 
   setDefaults();
 
