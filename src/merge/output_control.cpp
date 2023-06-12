@@ -540,24 +540,18 @@ generate_segment_uids() {
 }
 
 static int
-sortable_track_type_for_file_and_track_id(track_order_t const &track_order) {
-  auto const type = g_files[track_order.file_id]->reader->m_reader_packetizers[track_order.track_id]->get_track_type();
-
+sortable_track_type_for_file_and_track_id(int type) {
   return type == track_video    ?  1
        : type == track_audio    ?  2
        : type == track_subtitle ?  3
        :                          99;
 }
 
-static bool
-track_order_less_than_for_type(track_order_t const &a,
-                               track_order_t const &b) {
-  return sortable_track_type_for_file_and_track_id(a) < sortable_track_type_for_file_and_track_id(b);
-}
-
 static void
 create_type_based_track_order() {
-  auto file_id = -1;
+  using sort_spec_t = std::tuple<int, int64_t, int64_t>;
+  auto to_sort      = std::vector<sort_spec_t>{};
+  auto file_id      = -1;
 
   for (auto const &file : g_files) {
     ++file_id;
@@ -565,11 +559,22 @@ create_type_based_track_order() {
     if (file->appending)
       continue;
 
-    for (int track_id = 0, end = file.get()->reader->m_reader_packetizers.size(); track_id < end; ++track_id)
-      g_track_order.push_back(track_order_t{ file_id, track_id });
+    for (auto const &ptzr : file.get()->reader->m_reader_packetizers)
+      to_sort.push_back({ sortable_track_type_for_file_and_track_id(ptzr->get_track_type()), file_id, ptzr->m_ti.m_id });
   }
 
-  std::stable_sort(g_track_order.begin(), g_track_order.end(), track_order_less_than_for_type);
+  std::stable_sort(to_sort.begin(), to_sort.end());
+
+  for (auto const &to : to_sort)
+    g_track_order.push_back({ std::get<1>(to), std::get<2>(to) });
+}
+
+static void
+sort_tracks_by_track_number() {
+  std::stable_sort(g_kax_tracks->begin(), g_kax_tracks->end(), [](auto a, auto b) {
+    return GetChildValue<libmatroska::KaxTrackNumber>(dynamic_cast<libmatroska::KaxTrackEntry &>(*a))
+         < GetChildValue<libmatroska::KaxTrackNumber>(dynamic_cast<libmatroska::KaxTrackEntry &>(*b));
+  });
 }
 
 /** \brief Render the basic EBML and Matroska headers
@@ -700,6 +705,8 @@ render_headers(mm_io_c *out) {
       for (auto const &packetizer : g_packetizers)
         if (packetizer.packetizer)
           packetizer.packetizer->fix_headers();
+
+      sort_tracks_by_track_number();
 
     } else
       set_timestamp_scale();
