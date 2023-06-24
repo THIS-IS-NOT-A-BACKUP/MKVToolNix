@@ -97,7 +97,7 @@ done
 QTDIR="${HOME}/opt/qt/${QTVERSION}/gcc_64"
 NO_GLIBC_VERSION=1
 
-if [[ ( -d .git ) && ( $RELEASE_VERSION == 0 ) ]]; then
+if git rev-parse --show-toplevel &> /dev/null && [[ $RELEASE_VERSION == 0 ]]; then
   # If revision is a tag: release-28.2.0
   # If it isn't: release-28.1.0-7-g558fbc986
   VERSION="$(git describe --tags | sed -e 's/release-//')"
@@ -112,8 +112,11 @@ else
 fi
 JOBS=$(nproc)
 
-wget -O "${TOP_DIR}/packaging/appimage/functions.sh" -q https://raw.githubusercontent.com/AppImage/AppImages/master/functions.sh
-. "${TOP_DIR}/packaging/appimage/functions.sh"
+functions_sh="${TOP_DIR}/packaging/appimage/functions.sh"
+if [[ ! -f "${functions_sh}" ]]; then
+   wget -O "${functions_sh}" -q https://raw.githubusercontent.com/AppImage/AppImages/master/functions.sh
+fi
+source "${functions_sh}"
 
 if [[ ! -f configure ]]; then
   ./autogen.sh
