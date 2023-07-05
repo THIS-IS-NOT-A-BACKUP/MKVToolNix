@@ -100,6 +100,40 @@ static unsigned char unhamtab[256] = {
   0xff, 0x0e, 0x0f, 0xff, 0x0e, 0x8e, 0xff, 0x0e,
 };
 
+// Subtitle conversation color support
+//
+// ETSI EN 300 706 V1.2.1 (2003-04)
+// Enhanced Teletext specification
+//
+// Table 29: Function of Column Address triplets
+// 00000 Foreground Colour
+// When data field bits D6 and D5 are both set to '0', bits D4 - D0 define the foreground
+// colour. Bits D4 and D3 select a CLUT in the Colour Map of table 30, and bits D2 - D0
+// select an entry from that CLUT. All other data field values are reserved.
+// The effect of this attribute persists to the end of a display row unless
+//
+// Table 30: Colour Map
+// CLUT Entry Colour
+//      0     Black
+//      1     Red
+//      2     Green
+// 0    3     Yellow
+//      4     Blue
+//      5     Magenta
+//      6     Cyan
+//      7     White
+//
+// Only using CLUT 0, the rest is ignored
+//
+// Implemented in decode_color_text() and decode_color_text_end_of_line()
+// Implementation used from https://github.com/CCExtractor/ccextractor/blob/master/src/lib_ccx/telxcc.c
+
+static const char *TTXT_COLOURS[8] = {
+    // black,   red,       green,     yellow,    blue,      magenta,   cyan,      white
+    "#000000", "#ff0000", "#00ff00", "#ffff00", "#0000ff", "#ff00ff", "#00ffff", "#ffffff"};
+
+bool font_tag_opened = false;
+
 void
 teletext_to_srt_packet_converter_c::ttx_page_data_t::reset() {
   page         = -1;
@@ -252,6 +286,34 @@ teletext_to_srt_packet_converter_c::remove_parity(unsigned char *buffer,
     buffer[idx] &= 0x7f;
 }
 
+std::string
+teletext_to_srt_packet_converter_c::decode_color_text(unsigned char c) {
+  if ((c < 0x0) || (c > 0x07))
+    return " "s;
+
+  auto font_str = maybe_close_color_font_tag();
+
+  // black is considered as white
+  // <font/> tags are only written when needed
+  font_str       += fmt::format(" <font color=\"{0}\">", TTXT_COLOURS[c]);
+  font_tag_opened = true;
+
+  return font_str;
+}
+
+std::string
+teletext_to_srt_packet_converter_c::maybe_close_color_font_tag() {
+  std::string font_str = "";
+
+  if (font_tag_opened) {
+    font_str += "</font>";
+    font_tag_opened = false;
+  }
+
+  return font_str;
+}
+
+
 bool
 teletext_to_srt_packet_converter_c::decode_line(unsigned char const *buffer,
                                                 unsigned int row_number) {
@@ -276,10 +338,34 @@ teletext_to_srt_packet_converter_c::decode_line(unsigned char const *buffer,
     auto c      = buffer[idx];
     auto mapped = char_map[static_cast<int>(c)];
 
-    recoded    += mapped  ? std::string{mapped}
-                : c < ' ' ? std::string{' '}
-                :           std::string{static_cast<char>(c)};
+    mxdebug_if(m_debug_packet, fmt::format("  txt char {0} ({1})\n", c, static_cast<int>(c)));
+
+    recoded += mapped  ? std::string{mapped}
+             : c < ' ' ? decode_color_text(c)
+             :           std::string{static_cast<char>(c)};
+
   }
+
+  recoded += maybe_close_color_font_tag();
+
+  auto to_clean = Q(recoded);
+
+  static std::optional<QRegularExpression> s_re_spaces_start_end, s_re_spaces_before_closing_tag, s_re_spaces_after_opening_tag, s_re_no_content;
+
+  if (!s_re_spaces_start_end) {
+    s_re_spaces_before_closing_tag = QRegularExpression{Q("[[:space:]]+</font>[[:space:]]*")};
+    s_re_spaces_after_opening_tag  = QRegularExpression{Q("[[:space:]]*(<font color=[^>]+>)[[:space:]]+")};
+    s_re_spaces_start_end          = QRegularExpression{Q("^[[:space:]]+|[[:space:]]+$")};
+    s_re_no_content                = QRegularExpression{Q("<font color=[^>]+>[[:space:]]*</font>")};
+  }
+
+  to_clean
+    .replace(*s_re_spaces_before_closing_tag, Q("</font> "))
+    .replace(*s_re_spaces_after_opening_tag,  Q(" \\1"))
+    .replace(*s_re_no_content,                {})
+    .replace(*s_re_spaces_start_end,          {});
+
+  recoded = to_utf8(to_clean);
 
   return recoded != prior;
 }
