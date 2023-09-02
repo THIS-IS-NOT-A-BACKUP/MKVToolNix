@@ -7,6 +7,18 @@
   doesn't understand, `-mno-direct-extern-access`. `configure` will now pass
   the parameter `-spec linux-clang` to `qmake` so that it uses the correct
   compiler flags.
+* build system: fixed the use of `mktemp` to be more portable to
+  e.g. macOS. Fixes #3608.
+* mkvmerge: if a video aspect ratio was given with `--aspect-ratio-factor`,
+  the code would apply a second factor based on the pixel resolution,
+  resulting in much too large values for the `DisplayWidth` element. For
+  example, with a pixel resolution of 720x520 & an aspect ratio factor of 1/1
+  the result should be 720x520, but instead it was 900x520. Up until release
+  76.0 this has only happened when a track order was given (which
+  unfortunately includes all invocations with MKVToolNix GUI as it always
+  includes the track order). Starting with release 77.0 this has always
+  happened due to the automatic sorting of tracks implicitly creating a track
+  order, even if none was given.
 
 
 # Version 79.0 "Funeral Pyres" 2023-08-20
