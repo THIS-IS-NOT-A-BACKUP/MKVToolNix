@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MKVToolNix\n"
-"POT-Creation-Date: 2023-08-20 10:59+0200\n"
+"POT-Creation-Date: 2023-10-29 22:06+0100\n"
 "PO-Revision-Date: 2016-02-03 20:53+0000\n"
 "Last-Translator: Andrei Stepanov, 2018-2023\n"
 "Language-Team: Russian (http://app.transifex.com/moritz-bunkus/mkvtoolnix/language/ru/)\n"
@@ -29,8 +29,8 @@ msgstr "mkvextract"
 #: doc/man/mkvmerge.xml:6
 #: doc/man/mkvpropedit.xml:6
 #: doc/man/mkvtoolnix-gui.xml:6
-msgid "79.0"
-msgstr "79.0"
+msgid "80.0"
+msgstr "80.0"
 
 #. type: Content of the date entity
 #: doc/man/mkvextract.xml:7
@@ -40,7 +40,7 @@ msgstr "79.0"
 #: doc/man/mkvtoolnix-gui.xml:7
 #, fuzzy
 #| msgid "2023-04-30"
-msgid "2023-08-20"
+msgid "2023-10-29"
 msgstr "2023-04-30"
 
 #. type: Content of the mkvmerge entity
@@ -2487,7 +2487,7 @@ msgstr "Если несколько имён файлов содержатся �
 #. type: Content of: <refentry><refsect1><refsect2><variablelist><varlistentry><listitem><para>
 #: doc/man/mkvmerge.xml:1035
 msgid "This is an alternative syntax to using '+' between the file names. Therefore the following two commands are equivalent:"
-msgstr "Альтернативное использование синтаксиса '+' между двумя именами файлов. Поэтому следующие две команды эквивалентны:"
+msgstr "Это альтернативный синтаксис использования «+» между двумя именами файлов. Поэтому следующие две команды эквивалентны:"
 
 #. type: Content of: <refentry><refsect1><refsect2><variablelist><varlistentry><listitem><screen>
 #: doc/man/mkvmerge.xml:1038
@@ -2512,7 +2512,7 @@ msgstr "Для определённых типов файлов (програм�
 #. type: Content of: <refentry><refsect1><refsect2><variablelist><varlistentry><listitem><para>
 #: doc/man/mkvmerge.xml:1054
 msgid "The '=' can also be put in front of the next file name. Therefore the following two commands are equivalent:"
-msgstr "Также можно поставить '=' перед следующим именем файла. Поэтому следующие две команды эквивалентны:"
+msgstr "Также можно поставить «=» перед следующим именем файла. Поэтому следующие две команды эквивалентны:"
 
 #. type: Content of: <refentry><refsect1><refsect2><variablelist><varlistentry><listitem><screen>
 #: doc/man/mkvmerge.xml:1057
@@ -3461,7 +3461,7 @@ msgstr "<option>-J</option> <parameter>имя-файла</parameter>"
 #. type: Content of: <refentry><refsect1><refsect2><variablelist><varlistentry><listitem><para>
 #: doc/man/mkvmerge.xml:2125
 msgid "This is a convenient alias for \"<literal>--identification-format json --identify file-name</literal>\"."
-msgstr "Это удобный псевдоним для \"<literal>--identification-format json --identify имя-файла</literal>\"."
+msgstr "Это удобный псевдоним для «<literal>--identification-format json --identify имя-файла</literal>»."
 
 #. type: Content of: <refentry><refsect1><refsect2><variablelist><varlistentry><term>
 #: doc/man/mkvmerge.xml:2131
