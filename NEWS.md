@@ -1,3 +1,33 @@
+# Version ?
+
+## New features and enhancements
+
+* MKVToolNix GUI: multiplexer: added a new option in the preferences for
+  always enabling 'forced' subtitle tracks. A subtitle track is considered to
+  be 'forced' if: the corresponding property is set in the source file; the
+  track's name contains the word 'forced' (in English); deriving the 'forced
+  display' flag from file names is active & the file name matches the
+  corresponding pattern. The option is disabled by default. Implements #3627.
+
+## Bug fixes
+
+* mkvmerge: when the user requests processing be stopped after the video ends
+  `mkvmerge` will now take appending files into account properly. It won't
+  stop processing unconditionally after the first file ends anymore. Fixes
+  #3618.
+* mkvmerge: AV1 handling in readers: the readers will now provide the pixel
+  dimensions to the AV1 packetizer as early as possible, just like for other
+  video packetizers. That way the pixel dimensions are available for
+  calculating the display dimensions when command-line options such as
+  `--aspect-ratio` & `--aspect-ratio-factor` are used. Before the change the
+  calculation was done based on initial pixel dimension values of 0x0,
+  resulting in display dimensions of 0x0, too. Fixes #3611.
+* mkvextract: AAC extractor: when an invalid program config element in the
+  GA-specific config element is encountered, the program config element will
+  be disregarded, which avoids mkvextract aborting with an exception. Fixes
+  #3606.
+
+
 # Version 80.0 "Roundabout" 2023-10-29
 
 ## New features and enhancements
