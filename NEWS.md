@@ -14,6 +14,10 @@
 * mkvmerge: HEVC/H.265: added support for reading single-layer Dolby Vision
   from Annex B type bitstream read from MPEG transport streams. Partially
   implements #3113.
+* mkvmerge: HEVC/H.265: added support for reading dual-layer Dolby Vision with
+  both the base & enhancement layers in the same track from Annex B type
+  bitstreams in MPEG transport files & elementary stream files. Implements
+  #3126.
 
 ## Bug fixes
 
@@ -42,6 +46,13 @@
   Matroska, MP4/MOV or FLV files the first frame of all the appended files was
   sometimes dropped, resulting in broken video at the point where video is
   appended. Fixes #3479.
+
+## Other changes
+
+* AVC & HEVC dumper development tool: the tool has been renamed from
+  `xvc_dump` to `xyzvc_dump` as `xvc` is an abbreviation for an existing video
+  codec (Extreme Video Coding), and the tool has nothing to do with that
+  codec.
 
 
 # Version 80.0 "Roundabout" 2023-10-29
