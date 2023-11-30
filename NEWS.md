@@ -11,13 +11,19 @@
 * MKVToolNix GUI: multiplexer: the functionality for detecting file name
   sequences when adding files can now recognize the patterns used by GoPro's
   cameras for chaptered video files. Implements #3633.
-* mkvmerge: HEVC/H.265: added support for reading single-layer Dolby Vision
-  from Annex B type bitstream read from MPEG transport streams. Partially
-  implements #3113.
-* mkvmerge: HEVC/H.265: added support for reading dual-layer Dolby Vision with
-  both the base & enhancement layers in the same track from Annex B type
-  bitstreams in MPEG transport files & elementary stream files. Implements
-  #3126.
+* mkvmerge: MPEG transport stream reader: HEVC/H.265: added support for
+  reading single-layer Dolby Vision from Annex B type bitstream read from MPEG
+  transport streams. Partially implements #3113.
+* mkvmerge: MPEG transport stream reader, HEVC/H.265 elementary stream reader:
+  added support for reading dual-layer Dolby Vision with both the base &
+  enhancement layers in the same track from Annex B type bitstreams in MPEG
+  transport files & elementary stream files. Implements #3126.
+* xyzvc_dump: the end position of the current NALU will be output in
+  non-portable format as well.
+* xyzvc_dump: HEVC: the tool will now also output the inner NALU type of Dolby
+  Vision NALUs (`unspec62` and `unspec63`).
+* mkvmerge: MPEG transport stream reader: implemented combining Dolby Vision
+  base & enhancement layers from different tracks. Implements #3127.
 
 ## Bug fixes
 
@@ -46,6 +52,8 @@
   Matroska, MP4/MOV or FLV files the first frame of all the appended files was
   sometimes dropped, resulting in broken video at the point where video is
   appended. Fixes #3479.
+* xyzvc_dump: fixed the tool aborting with an exception when the last NALU in
+  an Annex B type file was shorter than four bytes.
 
 ## Other changes
 
