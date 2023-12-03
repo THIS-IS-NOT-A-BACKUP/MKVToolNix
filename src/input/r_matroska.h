@@ -73,6 +73,7 @@ struct kax_track_t {
   std::optional<double> v_max_luminance, v_min_luminance;
   std::optional<int64_t> v_field_order;
   stereo_mode_c::mode v_stereo_mode;
+  std::optional<bool> v_alpha_mode;
   char v_fourcc[5];
   std::optional<uint64_t> v_projection_type;
   memory_cptr v_projection_private;
@@ -169,6 +170,7 @@ struct kax_track_t {
   void handle_packetizer_color();
   void handle_packetizer_field_order();
   void handle_packetizer_stereo_mode();
+  void handle_packetizer_alpha_mode();
   void handle_packetizer_pixel_dimensions();
   void handle_packetizer_default_duration();
   void handle_packetizer_output_sampling_freq();

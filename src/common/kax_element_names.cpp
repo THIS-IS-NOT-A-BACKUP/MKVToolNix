@@ -157,11 +157,12 @@ kax_element_names_c::init() {
   add(EBML_ID(KaxVideoGamma),                   Y("Gamma"));
   add(EBML_ID(KaxVideoFlagInterlaced),          Y("Interlaced"));
   add(EBML_ID(KaxVideoFieldOrder),              Y("Field order"));
-  add(EBML_ID(KaxVideoStereoMode),              Y("Stereo mode"));
+  add(EBML_ID(KaxVideoStereoMode),              Y("Video stereo mode"));
   add(EBML_ID(KaxVideoAspectRatio),             Y("Aspect ratio type"));
   add(EBML_ID(KaxVideoColourSpace),             Y("Color space"));
   add(EBML_ID(KaxVideoFrameRate),               Y("Frame rate"));
   add(EBML_ID(KaxOldStereoMode),                Y("Stereo mode (deprecated element)"));
+  add(EBML_ID(KaxVideoAlphaMode),               Y("Video alpha mode"));
 
   add(EBML_ID(KaxContentEncodings),             Y("Content encodings"));
   add(EBML_ID(KaxContentEncoding),              Y("Content encoding"));
