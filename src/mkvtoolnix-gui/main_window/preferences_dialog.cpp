@@ -123,7 +123,8 @@ PreferencesDialog::PreferencesDialog(QWidget *parent,
   ui->cbMAddBlurayCovers->setChecked(m_cfg.m_mergeAddBlurayCovers);
   ui->cbMAttachmentAlwaysSkipForExistingName->setChecked(m_cfg.m_mergeAttachmentsAlwaysSkipForExistingName);
 
-  setupForcedDisplayFlagSubtitles();
+  setupDeriveForcedDisplayFlagSubtitles();
+  setupDeriveHearingImpairedFlag();
   setupFileColorsControls();
   setupProcessPriority();
   setupPlaylistScanningPolicy();
@@ -518,12 +519,20 @@ PreferencesDialog::setupToolTips() {
                    .arg(QYH("Depending on the setting below this language can also be used if the language in the source file is 'undetermined' ('und').")));
 
   auto text = Q("<p>%1 %2</p>")
+    .arg(QYH("Audio and subtitle files often contain the words 'cc' or 'sdh' in their file name to signal that they're intended for hearing impaired people."))
+    .arg(QYH("The GUI can set the 'hearing impaired' flag for such tracks if the file name matches this regular expression."));
+
+  Util::setToolTip(ui->cbMDeriveHearingImpairedFlag,   text);
+  Util::setToolTip(ui->leMDeriveHearingImpairedFlagRE, text);
+  Util::setToolTip(ui->pbMDeriveHearingImpairedFlagRERevert, QY("Revert the entry to its default value."));
+
+  text = Q("<p>%1 %2</p>")
     .arg(QYH("Subtitle files often contain the word 'forced' in their file name to signal that they're intended for 'forced display' only (e.g. when they speak Elfish in 'Lord of the Rings')."))
     .arg(QYH("The GUI can set the 'forced display' flag for such tracks if the file name matches this regular expression."));
 
-  Util::setToolTip(ui->cbMForcedDisplayFlagSubtitles,   text);
-  Util::setToolTip(ui->leMForcedDisplayFlagSubtitlesRE, text);
-  Util::setToolTip(ui->pbMForcedDisplayFlagSubtitlesRERevert, QY("Revert the entry to its default value."));
+  Util::setToolTip(ui->cbMDeriveForcedDisplayFlagSubtitles,   text);
+  Util::setToolTip(ui->leMDeriveForcedDisplayFlagSubtitlesRE, text);
+  Util::setToolTip(ui->pbMDeriveForcedDisplayFlagSubtitlesRERevert, QY("Revert the entry to its default value."));
 
   Util::setToolTip(ui->cbMDefaultSubtitleCharset, QY("If a character set is selected here, the program will automatically set the character set input to this value for newly added text subtitle tracks."));
 
@@ -645,8 +654,10 @@ PreferencesDialog::setupConnections() {
   connect(ui->cbMEnableMuxingTracksByLanguage,            &QCheckBox::toggled,                                           ui->tbMEnableMuxingTracksByLanguage,  &QLabel::setEnabled);
 
   connect(ui->pbMDeriveTrackLanguageRevertBoundaryChars,  &QPushButton::clicked,                                         this,                                 &PreferencesDialog::revertDeriveTrackLanguageFromFileNameChars);
-  connect(ui->pbMForcedDisplayFlagSubtitlesRERevert,      &QPushButton::clicked,                                         this,                                 &PreferencesDialog::revertForcedDisplayFlagSubtitlesRE);
-  connect(ui->cbMForcedDisplayFlagSubtitles,              &QCheckBox::toggled,                                           this,                                 &PreferencesDialog::enableForcedDisplayFlagSubtitlesControls);
+  connect(ui->pbMDeriveHearingImpairedFlagRERevert,       &QPushButton::clicked,                                         this,                                 &PreferencesDialog::revertDeriveHearingImpairedFlagRE);
+  connect(ui->cbMDeriveHearingImpairedFlag,               &QCheckBox::toggled,                                           this,                                 &PreferencesDialog::enableDeriveHearingImpairedFlagControls);
+  connect(ui->pbMDeriveForcedDisplayFlagSubtitlesRERevert, &QPushButton::clicked,                                        this,                                 &PreferencesDialog::revertDeriveForcedDisplayFlagSubtitlesRE);
+  connect(ui->cbMDeriveForcedDisplayFlagSubtitles,         &QCheckBox::toggled,                                          this,                                 &PreferencesDialog::enableDeriveForcedDisplayFlagSubtitlesControls);
 
   connect(ui->cbGuiRemoveJobs,                            &QCheckBox::toggled,                                           ui->cbGuiJobRemovalPolicy,            &QComboBox::setEnabled);
   connect(ui->cbGuiRemoveJobsOnExit,                      &QCheckBox::toggled,                                           ui->cbGuiJobRemovalOnExitPolicy,      &QComboBox::setEnabled);
@@ -959,19 +970,35 @@ PreferencesDialog::setupTabPositions() {
 }
 
 void
-PreferencesDialog::setupForcedDisplayFlagSubtitles() {
-  ui->cbMForcedDisplayFlagSubtitles->setChecked(m_cfg.m_deriveSubtitlesForcedFlagFromFileNames);
-  ui->leMForcedDisplayFlagSubtitlesRE->setText(m_cfg.m_regexForDerivingSubtitlesForcedFlagFromFileNames);
+PreferencesDialog::setupDeriveHearingImpairedFlag() {
+  ui->cbMDeriveHearingImpairedFlag->setChecked(m_cfg.m_deriveHearingImpairedFlagFromFileNames);
+  ui->leMDeriveHearingImpairedFlagRE->setText(m_cfg.m_regexForDerivingHearingImpairedFlagFromFileNames);
 
-  enableForcedDisplayFlagSubtitlesControls();
+  enableDeriveHearingImpairedFlagControls();
 }
 
 void
-PreferencesDialog::enableForcedDisplayFlagSubtitlesControls() {
-  auto enable = ui->cbMForcedDisplayFlagSubtitles->isChecked();
+PreferencesDialog::setupDeriveForcedDisplayFlagSubtitles() {
+  ui->cbMDeriveForcedDisplayFlagSubtitles->setChecked(m_cfg.m_deriveSubtitlesForcedFlagFromFileNames);
+  ui->leMDeriveForcedDisplayFlagSubtitlesRE->setText(m_cfg.m_regexForDerivingSubtitlesForcedFlagFromFileNames);
 
-  ui->leMForcedDisplayFlagSubtitlesRE->setEnabled(enable);
-  ui->pbMForcedDisplayFlagSubtitlesRERevert->setEnabled(enable);
+  enableDeriveForcedDisplayFlagSubtitlesControls();
+}
+
+void
+PreferencesDialog::enableDeriveHearingImpairedFlagControls() {
+  auto enable = ui->cbMDeriveHearingImpairedFlag->isChecked();
+
+  ui->leMDeriveHearingImpairedFlagRE->setEnabled(enable);
+  ui->pbMDeriveHearingImpairedFlagRERevert->setEnabled(enable);
+}
+
+void
+PreferencesDialog::enableDeriveForcedDisplayFlagSubtitlesControls() {
+  auto enable = ui->cbMDeriveForcedDisplayFlagSubtitles->isChecked();
+
+  ui->leMDeriveForcedDisplayFlagSubtitlesRE->setEnabled(enable);
+  ui->pbMDeriveForcedDisplayFlagSubtitlesRERevert->setEnabled(enable);
 }
 
 void
@@ -1211,8 +1238,10 @@ PreferencesDialog::save() {
   m_cfg.m_defaultVideoTrackLanguage                           = ui->ldwMDefaultVideoTrackLanguage->language();
   m_cfg.m_defaultSubtitleTrackLanguage                        = ui->ldwMDefaultSubtitleTrackLanguage->language();
   m_cfg.m_whenToSetDefaultLanguage                            = static_cast<Util::Settings::SetDefaultLanguagePolicy>(ui->cbMWhenToSetDefaultLanguage->currentData().toInt());
-  m_cfg.m_deriveSubtitlesForcedFlagFromFileNames              = ui->cbMForcedDisplayFlagSubtitles->isChecked();
-  m_cfg.m_regexForDerivingSubtitlesForcedFlagFromFileNames    = ui->leMForcedDisplayFlagSubtitlesRE->text();
+  m_cfg.m_deriveHearingImpairedFlagFromFileNames              = ui->cbMDeriveHearingImpairedFlag->isChecked();
+  m_cfg.m_regexForDerivingHearingImpairedFlagFromFileNames    = ui->leMDeriveHearingImpairedFlagRE->text();
+  m_cfg.m_deriveSubtitlesForcedFlagFromFileNames              = ui->cbMDeriveForcedDisplayFlagSubtitles->isChecked();
+  m_cfg.m_regexForDerivingSubtitlesForcedFlagFromFileNames    = ui->leMDeriveForcedDisplayFlagSubtitlesRE->text();
   m_cfg.m_defaultSubtitleCharset                              = ui->cbMDefaultSubtitleCharset->currentData().toString();
   m_cfg.m_priority                                            = static_cast<Util::Settings::ProcessPriority>(ui->cbMProcessPriority->currentData().toInt());
   m_cfg.m_defaultAdditionalMergeOptions                       = ui->leMDefaultAdditionalCommandLineOptions->text();
@@ -1440,8 +1469,13 @@ PreferencesDialog::revertDeriveTrackLanguageFromFileNameChars() {
 }
 
 void
-PreferencesDialog::revertForcedDisplayFlagSubtitlesRE() {
-  ui->leMForcedDisplayFlagSubtitlesRE->setText(Util::Settings::defaultRegexForDerivingForcedDisplayFlagForSubtitlesFromFileName());
+PreferencesDialog::revertDeriveHearingImpairedFlagRE() {
+  ui->leMDeriveHearingImpairedFlagRE->setText(Util::Settings::defaultRegexForDerivingHearingImpairedFlagFromFileName());
+}
+
+void
+PreferencesDialog::revertDeriveForcedDisplayFlagSubtitlesRE() {
+  ui->leMDeriveForcedDisplayFlagSubtitlesRE->setText(Util::Settings::defaultRegexForDerivingForcedDisplayFlagForSubtitlesFromFileName());
 }
 
 bool
@@ -1476,8 +1510,24 @@ PreferencesDialog::verifyDeriveTrackLanguageSettings() {
 }
 
 bool
+PreferencesDialog::verifyDeriveHearingImpairedFlagSettings() {
+  auto reText = ui->leMDeriveHearingImpairedFlagRE->text();
+  QRegularExpression re{reText, QRegularExpression::CaseInsensitiveOption};
+
+  if (!reText.isEmpty() && re.isValid())
+    return true;
+
+  Util::MessageBox::critical(this)
+    ->title(QY("Invalid settings"))
+    .text(QY("The value for deriving the 'hearing impaired' flag from file names must be a valid regular expression."))
+    .exec();
+
+  return false;
+}
+
+bool
 PreferencesDialog::verifyDeriveForcedDisplayFlagSettings() {
-  auto reText = ui->leMForcedDisplayFlagSubtitlesRE->text();
+  auto reText = ui->leMDeriveForcedDisplayFlagSubtitlesRE->text();
   QRegularExpression re{reText, QRegularExpression::CaseInsensitiveOption};
 
   if (!reText.isEmpty() && re.isValid())
@@ -1521,6 +1571,7 @@ PreferencesDialog::verifyRunProgramConfigurations() {
 void
 PreferencesDialog::accept() {
   if (   verifyDeriveTrackLanguageSettings()
+      && verifyDeriveHearingImpairedFlagSettings()
       && verifyDeriveForcedDisplayFlagSettings()
       && verifyRunProgramConfigurations()) {
     rememberCurrentlySelectedPage();
