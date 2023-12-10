@@ -237,9 +237,7 @@ MainWindow::setupConnections() {
   connect(this,                                   &MainWindow::preferencesChanged,                        this,                 &MainWindow::showOrHideDebuggingMenu);
 
   connect(app,                                    &App::toolRequested,                                    this,                 &MainWindow::switchToTool);
-#if HAVE_QMEDIAPLAYER
   connect(&app->mediaPlayer(),                    &Util::MediaPlayer::errorOccurred,                      this,                 &MainWindow::handleMediaPlaybackError);
-#endif
 }
 
 void
@@ -931,7 +929,6 @@ MainWindow::stopQueueSpinner() {
   startStopQueueSpinner(false);
 }
 
-#if HAVE_QMEDIAPLAYER
 void
 MainWindow::handleMediaPlaybackError(QMediaPlayer::Error error,
                                      QString const &fileName) {
@@ -942,12 +939,7 @@ MainWindow::handleMediaPlaybackError(QMediaPlayer::Error error,
   if (error == QMediaPlayer::FormatError)
     messages << QY("Either the file format or the audio codec is not supported.");
 
-  else if (   (error == QMediaPlayer::ResourceError)
-           || (error == QMediaPlayer::AccessDeniedError)
-# if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-           || (error == QMediaPlayer::ServiceMissingError)
-# endif
-           )
+  else if ((error == QMediaPlayer::ResourceError) || (error == QMediaPlayer::AccessDeniedError))
     messages << QY("No audio device is available for playback, or accessing it failed.");
 
   Util::MessageBox::critical(this)
@@ -955,7 +947,6 @@ MainWindow::handleMediaPlaybackError(QMediaPlayer::Error error,
     .text(messages.join(Q(" ")))
     .exec();
 }
-#endif  // HAVE_QMEDIAPLAYER
 
 Util::LanguageDialog &
 MainWindow::setupLanguageDialog() {

@@ -2,9 +2,7 @@
 
 #include <Qt>
 #include <QDir>
-#if HAVE_QMEDIAPLAYER && (QT_VERSION >= QT_VERSION_CHECK(6, 2, 0))
-# include <QMediaFormat>
-#endif
+#include <QMediaFormat>
 #include <QOperatingSystemVersion>
 #include <QScreen>
 #include <QSettings>
@@ -205,9 +203,6 @@ gatherQtInfo(QStringList &info) {
   info << Q("* Version: %1.%2.%3").arg((QT_VERSION >> 16) & 0xff).arg((QT_VERSION >> 8) & 0xff).arg(QT_VERSION & 0xff);
   info << Q("* Build ABI: %1").arg(QSysInfo::buildAbi());
 
-#if !HAVE_QMEDIAPLAYER
-  info << Q("* Multimedia module not found during build");
-#elif QT_VERSION >= QT_VERSION_CHECK(6, 2, 0)
   QMediaFormat formats;
 
   QStringList lines;
@@ -260,7 +255,6 @@ gatherQtInfo(QStringList &info) {
 
   info << Q("") << Q("## Supported file formats") << Q("") << disclaimer << Q("");
   info += lines;
-#endif
 }
 
 void
