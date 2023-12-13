@@ -29,6 +29,7 @@
 #include "common/debugging.h"
 #include "common/ebml.h"
 #include "common/hacks.h"
+#include "common/option_with_source.h"
 #include "common/strings/formatting.h"
 #include "common/unique_numbers.h"
 #include "common/xml/ebml_tags_converter.h"
@@ -109,11 +110,11 @@ generic_packetizer_c::generic_packetizer_c(generic_reader_c *reader,
   , m_max_timestamp_seen{}
   , m_relaxed_timestamp_checking{}
 {
-  auto set_bool_maybe = [this](std::map<int64_t, bool> &flags, std::optional<bool> &flag) {
+  auto set_bool_maybe = [this](std::map<int64_t, bool> &flags, option_with_source_c<bool> &flag) {
     if (mtx::includes(flags, m_ti.m_id))
-      flag = flags[m_ti.m_id];
+      flag.set(flags[m_ti.m_id], option_source_e::command_line);
     else if (mtx::includes(flags, -1))
-      flag = flags[-1];
+      flag.set(flags[-1], option_source_e::command_line);
   };
 
   // Let's see if the user specified timestamp sync for this track.
@@ -133,15 +134,19 @@ generic_packetizer_c::generic_packetizer_c(generic_reader_c *reader,
   else if (mtx::includes(m_ti.m_cue_creations, -1))
     m_ti.m_cues = m_ti.m_cue_creations[-1];
 
-  set_bool_maybe(m_ti.m_default_track_flags,            m_ti.m_default_track);
-  set_bool_maybe(m_ti.m_forced_track_flags,             m_ti.m_forced_track);
-  set_bool_maybe(m_ti.m_enabled_track_flags,            m_ti.m_enabled_track);
-  set_bool_maybe(m_ti.m_fix_bitstream_frame_rate_flags, m_ti.m_fix_bitstream_frame_rate);
-  set_bool_maybe(m_ti.m_hearing_impaired_flags,         m_ti.m_hearing_impaired_flag);
-  set_bool_maybe(m_ti.m_visual_impaired_flags,          m_ti.m_visual_impaired_flag);
-  set_bool_maybe(m_ti.m_text_descriptions_flags,        m_ti.m_text_descriptions_flag);
-  set_bool_maybe(m_ti.m_original_flags,                 m_ti.m_original_flag);
-  set_bool_maybe(m_ti.m_commentary_flags,               m_ti.m_commentary_flag);
+  if (mtx::includes(m_ti.m_fix_bitstream_frame_rate_flags, m_ti.m_id))
+    m_ti.m_fix_bitstream_frame_rate = m_ti.m_fix_bitstream_frame_rate_flags[m_ti.m_id];
+  else if (mtx::includes(m_ti.m_fix_bitstream_frame_rate_flags, -1))
+    m_ti.m_fix_bitstream_frame_rate = m_ti.m_fix_bitstream_frame_rate_flags[-1];
+
+  set_bool_maybe(m_ti.m_default_track_flags,     m_ti.m_default_track);
+  set_bool_maybe(m_ti.m_forced_track_flags,      m_ti.m_forced_track);
+  set_bool_maybe(m_ti.m_enabled_track_flags,     m_ti.m_enabled_track);
+  set_bool_maybe(m_ti.m_hearing_impaired_flags,  m_ti.m_hearing_impaired_flag);
+  set_bool_maybe(m_ti.m_visual_impaired_flags,   m_ti.m_visual_impaired_flag);
+  set_bool_maybe(m_ti.m_text_descriptions_flags, m_ti.m_text_descriptions_flag);
+  set_bool_maybe(m_ti.m_original_flags,          m_ti.m_original_flag);
+  set_bool_maybe(m_ti.m_commentary_flags,        m_ti.m_commentary_flag);
 
   // Let's see if the user has specified a language for this track.
   if (mtx::includes(m_ti.m_languages, m_ti.m_id))
@@ -184,7 +189,7 @@ generic_packetizer_c::generic_packetizer_c(generic_reader_c *reader,
   // Let's see if the user has specified an audio emphasis mode for this track.
   int i = lookup_track_id(m_ti.m_audio_emphasis_list, m_ti.m_id);
   if (-2 != i)
-    set_audio_emphasis(m_ti.m_audio_emphasis_list[m_ti.m_id], OPTION_SOURCE_COMMAND_LINE);
+    set_audio_emphasis(m_ti.m_audio_emphasis_list[m_ti.m_id], option_source_e::command_line);
 
   // Let's see if the user has specified an aspect ratio or display dimensions
   // for this track.
@@ -192,9 +197,9 @@ generic_packetizer_c::generic_packetizer_c(generic_reader_c *reader,
   if (-2 != i) {
     display_properties_t &dprop = m_ti.m_display_properties[i];
     if (0 > dprop.aspect_ratio) {
-      set_video_display_dimensions(dprop.width, dprop.height, generic_packetizer_c::ddu_pixels, OPTION_SOURCE_COMMAND_LINE);
+      set_video_display_dimensions(dprop.width, dprop.height, generic_packetizer_c::ddu_pixels, option_source_e::command_line);
     } else {
-      set_video_aspect_ratio(dprop.aspect_ratio, dprop.ar_factor, OPTION_SOURCE_COMMAND_LINE);
+      set_video_aspect_ratio(dprop.aspect_ratio, dprop.ar_factor, option_source_e::command_line);
       m_ti.m_aspect_ratio_given = true;
     }
   }
@@ -215,111 +220,111 @@ generic_packetizer_c::generic_packetizer_c(generic_reader_c *reader,
   // Let's see if the user has specified cropping parameters for this track.
   i = lookup_track_id(m_ti.m_pixel_crop_list, m_ti.m_id);
   if (-2 != i)
-    set_video_pixel_cropping(m_ti.m_pixel_crop_list[i], OPTION_SOURCE_COMMAND_LINE);
+    set_video_pixel_cropping(m_ti.m_pixel_crop_list[i], option_source_e::command_line);
 
   // Let's see if the user has specified color matrix for this track.
   i = lookup_track_id(m_ti.m_color_matrix_coeff_list, m_ti.m_id);
   if (-2 != i)
-    set_video_color_matrix(m_ti.m_color_matrix_coeff_list[i], OPTION_SOURCE_COMMAND_LINE);
+    set_video_color_matrix(m_ti.m_color_matrix_coeff_list[i], option_source_e::command_line);
 
   // Let's see if the user has specified bits per channel parameter for this track.
   i = lookup_track_id(m_ti.m_bits_per_channel_list, m_ti.m_id);
   if (-2 != i)
-    set_video_bits_per_channel(m_ti.m_bits_per_channel_list[i], OPTION_SOURCE_COMMAND_LINE);
+    set_video_bits_per_channel(m_ti.m_bits_per_channel_list[i], option_source_e::command_line);
 
   // Let's see if the user has specified chroma subsampling parameter for this track.
   i = lookup_track_id(m_ti.m_chroma_subsample_list, m_ti.m_id);
   if (-2 != i)
-    set_video_chroma_subsample(m_ti.m_chroma_subsample_list[i], OPTION_SOURCE_COMMAND_LINE);
+    set_video_chroma_subsample(m_ti.m_chroma_subsample_list[i], option_source_e::command_line);
 
   // Let's see if the user has specified Cb subsampling parameter for this track.
   i = lookup_track_id(m_ti.m_cb_subsample_list, m_ti.m_id);
   if (-2 != i)
-    set_video_cb_subsample(m_ti.m_cb_subsample_list[i], OPTION_SOURCE_COMMAND_LINE);
+    set_video_cb_subsample(m_ti.m_cb_subsample_list[i], option_source_e::command_line);
 
   // Let's see if the user has specified chroma siting parameter for this track.
   i = lookup_track_id(m_ti.m_chroma_siting_list, m_ti.m_id);
   if (-2 != i)
-    set_video_chroma_siting(m_ti.m_chroma_siting_list[i], OPTION_SOURCE_COMMAND_LINE);
+    set_video_chroma_siting(m_ti.m_chroma_siting_list[i], option_source_e::command_line);
 
   // Let's see if the user has specified color range parameter for this track.
   i = lookup_track_id(m_ti.m_color_range_list, m_ti.m_id);
   if (-2 != i)
-    set_video_color_range(m_ti.m_color_range_list[i], OPTION_SOURCE_COMMAND_LINE);
+    set_video_color_range(m_ti.m_color_range_list[i], option_source_e::command_line);
 
   // Let's see if the user has specified color transfer characteristics parameter for this track.
   i = lookup_track_id(m_ti.m_color_transfer_list, m_ti.m_id);
   if (-2 != i)
-    set_video_color_transfer_character(m_ti.m_color_transfer_list[i], OPTION_SOURCE_COMMAND_LINE);
+    set_video_color_transfer_character(m_ti.m_color_transfer_list[i], option_source_e::command_line);
 
   // Let's see if the user has specified color primaries parameter for this track.
   i = lookup_track_id(m_ti.m_color_primaries_list, m_ti.m_id);
   if (-2 != i)
-    set_video_color_primaries(m_ti.m_color_primaries_list[i], OPTION_SOURCE_COMMAND_LINE);
+    set_video_color_primaries(m_ti.m_color_primaries_list[i], option_source_e::command_line);
 
   // Let's see if the user has specified max content light parameter for this track.
   i = lookup_track_id(m_ti.m_max_cll_list, m_ti.m_id);
   if (-2 != i)
-    set_video_max_cll(m_ti.m_max_cll_list[i], OPTION_SOURCE_COMMAND_LINE);
+    set_video_max_cll(m_ti.m_max_cll_list[i], option_source_e::command_line);
 
   // Let's see if the user has specified max frame light parameter for this track.
   i = lookup_track_id(m_ti.m_max_fall_list, m_ti.m_id);
   if (-2 != i)
-    set_video_max_fall(m_ti.m_max_fall_list[i], OPTION_SOURCE_COMMAND_LINE);
+    set_video_max_fall(m_ti.m_max_fall_list[i], option_source_e::command_line);
 
   // Let's see if the user has specified chromaticity coordinates parameter for this track.
   i = lookup_track_id(m_ti.m_chroma_coordinates_list, m_ti.m_id);
   if (-2 != i)
-    set_video_chroma_coordinates(m_ti.m_chroma_coordinates_list[i], OPTION_SOURCE_COMMAND_LINE);
+    set_video_chroma_coordinates(m_ti.m_chroma_coordinates_list[i], option_source_e::command_line);
 
   // Let's see if the user has specified white color coordinates parameter for this track.
   i = lookup_track_id(m_ti.m_white_coordinates_list, m_ti.m_id);
   if (-2 != i)
-    set_video_white_color_coordinates(m_ti.m_white_coordinates_list[i], OPTION_SOURCE_COMMAND_LINE);
+    set_video_white_color_coordinates(m_ti.m_white_coordinates_list[i], option_source_e::command_line);
 
   // Let's see if the user has specified max luminance parameter for this track.
   i = lookup_track_id(m_ti.m_max_luminance_list, m_ti.m_id);
   if (-2 != i)
-    set_video_max_luminance(m_ti.m_max_luminance_list[i], OPTION_SOURCE_COMMAND_LINE);
+    set_video_max_luminance(m_ti.m_max_luminance_list[i], option_source_e::command_line);
 
   // Let's see if the user has specified min luminance parameter for this track.
   i = lookup_track_id(m_ti.m_min_luminance_list, m_ti.m_id);
   if (-2 != i)
-    set_video_min_luminance(m_ti.m_min_luminance_list[i], OPTION_SOURCE_COMMAND_LINE);
+    set_video_min_luminance(m_ti.m_min_luminance_list[i], option_source_e::command_line);
 
   i = lookup_track_id(m_ti.m_projection_type_list, m_ti.m_id);
   if (-2 != i)
-    set_video_projection_type(m_ti.m_projection_type_list[i], OPTION_SOURCE_COMMAND_LINE);
+    set_video_projection_type(m_ti.m_projection_type_list[i], option_source_e::command_line);
 
   i = lookup_track_id(m_ti.m_projection_private_list, m_ti.m_id);
   if (-2 != i)
-    set_video_projection_private(m_ti.m_projection_private_list[i], OPTION_SOURCE_COMMAND_LINE);
+    set_video_projection_private(m_ti.m_projection_private_list[i], option_source_e::command_line);
 
   i = lookup_track_id(m_ti.m_projection_pose_yaw_list, m_ti.m_id);
   if (-2 != i)
-    set_video_projection_pose_yaw(m_ti.m_projection_pose_yaw_list[i], OPTION_SOURCE_COMMAND_LINE);
+    set_video_projection_pose_yaw(m_ti.m_projection_pose_yaw_list[i], option_source_e::command_line);
 
   i = lookup_track_id(m_ti.m_projection_pose_pitch_list, m_ti.m_id);
   if (-2 != i)
-    set_video_projection_pose_pitch(m_ti.m_projection_pose_pitch_list[i], OPTION_SOURCE_COMMAND_LINE);
+    set_video_projection_pose_pitch(m_ti.m_projection_pose_pitch_list[i], option_source_e::command_line);
 
   i = lookup_track_id(m_ti.m_projection_pose_roll_list, m_ti.m_id);
   if (-2 != i)
-    set_video_projection_pose_roll(m_ti.m_projection_pose_roll_list[i], OPTION_SOURCE_COMMAND_LINE);
+    set_video_projection_pose_roll(m_ti.m_projection_pose_roll_list[i], option_source_e::command_line);
 
   // Let's see if the user has specified a field order for this track.
   i = lookup_track_id(m_ti.m_field_order_list, m_ti.m_id);
   if (-2 != i)
-    set_video_field_order(m_ti.m_field_order_list[m_ti.m_id], OPTION_SOURCE_COMMAND_LINE);
+    set_video_field_order(m_ti.m_field_order_list[m_ti.m_id], option_source_e::command_line);
 
   // Let's see if the user has specified a stereo mode for this track.
   i = lookup_track_id(m_ti.m_stereo_mode_list, m_ti.m_id);
   if (-2 != i)
-    set_video_stereo_mode(m_ti.m_stereo_mode_list[m_ti.m_id], OPTION_SOURCE_COMMAND_LINE);
+    set_video_stereo_mode(m_ti.m_stereo_mode_list[m_ti.m_id], option_source_e::command_line);
 
   i = lookup_track_id(m_ti.m_alpha_mode_list, m_ti.m_id);
   if (-2 != i)
-    set_video_alpha_mode(m_ti.m_alpha_mode_list[m_ti.m_id], OPTION_SOURCE_COMMAND_LINE);
+    set_video_alpha_mode(m_ti.m_alpha_mode_list[m_ti.m_id], option_source_e::command_line);
 
   // Let's see if the user has specified a default duration for this track.
   if (mtx::includes(m_ti.m_default_durations, m_ti.m_id)) {
@@ -483,59 +488,67 @@ generic_packetizer_c::get_track_default_duration()
 }
 
 void
-generic_packetizer_c::set_track_default_flag(bool default_track) {
-  m_ti.m_default_track = default_track;
+generic_packetizer_c::set_track_default_flag(bool default_track,
+                                             option_source_e source) {
+  m_ti.m_default_track.set(default_track, source);
   if (m_track_entry)
-    GetChild<KaxTrackFlagDefault>(m_track_entry).SetValue(default_track ? 1 : 0);
+    GetChild<KaxTrackFlagDefault>(m_track_entry).SetValue(m_ti.m_default_track.get() ? 1 : 0);
 }
 
 void
-generic_packetizer_c::set_track_forced_flag(bool forced_track) {
-  m_ti.m_forced_track = forced_track;
+generic_packetizer_c::set_track_forced_flag(bool forced_track,
+                                            option_source_e source) {
+  m_ti.m_forced_track.set(forced_track, source);
   if (m_track_entry)
-    GetChild<KaxTrackFlagForced>(m_track_entry).SetValue(forced_track ? 1 : 0);
+    GetChild<KaxTrackFlagForced>(m_track_entry).SetValue(m_ti.m_forced_track.get() ? 1 : 0);
 }
 
 void
-generic_packetizer_c::set_track_enabled_flag(bool enabled_track) {
-  m_ti.m_enabled_track = enabled_track;
+generic_packetizer_c::set_track_enabled_flag(bool enabled_track,
+                                             option_source_e source) {
+  m_ti.m_enabled_track.set(enabled_track, source);
   if (m_track_entry)
-    GetChild<KaxTrackFlagEnabled>(m_track_entry).SetValue(enabled_track ? 1 : 0);
+    GetChild<KaxTrackFlagEnabled>(m_track_entry).SetValue(m_ti.m_enabled_track.get() ? 1 : 0);
 }
 
 void
-generic_packetizer_c::set_hearing_impaired_flag(bool hearing_impaired_flag) {
-  m_ti.m_hearing_impaired_flag = hearing_impaired_flag;
+generic_packetizer_c::set_hearing_impaired_flag(bool hearing_impaired_flag,
+                                                option_source_e source) {
+  m_ti.m_hearing_impaired_flag.set(hearing_impaired_flag, source);
   if (m_track_entry)
-    GetChild<KaxFlagHearingImpaired>(m_track_entry).SetValue(hearing_impaired_flag ? 1 : 0);
+    GetChild<KaxFlagHearingImpaired>(m_track_entry).SetValue(m_ti.m_hearing_impaired_flag.get() ? 1 : 0);
 }
 
 void
-generic_packetizer_c::set_visual_impaired_flag(bool visual_impaired_flag) {
-  m_ti.m_visual_impaired_flag = visual_impaired_flag;
+generic_packetizer_c::set_visual_impaired_flag(bool visual_impaired_flag,
+                                               option_source_e source) {
+  m_ti.m_visual_impaired_flag.set(visual_impaired_flag, source);
   if (m_track_entry)
-    GetChild<KaxFlagVisualImpaired>(m_track_entry).SetValue(visual_impaired_flag ? 1 : 0);
+    GetChild<KaxFlagVisualImpaired>(m_track_entry).SetValue(m_ti.m_visual_impaired_flag.get() ? 1 : 0);
 }
 
 void
-generic_packetizer_c::set_text_descriptions_flag(bool text_descriptions_flag) {
-  m_ti.m_text_descriptions_flag = text_descriptions_flag;
+generic_packetizer_c::set_text_descriptions_flag(bool text_descriptions_flag,
+                                                 option_source_e source) {
+  m_ti.m_text_descriptions_flag.set(text_descriptions_flag, source);
   if (m_track_entry)
-    GetChild<KaxFlagTextDescriptions>(m_track_entry).SetValue(text_descriptions_flag ? 1 : 0);
+    GetChild<KaxFlagTextDescriptions>(m_track_entry).SetValue(m_ti.m_text_descriptions_flag.get() ? 1 : 0);
 }
 
 void
-generic_packetizer_c::set_original_flag(bool original_flag) {
-  m_ti.m_original_flag = original_flag;
+generic_packetizer_c::set_original_flag(bool original_flag,
+                                        option_source_e source) {
+  m_ti.m_original_flag.set(original_flag, source);
   if (m_track_entry)
-    GetChild<KaxFlagOriginal>(m_track_entry).SetValue(original_flag ? 1 : 0);
+    GetChild<KaxFlagOriginal>(m_track_entry).SetValue(m_ti.m_original_flag.get() ? 1 : 0);
 }
 
 void
-generic_packetizer_c::set_commentary_flag(bool commentary_flag) {
-  m_ti.m_commentary_flag = commentary_flag;
+generic_packetizer_c::set_commentary_flag(bool commentary_flag,
+                                          option_source_e source) {
+  m_ti.m_commentary_flag.set(commentary_flag, source);
   if (m_track_entry)
-    GetChild<KaxFlagCommentary>(m_track_entry).SetValue(commentary_flag ? 1 : 0);
+    GetChild<KaxFlagCommentary>(m_track_entry).SetValue(m_ti.m_commentary_flag.get() ? 1 : 0);
 }
 
 void

@@ -2040,9 +2040,7 @@ qtmp4_reader_c::create_packetizer(int64_t tid) {
 
   if (packetizer_ok) {
     dmx.set_packetizer_block_addition_mappings();
-
-    if (!m_reader_packetizers[dmx.ptzr]->m_ti.m_enabled_track.has_value())
-      m_reader_packetizers[dmx.ptzr]->set_track_enabled_flag(dmx.m_enabled);
+    m_reader_packetizers[dmx.ptzr]->set_track_enabled_flag(dmx.m_enabled, option_source_e::container);
   }
 
   if (packetizer_ok && (-1 == m_main_dmx))
@@ -2840,19 +2838,19 @@ qtmp4_demuxer_c::set_packetizer_display_dimensions() {
       && (display_height != 0)
       && (   (v_width  != display_width)
           || (v_height != display_height)))
-    m_reader.m_reader_packetizers[ptzr]->set_video_display_dimensions(display_width, display_height, generic_packetizer_c::ddu_pixels, OPTION_SOURCE_CONTAINER);
+    m_reader.m_reader_packetizers[ptzr]->set_video_display_dimensions(display_width, display_height, generic_packetizer_c::ddu_pixels, option_source_e::container);
 }
 
 void
 qtmp4_demuxer_c::set_packetizer_color_properties() {
   if (v_color_primaries != 2) {
-    m_reader.m_reader_packetizers[ptzr]->set_video_color_primaries(v_color_primaries, OPTION_SOURCE_CONTAINER);
+    m_reader.m_reader_packetizers[ptzr]->set_video_color_primaries(v_color_primaries, option_source_e::container);
   }
   if (v_color_transfer_characteristics != 2) {
-    m_reader.m_reader_packetizers[ptzr]->set_video_color_transfer_character(v_color_transfer_characteristics, OPTION_SOURCE_CONTAINER);
+    m_reader.m_reader_packetizers[ptzr]->set_video_color_transfer_character(v_color_transfer_characteristics, option_source_e::container);
   }
   if (v_color_matrix_coefficients != 2) {
-    m_reader.m_reader_packetizers[ptzr]->set_video_color_matrix(v_color_matrix_coefficients, OPTION_SOURCE_CONTAINER);
+    m_reader.m_reader_packetizers[ptzr]->set_video_color_matrix(v_color_matrix_coefficients, option_source_e::container);
   }
 }
 
