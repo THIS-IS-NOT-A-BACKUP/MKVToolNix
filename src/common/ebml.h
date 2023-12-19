@@ -52,7 +52,7 @@ int write_ebml_element_head(mm_io_c &out, libebml::EbmlId const &id, int64_t con
 #define EBML_CLASS_CONTEXT(ref) ref::ClassInfos.Context
 #endif
 #if !defined(EBML_CLASS_CALLBACK)
-#define EBML_CLASS_CALLBACK(ref)   ref::ClassInfos
+#define EBML_CLASS_CALLBACK(ref)   ref::ClassInfo()
 #endif
 #if !defined(EBML_CONTEXT)
 #define EBML_CONTEXT(e)  e->Generic().Context
@@ -67,7 +67,7 @@ int write_ebml_element_head(mm_io_c &out, libebml::EbmlId const &id, int64_t con
 #define EBML_INFO_NAME(cb)    (cb).DebugName
 #endif
 #if !defined(EBML_INFO_CONTEXT)
-#define EBML_INFO_CONTEXT(cb) (cb).Context
+#define EBML_INFO_CONTEXT(cb) (cb).GetContext()
 #endif
 #if !defined(EBML_SEM_UNIQUE)
 #define EBML_SEM_UNIQUE(s)  (s).Unique
@@ -481,3 +481,4 @@ change_values(EbmlMaster &master,
 }
 
 bool found_in(libebml::EbmlElement &haystack, libebml::EbmlElement const *needle);
+void remove_dummy_elements(libebml::EbmlMaster &master);

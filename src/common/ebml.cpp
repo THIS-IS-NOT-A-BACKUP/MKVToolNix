@@ -15,6 +15,7 @@
 
 #include <unordered_set>
 
+#include <ebml/EbmlDummy.h>
 #include <ebml/EbmlFloat.h>
 #include <ebml/EbmlSInteger.h>
 #include <ebml/EbmlString.h>
@@ -23,11 +24,7 @@
 #include <ebml/EbmlVoid.h>
 
 #include <matroska/KaxBlock.h>
-#include <matroska/KaxChapters.h>
 #include <matroska/KaxSegment.h>
-#include <matroska/KaxTags.h>
-#include <matroska/KaxTrackAudio.h>
-#include <matroska/KaxTrackVideo.h>
 
 #include "common/date_time.h"
 #include "common/ebml.h"
@@ -780,4 +777,24 @@ found_in(EbmlElement &haystack,
   }
 
   return false;
+}
+
+void
+remove_dummy_elements(libebml::EbmlMaster &master) {
+  auto idx = 0u;
+
+  while (idx < master.ListSize()) {
+    auto child = master[idx];
+
+    if (Is<libebml::EbmlDummy>(child)) {
+      delete child;
+      master.Remove(idx);
+      continue;
+    }
+
+    if (dynamic_cast<libebml::EbmlMaster *>(child))
+      remove_dummy_elements(*static_cast<libebml::EbmlMaster *>(child));
+
+    ++idx;
+  }
 }
