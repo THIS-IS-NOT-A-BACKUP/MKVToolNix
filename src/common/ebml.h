@@ -410,6 +410,8 @@ void move_children(libebml::EbmlMaster &source, libebml::EbmlMaster &destination
 bool remove_master_from_parent_if_empty_or_only_defaults(libebml::EbmlMaster *parent, libebml::EbmlMaster *child, std::unordered_map<libebml::EbmlMaster *, bool> &handled);
 void remove_ietf_language_elements(libebml::EbmlMaster &master);
 void remove_mandatory_elements_set_to_their_default(libebml::EbmlMaster &master);
+void remove_dummy_elements(libebml::EbmlMaster &master);
+void remove_unrenderable_elements(libebml::EbmlMaster &master, bool with_default);
 
 const libebml::EbmlCallbacks *find_ebml_callbacks(const libebml::EbmlCallbacks &base, const libebml::EbmlId &id);
 const libebml::EbmlCallbacks *find_ebml_callbacks(const libebml::EbmlCallbacks &base, const char *debug_name);
@@ -481,4 +483,9 @@ change_values(EbmlMaster &master,
 }
 
 bool found_in(libebml::EbmlElement &haystack, libebml::EbmlElement const *needle);
-void remove_dummy_elements(libebml::EbmlMaster &master);
+
+#if LIBEBML_VERSION >= 0x020000
+libebml::EbmlElement::ShouldWrite render_should_write_arg(bool with_default);
+#else
+bool render_should_write_arg(bool with_default);
+#endif
