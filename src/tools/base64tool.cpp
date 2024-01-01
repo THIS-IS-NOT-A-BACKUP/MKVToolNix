@@ -32,7 +32,7 @@ set_usage() {
                              "\n"
                              "  encode - Read from <input>, encode to Base64 and write to <output>.\n"
                              "           Max line length can be specified and is 72 if left out.\n"
-                             "  decode - Read from <input>, decode to binary and write to <output>.\n");
+                             "  decode - Read from <input>, decode to uint8_t and write to <output>.\n");
 }
 
 int
@@ -40,7 +40,6 @@ main(int argc,
      char *argv[]) {
   int maxlen;
   uint64_t size;
-  unsigned char *buffer;
   char mode;
   std::string s, line;
 
@@ -90,11 +89,11 @@ main(int argc,
   in->restore_pos();
 
   if (mode == 'e') {
-    buffer = (unsigned char *)safemalloc(size);
+    auto af_buffer = memory_c::alloc(size);
+    auto buffer    = af_buffer->get_buffer();
     size = in->read(buffer, size);
 
     s = mtx::base64::encode(buffer, size, true, maxlen);
-    safefree(buffer);
 
     out->write(s.c_str(), s.length());
 

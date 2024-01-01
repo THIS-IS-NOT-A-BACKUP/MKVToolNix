@@ -21,8 +21,6 @@
 #include "output/p_dts.h"
 #include "common/strings/formatting.h"
 
-using namespace libmatroska;
-
 dts_packetizer_c::dts_packetizer_c(generic_reader_c *p_reader,
                                    track_info_c &p_ti,
                                    mtx::dts::header_t const &dtsheader)
@@ -50,7 +48,7 @@ dts_packetizer_c::get_dts_packet(bool flushing) {
   if (0 == m_packet_buffer.get_size())
     return std::make_tuple(dtsheader, packet_buf, 0ull);
 
-  const unsigned char *buf = m_packet_buffer.get_buffer();
+  const uint8_t *buf = m_packet_buffer.get_buffer();
   int buf_size             = m_packet_buffer.get_size();
   int pos                  = mtx::dts::find_sync_word(buf, buf_size);
 

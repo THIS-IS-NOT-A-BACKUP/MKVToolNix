@@ -24,8 +24,6 @@
 #include "merge/packet_extensions.h"
 #include "output/p_vc1.h"
 
-using namespace libmatroska;
-
 vc1_video_packetizer_c::vc1_video_packetizer_c(generic_reader_c *n_reader, track_info_c &n_ti)
   : generic_packetizer_c{n_reader, n_ti, track_video}
   , m_previous_timestamp(-1)
@@ -74,7 +72,7 @@ vc1_video_packetizer_c::set_headers() {
     else
       set_track_default_duration(m_parser.get_default_duration());
 
-    memcpy(((unsigned char *)bih) + sizeof(alBITMAPINFOHEADER) + 1, m_raw_headers->get_buffer(), m_raw_headers->get_size());
+    memcpy(((uint8_t *)bih) + sizeof(alBITMAPINFOHEADER) + 1, m_raw_headers->get_buffer(), m_raw_headers->get_size());
 
   } else
     set_track_default_duration(1000000000ll * 1001 / 30000);
