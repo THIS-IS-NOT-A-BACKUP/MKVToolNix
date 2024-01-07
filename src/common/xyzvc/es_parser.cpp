@@ -12,17 +12,15 @@
 
 #include "common/common_pch.h"
 
-#include "common/avc_hevc/es_parser.h"
 #include "common/checksums/base_fwd.h"
 #include "common/endian.h"
 #include "common/memory_slice_cursor.h"
 #include "common/mm_file_io.h"
 #include "common/mpeg.h"
 #include "common/strings/formatting.h"
+#include "common/xyzvc/es_parser.h"
 
-namespace mtx::avc_hevc {
-
-std::unordered_map<int, std::string> es_parser_c::ms_nalu_names_by_type, es_parser_c::ms_slice_names_by_type;
+namespace mtx::xyzvc {
 
 es_parser_c::es_parser_c(std::string const &debug_type,
                          std::size_t num_slice_types,
@@ -232,7 +230,7 @@ es_parser_c::get_num_frames_available()
   return m_frames_out.size();
 }
 
-mtx::avc_hevc::frame_t
+mtx::xyzvc::frame_t
 es_parser_c::get_frame() {
   assert(!m_frames_out.empty());
 
@@ -599,8 +597,8 @@ es_parser_c::get_num_frame_slices()
 std::string
 es_parser_c::get_nalu_type_name(int type)
   const {
-  auto name = ms_nalu_names_by_type.find(type);
-  return (ms_nalu_names_by_type.end() == name) ? "unknown" : name->second;
+  auto name = m_nalu_names_by_type->find(type);
+  return (m_nalu_names_by_type->end() == name) ? "unknown" : name->second;
 }
 
 void
@@ -652,7 +650,7 @@ es_parser_c::debug_dump_statistics()
   mxdebug(fmt::format("{0}: Number of slices by type:\n", m_debug_type));
   for (int i = 0, size = m_stats.num_slices_by_type.size(); i < size; ++i)
     if (0 != m_stats.num_slices_by_type[i])
-      mxdebug(fmt::format("  {0}: {1}\n", i < static_cast<int>(ms_slice_names_by_type.size()) ? ms_slice_names_by_type[i] : "?"s, m_stats.num_slices_by_type[i]));
+      mxdebug(fmt::format("  {0}: {1}\n", i < static_cast<int>(m_slice_names_by_type->size()) ? m_slice_names_by_type->at(i) : "?"s, m_stats.num_slices_by_type[i]));
 }
 
-} // namespace mtx::avc_hevc
+} // namespace mtx::xyzvc
