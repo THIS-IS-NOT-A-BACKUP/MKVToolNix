@@ -3,8 +3,8 @@
 <!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd"
 [
 <!ENTITY product "mkvmerge">
-<!ENTITY version "87.0">
-<!ENTITY date "2024-09-07">
+<!ENTITY version "88.0">
+<!ENTITY date "2024-10-19">
 
 <!ENTITY mkvmerge "<citerefentry><refentrytitle>mkvmerge</refentrytitle><manvolnum>1</manvolnum></citerefentry>">
 <!ENTITY mkvinfo "<citerefentry><refentrytitle>mkvinfo</refentrytitle><manvolnum>1</manvolnum></citerefentry>">
@@ -1161,10 +1161,9 @@ $ mkvmerge -o out.mkv '(' file.mkv ')'</screen>
      </term>
      <listitem>
       <para>
-       Creates a file attachment inside the &matroska; file. The <abbrev>MIME</abbrev> type must have been set before this option can used. The
-       difference between the two forms is that during splitting the files attached with <option>--attach-file</option> are attached to all
-       output files while the ones attached with <option>--attach-file-once</option> are only attached to the first file created.  If
-       splitting is not used then both do the same.
+       Creates a file attachment inside the &matroska; file. The difference between the two forms is that during splitting the files
+       attached with <option>--attach-file</option> are attached to all output files while the ones attached with
+       <option>--attach-file-once</option> are only attached to the first file created. If splitting is not used then both do the same.
       </para>
 
       <para>

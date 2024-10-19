@@ -1,4 +1,4 @@
-# Version ?
+# Version 88.0 "All I Know" 2024-10-19
 
 ## New features and enhancements
 
@@ -11,6 +11,9 @@
   found. Fixes #3744.
 * mkvmerge: MP4 reader: mkvmerge will no longer warn when multiple identical
   FourCCs are present within the same track headers. Fixes #3748.
+* mkvmerge man page: removed the wrong statement that an attachment's MIME
+  type must be set before use of the `--attach-file` & `--attach-file-once`
+  options. If not given, mkvmerge auto-detects the MIME type.
 
 
 # Version 87.0 "Black as the Sky" 2024-09-07
